@@ -1,14 +1,14 @@
 {
     "collab_server" : "",
-    "contents" : "call_api <- function(endpoint, ...) {\n  # create link based on specified endpoint\n  baseUrl <- paste(baseUrl, endpoint, \".php?\", sep = \"\")\n  # retrieve and iterate through params\n  params <- list(...)\n  for (i in 1:length(params)) {\n    baseUrl <- paste(baseUrl, names(params)[i], \"=\", params[i], \"&\",\n                     sep = \"\")\n  }\n  # problem with JSON objects not being separated by new line characters\n  # inefficient workaround\n  lines <- readLines(baseUrl)\n  m <- gregexpr(\"}\", lines, perl = TRUE)\n  # add new line after each matched instance of \"}\"\n  regmatches(lines, m) <- \"}\\n\"\n  # write to file and then read to file (inefficient)\n  write(lines, \"data1.txt\")\n  metadata <- jsonlite::stream_in(file(\"data1.txt\"))\n  return(metadata)\n}\n\nparams_from_call <- function(match_call) {\n  params <- as.list(match_call)\n  # rename first element in order for call_api to recognize params\n  names(params)[1] <- \"endpoint\"\n  # convert first parameter to character type\n  params[1] <- as.character(params[1])\n  return(params)\n}\n",
+    "contents" : "call_api <- function(endpoint, ...) {\n  # create link based on specified endpoint\n  baseUrl <- paste(baseUrl, endpoint, \".php?\", sep = \"\")\n  # retrieve and iterate through params\n  params <- list(...)\n  for (i in 1:length(params)) {\n    baseUrl <- paste(baseUrl, names(params)[i], \"=\", params[i], \"&\",\n                     sep = \"\")\n  }\n  # problem with JSON objects not being separated by new line characters\n  # inefficient workaround\n  lines <- readLines(baseUrl)\n  m <- gregexpr(\"}\", lines, perl = TRUE)\n  # add new line after each matched instance of \"}\"\n  regmatches(lines, m) <- \"}\\n\"\n  # write to file and then read to file (inefficient)\n  write(lines, \"json_temp.txt\")\n  metadata <- jsonlite::stream_in(file(\"json_temp.txt\"))\n  return(metadata)\n}\n\nparams_from_call <- function(match_call) {\n  params <- as.list(match_call)\n  # rename first element in order for call_api to recognize params\n  names(params)[1] <- \"endpoint\"\n  # convert first parameter to character type\n  params[1] <- as.character(params[1])\n  return(params)\n}\n",
     "created" : 1517512787948.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "4152410522",
+    "hash" : "4087285095",
     "id" : "4413AACB",
-    "lastKnownWriteTime" : 1517512806,
-    "last_content_update" : 1517512806984,
+    "lastKnownWriteTime" : 1517517608,
+    "last_content_update" : 1517517608004,
     "path" : "~/Desktop/Junior Year Drive/POL 345/ffmetadata/R/helpers.R",
     "project_path" : "R/helpers.R",
     "properties" : {

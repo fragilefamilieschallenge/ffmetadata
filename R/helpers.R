@@ -14,8 +14,8 @@ call_api <- function(endpoint, ...) {
   # add new line after each matched instance of "}"
   regmatches(lines, m) <- "}\n"
   # write to file and then read to file (inefficient)
-  write(lines, "data1.txt")
-  metadata <- jsonlite::stream_in(file("data1.txt"))
+  write(lines, "json_temp.txt")
+  metadata <- jsonlite::stream_in(file("json_temp.txt"))
   return(metadata)
 }
 
