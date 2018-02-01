@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "Package: ffmetadata\nType: Package\nTitle: Provides Access to Fragile Families Metadata\nVersion: 0.1.0\nAuthor: Ryan Vinh\nMaintainer: Ryan Vinh <rvinh@princeton.edu>\nDescription: This package allows one to retrieve metadata for the\n    Fragile Families challenge via the PHP Web API.  Users can\n    select, filter, and search metadata for relevant variables.\nLicense: MIT License\nEncoding: UTF-8\nLazyData: true\nImports:\n  jsonlite,\nRoxygenNote: 6.0.1\n",
+    "created" : 1517517267023.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3827702167",
+    "id" : "A68151EF",
+    "lastKnownWriteTime" : 1513093227,
+    "last_content_update" : 1513093227,
+    "path" : "~/Desktop/Junior Year Drive/POL 345/ffmetadata/DESCRIPTION",
+    "project_path" : "DESCRIPTION",
+    "properties" : {
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "dcf"
+}
