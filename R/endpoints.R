@@ -1,4 +1,4 @@
-#' selectMetadata
+#' Select Metadata
 #'
 #' Modified from PHP Web API definition: selectMetadata
 #' returns a specific field of a given variable, or
@@ -12,20 +12,20 @@
 #' @export
 #'
 #' @examples
-#' selectNoFieldName <- selectMetadata(new_name = "ce3agefc")
-#' selectWithFieldName <- selectMetadata(new_name = "ce3agefc", field_name = "type")
-selectMetadata <- function(new_name = NULL, field_name = NULL) {
+#' select1 <- select_metadata(variable_name = "ce3agefc")
+#' select2 <- select_metadata(variable_name = "ce3agefc", field_name = "type")
+select_metadata <- function(variable_name = NULL, field_name = NULL) {
   # validate field_name
   if (!is.null(field_name)) {
-    if (!(field_name %in% validNames)) {
+    if (!(field_name %in% .valid_names)) {
       stop(field_name, " is not a valid field name")
     }
   }
-  params <- params_from_call(match.call())
-  do.call("call_api", params)
+  params <- list(new_name=variable_name, field_name=field_name)
+  call_api("selectMetadata.php", params)
 }
 
-#' searchMetadata
+#' Search Metadata
 #'
 #' Modified from PHP Web API: searchMetadata returns a
 #' data frame of variables given a query string and a search category,
@@ -37,17 +37,17 @@ selectMetadata <- function(new_name = NULL, field_name = NULL) {
 #' @export
 #'
 #' @examples
-#' search_test <- searchMetadata(query = "policing", field_name = "topic1")
-searchMetadata <- function(query = NULL, field_name = NULL) {
+#' search_test <- search_metadata(query = "policing", field_name = "topic1")
+search_metadata <- function(query = NULL, field_name = NULL) {
   # validate field_name
-  if (!(field_name %in% validNames)) {
+  if (!(field_name %in% .valid_names)) {
     stop(field_name, " is not a valid field name")
   }
-  params <- params_from_call(match.call())
-  do.call("call_api", params)
+  params <- list(query=query, field_name=field_name)
+  call_api("searchMetadata.php", params)
 }
 
-#' filterMetadata
+#' Filter Metadata
 #'
 #' Modified from PHP Web API definition: filterMetadata returns a data frame
 #' of variables given a set of filter values for variable categories,
@@ -59,15 +59,17 @@ searchMetadata <- function(query = NULL, field_name = NULL) {
 #' @export
 #'
 #' @examples
-#' filter_test <- filterMetadata(wave = 3, source = "constructed", type = "bin")
-filterMetadata <- function(...) {
-  params <- params_from_call(match.call())
+#' filter_test <- filter_metadata(wave = 3, source = "constructed", type = "bin")
+filter_metadata <- function(filter_list=list(), ...) {
+  params <- c(filter_list, list(...))
+
   # validate parameters, ignoring the first entry (the function name)
-  for (i in 2:length(params)) {
-    if (!(names(params)[i] %in% validNames)) {
+  for (i in 1:length(params)) {
+    if (!(names(params)[i] %in% .valid_names)) {
       stop(names(params)[i], " is not a valid field name")
     }
   }
-  do.call("call_api", params)
+
+  call_api(endpoint="filterMetadata.php", params)
 }
 

@@ -1,29 +1,20 @@
-call_api <- function(endpoint, ...) {
+
+# endpoint : api endpoint. e.g. "selectMetadata.php"
+# params : a named list of url parameters
+call_api <- function(endpoint, params) {
   # create link based on specified endpoint
-  baseUrl <- paste(baseUrl, endpoint, ".php?", sep = "")
+  base_url <- paste(.base_url, endpoint, "?", sep = "")
   # retrieve and iterate through params
-  params <- list(...)
   for (i in 1:length(params)) {
-    baseUrl <- paste(baseUrl, names(params)[i], "=", params[i], "&",
+    if(!is.null(params[[i]]))
+      base_url <- paste(base_url, names(params)[i], "=", params[[i]], "&",
                      sep = "")
   }
-  # problem with JSON objects not being separated by new line characters
-  # inefficient workaround
-  lines <- readLines(baseUrl)
-  m <- gregexpr("}", lines, perl = TRUE)
-  # add new line after each matched instance of "}"
-  regmatches(lines, m) <- "}\n"
-  # write to file and then read to file (inefficient)
-  write(lines, "json_temp.txt")
-  metadata <- jsonlite::stream_in(file("json_temp.txt"))
-  return(metadata)
-}
+  # problem with API not returning JSON objects
+  lines <- readLines(base_url, warn=FALSE)
+  meta <- list()
+  for(i in 1:length(lines)) meta[[i]] <- as.data.frame(jsonlite::fromJSON(lines[i]))
+  metadata <- do.call(rbind,meta)
 
-params_from_call <- function(match_call) {
-  params <- as.list(match_call)
-  # rename first element in order for call_api to recognize params
-  names(params)[1] <- "endpoint"
-  # convert first parameter to character type
-  params[1] <- as.character(params[1])
-  return(params)
+  return(metadata)
 }
