@@ -13,3 +13,4 @@ LazyData: true
 Imports:
     jsonlite,
 RoxygenNote: 5.0.1
+Suggests: testthat
