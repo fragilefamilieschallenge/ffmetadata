@@ -1,11 +1,11 @@
 #' Select Metadata
 #'
-#' Modified from PHP Web API definition: selectMetadata
+#' Modified from PHP Web API definition: select_metadata
 #' returns a specific field of a given variable, or
 #' the entire variable if no field is specified
 #'
-#' @param varName name of variable
-#' @param fieldName specific field of variable
+#' @param variable_name name of variable
+#' @param field_name specific field of variable
 #'
 #' @return returns string with value if field is specified,
 #' returns list of fields for variable if field is unspecified
@@ -27,13 +27,15 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
 
 #' Search Metadata
 #'
-#' Modified from PHP Web API: searchMetadata returns a
+#' Modified from PHP Web API: search_metadata returns a
 #' data frame of variables given a query string and a search category,
 #' or the entire set of metadata as a data frame if query is empty
 #' @param query a substring searched for in the given search category
 #' @param field_name the search category
 #'
-#' @return returns data frame where each observation is a variable
+#' @return returns data frame of variables given a query string and a
+#' search category, or the entire set of metadata as a data frame if the
+#' query is empty
 #' @export
 #'
 #' @examples
@@ -49,13 +51,32 @@ search_metadata <- function(query = NULL, field_name = NULL) {
 
 #' Filter Metadata
 #'
-#' Modified from PHP Web API definition: filterMetadata returns a data frame
+#' Modified from PHP Web API definition: filter_metadata returns a data frame
 #' of variables given a set of filter values for variable categories,
 #' or the entire set of metadata as a data frame if no filters are provided
-#' @param ...
+#' @param new_name the new, standardized variable name
+#' @param old_name the original variable name from older files
+#' @param type variable type
+#' @param warning flags for issues
+#' @param group group number (matches the same questions across surveys)
+#' @param q_group_N number of variables that are in the group
+#' @param topic1 first concept tag
+#' @param topic2 second concept tag
+#' @param source source of variable
+#' @param respondent respondent, either the person interviewed or the place an
+#' interview took place
+#' @param wave the wave of data collection associated with the variable
+#' @param scope the reach of a variable's sample population
+#' @param section section of survey where question is asked
+#' @param leaf the rest of the variable name
+#' @param q_group_list a string that lists all of the new variable names
+#' for all the variables in the group
+#' @param value1-value78 all of the potential responses for a given variable
+#' @param label1-label68 all of the labels for the potential responses for
+#' a given variable
 #'
-#' @return returns data frame where each observation is a
-#' variable
+#' @return returns data frame of variable metadata based on a set of given
+#' filter values, or the entire set of metadata if no filters are provided
 #' @export
 #'
 #' @examples

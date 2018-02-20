@@ -7,16 +7,16 @@
 select_metadata(variable_name = NULL, field_name = NULL)
 }
 \arguments{
-\item{varName}{name of variable}
+\item{variable_name}{name of variable}
 
-\item{fieldName}{specific field of variable}
+\item{field_name}{specific field of variable}
 }
 \value{
 returns string with value if field is specified,
 returns list of fields for variable if field is unspecified
 }
 \description{
-Modified from PHP Web API definition: selectMetadata
+Modified from PHP Web API definition: select_metadata
 returns a specific field of a given variable, or
 the entire variable if no field is specified
 }
@@ -24,4 +24,3 @@ the entire variable if no field is specified
 select1 <- select_metadata(variable_name = "ce3agefc")
 select2 <- select_metadata(variable_name = "ce3agefc", field_name = "type")
 }
-

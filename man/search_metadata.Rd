@@ -12,14 +12,15 @@ search_metadata(query = NULL, field_name = NULL)
 \item{field_name}{the search category}
 }
 \value{
-returns data frame where each observation is a variable
+returns data frame of variables given a query string and a
+search category, or the entire set of metadata as a data frame if the
+query is empty
 }
 \description{
-Modified from PHP Web API: searchMetadata returns a
+Modified from PHP Web API: search_metadata returns a
 data frame of variables given a query string and a search category,
 or the entire set of metadata as a data frame if query is empty
 }
 \examples{
 search_test <- search_metadata(query = "policing", field_name = "topic1")
 }
-
