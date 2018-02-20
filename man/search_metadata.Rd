@@ -51,3 +51,4 @@ List of valid field names:
 \examples{
 search_test <- search_metadata(query = "policing", field_name = "topic1")
 }
+

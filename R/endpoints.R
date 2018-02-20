@@ -9,7 +9,7 @@
 #' details for valid field names
 #'
 #' @return returns string with value of a given field if field is specified,
-#' returns entire variable if field is unspecified
+#' returns a data.frame with variables for every field if field is unspecified
 #'
 #' @details List of valid field names:
 #' \itemize{
@@ -48,7 +48,16 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
     }
   }
   params <- list(new_name=variable_name, field_name=field_name)
-  call_api("selectMetadata.php", params)
+  result <- call_api("selectMetadata.php", params)
+
+  #format single return values
+  if(!is.null(field_name)){
+    result <- unlist(result)
+    if(is.factor(result))
+      result <- as.character(result)
+    names(result) <- field_name
+  }
+  result
 }
 
 #' Search Metadata

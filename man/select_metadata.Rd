@@ -14,7 +14,7 @@ details for valid field names}
 }
 \value{
 returns string with value of a given field if field is specified,
-returns entire variable if field is unspecified
+returns a data.frame with variables for every field if field is unspecified
 }
 \description{
 select_metadata allows users to retrieve the value of
@@ -50,3 +50,4 @@ List of valid field names:
 select1 <- select_metadata(variable_name = "ce3agefc")
 select2 <- select_metadata(variable_name = "ce3agefc", field_name = "type")
 }
+
