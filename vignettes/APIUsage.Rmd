@@ -1,0 +1,29 @@
+---
+title: "How to Query Metadata from the Fragile Families API"
+author: "Ryan Vinh and Ian E. Fellows"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{How to Query Metadata from the Fragile Families API}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+## Introduction
+
+The ffmetadata package provides easy to use access to metadata surrounding the Fragile Families Project data (https://fragilefamilies.princeton.edu/). The data itself is complex, and so this tool makes it easy to find and filter information about the variables included. It does this by querying the Fragile Families web API, available at (http://mayap.mycpanel.princeton.edu/).
+
+
+## Finding information out about a variable (select_metadata)
+
+TODO: give a worked example. e.g. suppose you want to find out about the ____ variable .... 
+
+```{r, echo=FALSE, results='asis'}
+print(2+2)
+```
+
+
+## Searching for variables (search_metadata and filter_metadata)
+
+TODO: give a worked example. try to make it different from the examples in the RDocs.
