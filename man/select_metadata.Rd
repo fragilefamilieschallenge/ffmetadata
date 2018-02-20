@@ -9,16 +9,42 @@ select_metadata(variable_name = NULL, field_name = NULL)
 \arguments{
 \item{variable_name}{name of variable}
 
-\item{field_name}{specific field of variable}
+\item{field_name}{specific field of variable to be accessed. See
+details for valid field names}
 }
 \value{
-returns string with value if field is specified,
-returns list of fields for variable if field is unspecified
+returns string with value of a given field if field is specified,
+returns entire variable if field is unspecified
 }
 \description{
-Modified from PHP Web API definition: select_metadata
-returns a specific field of a given variable, or
+select_metadata allows users to retrieve the value of
+a specific field of a given variable, or
 the entire variable if no field is specified
+}
+\details{
+List of valid field names:
+\itemize{
+  \item{new_name: the new, standardized variable name}
+  \item{old_name: the original variable name from older files}
+  \item{type: variable type}
+  \item{warning: flags for issues}
+  \item{group: group number (matches the same questions across surveys)}
+  \item{q_group_N: number of variables that are in the group}
+  \item{topic1: first concept tag}
+  \item{topic2: second concept tag}
+  \item{source: source of variable}
+  \item{respondent: respondent, either the person interviewed or
+  the place an interview took place}
+  \item{wave: the wave of data collection associated with the variable}
+  \item{scope: the reach of a variable's sample population}
+  \item{section: section of survey where question is asked}
+  \item{leaf: the rest of the variable name}
+  \item{q_group_list: a string that lists all of the new variable names
+  for all the variables in the group}
+  \item{value1-value78: all of the potential responses for a given variable}
+  \item{label1-label68: all of the labels for the potential responses for
+  a given variable}
+}
 }
 \examples{
 select1 <- select_metadata(variable_name = "ce3agefc")

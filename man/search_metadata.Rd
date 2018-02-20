@@ -7,9 +7,10 @@
 search_metadata(query = NULL, field_name = NULL)
 }
 \arguments{
-\item{query}{a substring searched for in the given search category}
+\item{query}{a substring searched for in the given variable field}
 
-\item{field_name}{the search category}
+\item{field_name}{the field in which the query is searched for.
+See details for valid field names.}
 }
 \value{
 returns data frame of variables given a query string and a
@@ -17,9 +18,35 @@ search category, or the entire set of metadata as a data frame if the
 query is empty
 }
 \description{
-Modified from PHP Web API: search_metadata returns a
-data frame of variables given a query string and a search category,
-or the entire set of metadata as a data frame if query is empty
+search_metadata allows users to retrieve a data frame of
+variables based on whether or not those variables contain a given query
+within a given field, or the entire set of metadata if the query
+is empty
+}
+\details{
+List of valid field names:
+\itemize{
+  \item{new_name: the new, standardized variable name}
+  \item{old_name: the original variable name from older files}
+  \item{type: variable type}
+  \item{warning: flags for issues}
+  \item{group: group number (matches the same questions across surveys)}
+  \item{q_group_N: number of variables that are in the group}
+  \item{topic1: first concept tag}
+  \item{topic2: second concept tag}
+  \item{source: source of variable}
+  \item{respondent: respondent, either the person interviewed or
+  the place an interview took place}
+  \item{wave: the wave of data collection associated with the variable}
+  \item{scope: the reach of a variable's sample population}
+  \item{section: section of survey where question is asked}
+  \item{leaf: the rest of the variable name}
+  \item{q_group_list: a string that lists all of the new variable names
+  for all the variables in the group}
+  \item{value1-value78: all of the potential responses for a given variable}
+  \item{label1-label68: all of the labels for the potential responses for
+  a given variable}
+}
 }
 \examples{
 search_test <- search_metadata(query = "policing", field_name = "topic1")

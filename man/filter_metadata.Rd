@@ -7,51 +7,45 @@
 filter_metadata(filter_list = list(), ...)
 }
 \arguments{
-\item{new_name}{the new, standardized variable name}
+\item{filter_list}{a named list of variables to filter metadata on. See
+details for valid field names.}
 
-\item{old_name}{the original variable name from older files}
-
-\item{type}{variable type}
-
-\item{warning}{flags for issues}
-
-\item{group}{group number (matches the same questions across surveys)}
-
-\item{q_group_N}{number of variables that are in the group}
-
-\item{topic1}{first concept tag}
-
-\item{topic2}{second concept tag}
-
-\item{source}{source of variable}
-
-\item{respondent}{respondent, either the person interviewed or the place an
-interview took place}
-
-\item{wave}{the wave of data collection associated with the variable}
-
-\item{scope}{the reach of a variable's sample population}
-
-\item{section}{section of survey where question is asked}
-
-\item{leaf}{the rest of the variable name}
-
-\item{q_group_list}{a string that lists all of the new variable names
-for all the variables in the group}
-
-\item{value1-value78}{all of the potential responses for a given variable}
-
-\item{label1-label68}{all of the labels for the potential responses for
-a given variable}
+\item{...}{additional value combinations to filter on. See details for
+valid field names.}
 }
 \value{
 returns data frame of variable metadata based on a set of given
 filter values, or the entire set of metadata if no filters are provided
 }
 \description{
-Modified from PHP Web API definition: filter_metadata returns a data frame
-of variables given a set of filter values for variable categories,
+filter_metadata allows users to retreive a data frame
+of variables based on a set of filter values for variable categories,
 or the entire set of metadata as a data frame if no filters are provided
+}
+\details{
+List of valid field names:
+\itemize{
+  \item{new_name: the new, standardized variable name}
+  \item{old_name: the original variable name from older files}
+  \item{type: variable type}
+  \item{warning: flags for issues}
+  \item{group: group number (matches the same questions across surveys)}
+  \item{q_group_N: number of variables that are in the group}
+  \item{topic1: first concept tag}
+  \item{topic2: second concept tag}
+  \item{source: source of variable}
+  \item{respondent: respondent, either the person interviewed or
+  the place an interview took place}
+  \item{wave: the wave of data collection associated with the variable}
+  \item{scope: the reach of a variable's sample population}
+  \item{section: section of survey where question is asked}
+  \item{leaf: the rest of the variable name}
+  \item{q_group_list: a string that lists all of the new variable names
+  for all the variables in the group}
+  \item{value1-value78: all of the potential responses for a given variable}
+  \item{label1-label68: all of the labels for the potential responses for
+  a given variable}
+}
 }
 \examples{
 filter_test <- filter_metadata(wave = 3, source = "constructed", type = "bin")

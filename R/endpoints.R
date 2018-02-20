@@ -1,14 +1,40 @@
 #' Select Metadata
 #'
-#' Modified from PHP Web API definition: select_metadata
-#' returns a specific field of a given variable, or
+#' select_metadata allows users to retrieve the value of
+#' a specific field of a given variable, or
 #' the entire variable if no field is specified
 #'
 #' @param variable_name name of variable
-#' @param field_name specific field of variable
+#' @param field_name specific field of variable to be accessed. See
+#' details for valid field names
 #'
-#' @return returns string with value if field is specified,
-#' returns list of fields for variable if field is unspecified
+#' @return returns string with value of a given field if field is specified,
+#' returns entire variable if field is unspecified
+#'
+#' @details List of valid field names:
+#' \itemize{
+#'   \item{new_name: the new, standardized variable name}
+#'   \item{old_name: the original variable name from older files}
+#'   \item{type: variable type}
+#'   \item{warning: flags for issues}
+#'   \item{group: group number (matches the same questions across surveys)}
+#'   \item{q_group_N: number of variables that are in the group}
+#'   \item{topic1: first concept tag}
+#'   \item{topic2: second concept tag}
+#'   \item{source: source of variable}
+#'   \item{respondent: respondent, either the person interviewed or
+#'   the place an interview took place}
+#'   \item{wave: the wave of data collection associated with the variable}
+#'   \item{scope: the reach of a variable's sample population}
+#'   \item{section: section of survey where question is asked}
+#'   \item{leaf: the rest of the variable name}
+#'   \item{q_group_list: a string that lists all of the new variable names
+#'   for all the variables in the group}
+#'   \item{value1-value78: all of the potential responses for a given variable}
+#'   \item{label1-label68: all of the labels for the potential responses for
+#'   a given variable}
+#' }
+#'
 #' @export
 #'
 #' @examples
@@ -27,15 +53,43 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
 
 #' Search Metadata
 #'
-#' Modified from PHP Web API: search_metadata returns a
-#' data frame of variables given a query string and a search category,
-#' or the entire set of metadata as a data frame if query is empty
-#' @param query a substring searched for in the given search category
-#' @param field_name the search category
+#' search_metadata allows users to retrieve a data frame of
+#' variables based on whether or not those variables contain a given query
+#' within a given field, or the entire set of metadata if the query
+#' is empty
+#'
+#' @param query a substring searched for in the given variable field
+#' @param field_name the field in which the query is searched for.
+#' See details for valid field names.
 #'
 #' @return returns data frame of variables given a query string and a
 #' search category, or the entire set of metadata as a data frame if the
 #' query is empty
+#'
+#' @details List of valid field names:
+#' \itemize{
+#'   \item{new_name: the new, standardized variable name}
+#'   \item{old_name: the original variable name from older files}
+#'   \item{type: variable type}
+#'   \item{warning: flags for issues}
+#'   \item{group: group number (matches the same questions across surveys)}
+#'   \item{q_group_N: number of variables that are in the group}
+#'   \item{topic1: first concept tag}
+#'   \item{topic2: second concept tag}
+#'   \item{source: source of variable}
+#'   \item{respondent: respondent, either the person interviewed or
+#'   the place an interview took place}
+#'   \item{wave: the wave of data collection associated with the variable}
+#'   \item{scope: the reach of a variable's sample population}
+#'   \item{section: section of survey where question is asked}
+#'   \item{leaf: the rest of the variable name}
+#'   \item{q_group_list: a string that lists all of the new variable names
+#'   for all the variables in the group}
+#'   \item{value1-value78: all of the potential responses for a given variable}
+#'   \item{label1-label68: all of the labels for the potential responses for
+#'   a given variable}
+#' }
+#'
 #' @export
 #'
 #' @examples
@@ -51,33 +105,42 @@ search_metadata <- function(query = NULL, field_name = NULL) {
 
 #' Filter Metadata
 #'
-#' Modified from PHP Web API definition: filter_metadata returns a data frame
-#' of variables given a set of filter values for variable categories,
+#' filter_metadata allows users to retreive a data frame
+#' of variables based on a set of filter values for variable categories,
 #' or the entire set of metadata as a data frame if no filters are provided
-#' @param new_name the new, standardized variable name
-#' @param old_name the original variable name from older files
-#' @param type variable type
-#' @param warning flags for issues
-#' @param group group number (matches the same questions across surveys)
-#' @param q_group_N number of variables that are in the group
-#' @param topic1 first concept tag
-#' @param topic2 second concept tag
-#' @param source source of variable
-#' @param respondent respondent, either the person interviewed or the place an
-#' interview took place
-#' @param wave the wave of data collection associated with the variable
-#' @param scope the reach of a variable's sample population
-#' @param section section of survey where question is asked
-#' @param leaf the rest of the variable name
-#' @param q_group_list a string that lists all of the new variable names
-#' for all the variables in the group
-#' @param value1-value78 all of the potential responses for a given variable
-#' @param label1-label68 all of the labels for the potential responses for
-#' a given variable
+#'
+#' @param filter_list a named list of variables to filter metadata on. See
+#' details for valid field names.
+#' @param ... additional value combinations to filter on. See details for
+#' valid field names.
 #'
 #' @return returns data frame of variable metadata based on a set of given
 #' filter values, or the entire set of metadata if no filters are provided
 #' @export
+#'
+#' @details List of valid field names:
+#' \itemize{
+#'   \item{new_name: the new, standardized variable name}
+#'   \item{old_name: the original variable name from older files}
+#'   \item{type: variable type}
+#'   \item{warning: flags for issues}
+#'   \item{group: group number (matches the same questions across surveys)}
+#'   \item{q_group_N: number of variables that are in the group}
+#'   \item{topic1: first concept tag}
+#'   \item{topic2: second concept tag}
+#'   \item{source: source of variable}
+#'   \item{respondent: respondent, either the person interviewed or
+#'   the place an interview took place}
+#'   \item{wave: the wave of data collection associated with the variable}
+#'   \item{scope: the reach of a variable's sample population}
+#'   \item{section: section of survey where question is asked}
+#'   \item{leaf: the rest of the variable name}
+#'   \item{q_group_list: a string that lists all of the new variable names
+#'   for all the variables in the group}
+#'   \item{value1-value78: all of the potential responses for a given variable}
+#'   \item{label1-label68: all of the labels for the potential responses for
+#'   a given variable}
+#' }
 #'
 #' @examples
 #' filter_test <- filter_metadata(wave = 3, source = "constructed", type = "bin")
