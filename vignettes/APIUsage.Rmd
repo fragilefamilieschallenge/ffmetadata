@@ -14,16 +14,54 @@ vignette: >
 
 The ffmetadata package provides easy to use access to metadata surrounding the Fragile Families Project data (https://fragilefamilies.princeton.edu/). The data itself is complex, and so this tool makes it easy to find and filter information about the variables included. It does this by querying the Fragile Families web API, available at (http://mayap.mycpanel.princeton.edu/).
 
-
-## Finding information out about a variable (select_metadata)
-
-TODO: give a worked example. e.g. suppose you want to find out about the ____ variable .... 
-
-```{r, echo=FALSE, results='asis'}
-print(2+2)
+```{r, echo=FALSE}
+library(ffmetadata)
 ```
 
 
+## Finding information out about a variable (select_metadata)
+
+Suppose you want to find out the value of a given variable's field.  For example, let's say we want to find out the source of the variable with the name "ce3datey". To accomplish this, we would call select_metadata using "ce3datey" for variable_name and "source" for field_name.
+
+```{r, results='asis'}
+select_type <- select_metadata(variable_name = "ce3datey", field_name = "source")
+```
+
+If you want to view the entire variable and all the values for its fields, you can call select_metadata without using the field_name parameter and simply using "ce3datey" for variable_name. This will return all the fields for ce3datey as a data frame with one row.
+
+```{r, eval=FALSE}
+select_entire <- select_metadata(variable_name = "ce3datey")
+```
+
 ## Searching for variables (search_metadata and filter_metadata)
 
-TODO: give a worked example. try to make it different from the examples in the RDocs.
+search_metadata
+
+Suppose you want to search for all the variables that contain a certain substring within a given field.  For example, let's say we want to retrieve all the variables that have the substring "health" contained in their topic1 field.  To accomplish this, we could call search_metadata using "health" as our query and "topic1" as our field_name.  The result will be a data frame of all the variables that have the substring "health" in their topic1 field.
+```{r, eval=FALSE}
+search_topic1 <- search_metadata(query = "health", field_name = "topic1")
+```
+
+filter_metadata
+
+Suppose you want to search for all the variables that satisfy several criteria.  For example, let's say we want to retrieve all the binary variables from questionnaires administered in all 20 cities involved in the study.  To accomplish this, we could call filter_metadata using "bin" as our type, "questionnaire" as our source, and 20 for our scope. This can be accomplished using a named list, by typing the parameters in explicitly, or by a combination of both approaches.
+```{r, eval=FALSE}
+# named-list approach
+params_list <- c("bin", "questionnaire", 20)
+names(params_list) <- c("type", "source", "scope")
+# call to filter_metadata
+filtered <- filter_metadata(params_list)
+```
+
+```{r, eval=FALSE}
+# explicit parameter approach
+filtered <- filter_metadata(type = "bin", source = "questionnaire", scope = 20)
+```
+
+```{r, eval=FALSE}
+# mixed approach
+params_list <- c("bin", "questionnaire")
+names(params_list) <- c("type", "source")
+filtered <- filter_metadata(params_list, scope = 20)
+```
+
