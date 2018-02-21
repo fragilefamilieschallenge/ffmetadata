@@ -26,7 +26,8 @@ List of valid field names:
 \itemize{
   \item{new_name: the new, standardized variable name}
   \item{old_name: the original variable name from older files}
-  \item{type: variable type}
+  \item{type: variable type. Options are binary (bin), continuous (cont),
+   unordered categorical (uc), ordered categorical (oc), and string (string)}
   \item{warning: flags for issues}
   \item{group: group number (matches the same questions across surveys)}
   \item{q_group_N: number of variables that are in the group}
@@ -36,7 +37,9 @@ List of valid field names:
   \item{respondent: respondent, either the person interviewed or
   the place an interview took place}
   \item{wave: the wave of data collection associated with the variable}
-  \item{scope: the reach of a variable's sample population}
+  \item{scope: the reach of a variable's sample population (grouped by
+   city where each person was originally interviewed). The max scope is
+   20 cities.}
   \item{section: section of survey where question is asked}
   \item{leaf: the rest of the variable name}
   \item{q_group_list: a string that lists all of the new variable names
@@ -50,4 +53,3 @@ List of valid field names:
 select1 <- select_metadata(variable_name = "ce3agefc")
 select2 <- select_metadata(variable_name = "ce3agefc", field_name = "type")
 }
-
