@@ -31,8 +31,12 @@ List of valid field names:
   \item{warning: flags for issues}
   \item{group: group number (matches the same questions across surveys)}
   \item{q_group_N: number of variables that are in the group}
-  \item{topic1: first concept tag}
-  \item{topic2: second concept tag}
+  \item{topic1: indicates specific content topic (e.g.
+   medication or housing status), there is no hierarchy between topic1 and
+   topic2}
+  \item{topic2: indicates specific content topic (e.g.
+   medication or housing status), there is no hierarchy between topic1 and
+   topic2}
   \item{source: source of variable}
   \item{respondent: respondent, either the person interviewed or
   the place an interview took place}
