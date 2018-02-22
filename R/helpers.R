@@ -13,7 +13,10 @@ call_api <- function(endpoint, params) {
   # problem with API not returning JSON objects
   lines <- readLines(utils::URLencode(base_url), warn=FALSE)
   meta <- list()
-  for(i in 1:length(lines)) meta[[i]] <- as.data.frame(jsonlite::fromJSON(lines[i]))
+  for(i in 1:length(lines)) {
+    if(!is.na(lines[i]) && nchar(lines[i])>1)
+      meta[[i]] <- as.data.frame(jsonlite::fromJSON(lines[i]))
+  }
   metadata <- do.call(rbind,meta)
 
   return(metadata)

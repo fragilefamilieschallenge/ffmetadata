@@ -23,32 +23,87 @@ library(ffmetadata)
 
 Suppose you want to find out the value of a given variable's field.  For example, let's say we want to find out the source of the variable with the name "ce3datey". To accomplish this, we would call select_metadata using "ce3datey" for variable_name and "source" for field_name.
 
-```{r, results='asis'}
+```{r}
 select_type <- select_metadata(variable_name = "ce3datey", field_name = "source")
+print(select_type)
 ```
 
 If you want to view the entire variable and all the values for its fields, you can call select_metadata without using the field_name parameter and simply using "ce3datey" for variable_name. This will return all the fields for ce3datey as a data frame with one row.
 
-```{r, eval=FALSE}
+```{r, results = "asis"}
 select_entire <- select_metadata(variable_name = "ce3datey")
+pander::pandoc.table(select_entire, split.tables=Inf)
 ```
+
+The metadata fields are defined as follows:
+
+new_name
+: the new, standardized variable name
+
+old_name
+: the original variable name from older files
+
+type
+: variable type. Options are binary (bin), continuous (cont), unordered categorical (uc), ordered categorical (oc), and string (string)
+
+warning
+: flags for issues
+group: group number (matches the same questions across surveys)
+
+q_group_N
+: number of variables that are in the group
+
+topic1
+: indicates specific content topic (e.g.medication or housing status), there is no hierarchy between topic1 and   topic2
+
+topic2
+: indicates specific content topic (e.g. medication or housing status), there is no hierarchy between topic1 and topic2
+
+source
+: source of variable
+
+respondent
+: respondent, either the person interviewed or the place an interview took place
+
+wave
+: the wave of data collection associated with the variable
+
+scope
+: the reach of a variable's sample population (grouped by city where each person was originally interviewed). The max scope is 20 cities.
+
+section
+: section of survey where question is asked
+
+leaf
+: the rest of the variable name
+
+q_group_list
+: a string that lists all of the new variable names for all the variables in the group
+
+value1-value78
+: all of the potential responses for a given variable}
+
+label1-label68
+: all of the labels for the potential responses for a given variable
+
 
 ## Searching for variables (search_metadata and filter_metadata)
 
-search_metadata
+###search_metadata
 
 Suppose you want to search for all the variables that contain a certain substring within a given field.  For example, let's say we want to retrieve all the variables that have the substring "health" contained in their topic1 field.  To accomplish this, we could call search_metadata using "health" as our query and "topic1" as our field_name.  The result will be a data frame of all the variables that have the substring "health" in their topic1 field.
-```{r, eval=FALSE}
+```{r, results = "asis"}
 search_topic1 <- search_metadata(query = "mental health", field_name = "topic1")
+pander::pandoc.table(search_topic1[1:3,], split.tables=Inf)
 ```
 
-filter_metadata
+###filter_metadata
 
 Suppose you want to search for all the variables that satisfy several criteria.  For example, let's say we want to retrieve all the binary variables from questionnaires administered in all 20 cities involved in the study.  To accomplish this, we could call filter_metadata using "bin" as our type, "questionnaire" as our source, and 20 for our scope. This can be accomplished using a named list, by typing the parameters in explicitly, or by a combination of both approaches.
 ```{r, eval=FALSE}
 # named-list approach
-params_list <- c("bin", "questionnaire", 20)
-names(params_list) <- c("type", "source", "scope")
+params_list <- list(type="bin", source="questionnaire", scope=20)
+#names(params_list) <- c("type", "source", "scope")
 # call to filter_metadata
 filtered <- filter_metadata(params_list)
 ```
