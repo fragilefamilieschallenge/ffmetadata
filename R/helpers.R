@@ -7,13 +7,11 @@ call_api <- function(endpoint, params) {
   # retrieve and iterate through params
   for (i in 1:length(params)) {
     if(!is.null(params[[i]]))
-      # correctly encode spaces in url
-      params[[i]] <- gsub(" ", "+", params[[i]])
       base_url <- paste(base_url, names(params)[i], "=", params[[i]], "&",
                      sep = "")
   }
   # problem with API not returning JSON objects
-  lines <- readLines(base_url, warn=FALSE)
+  lines <- readLines(utils::URLencode(base_url), warn=FALSE)
   meta <- list()
   for(i in 1:length(lines)) meta[[i]] <- as.data.frame(jsonlite::fromJSON(lines[i]))
   metadata <- do.call(rbind,meta)
