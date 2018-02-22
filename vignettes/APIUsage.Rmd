@@ -39,7 +39,7 @@ search_metadata
 
 Suppose you want to search for all the variables that contain a certain substring within a given field.  For example, let's say we want to retrieve all the variables that have the substring "health" contained in their topic1 field.  To accomplish this, we could call search_metadata using "health" as our query and "topic1" as our field_name.  The result will be a data frame of all the variables that have the substring "health" in their topic1 field.
 ```{r, eval=FALSE}
-search_topic1 <- search_metadata(query = "health", field_name = "topic1")
+search_topic1 <- search_metadata(query = "mental health", field_name = "topic1")
 ```
 
 filter_metadata

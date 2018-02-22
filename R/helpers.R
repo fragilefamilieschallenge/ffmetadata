@@ -7,6 +7,8 @@ call_api <- function(endpoint, params) {
   # retrieve and iterate through params
   for (i in 1:length(params)) {
     if(!is.null(params[[i]]))
+      # correctly encode spaces in url
+      params[[i]] <- gsub(" ", "+", params[[i]])
       base_url <- paste(base_url, names(params)[i], "=", params[[i]], "&",
                      sep = "")
   }
