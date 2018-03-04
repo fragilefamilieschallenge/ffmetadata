@@ -54,8 +54,8 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
       stop(field_name, " is not a valid field name")
     }
   }
-  params <- list(new_name=variable_name, field_name=field_name)
-  result <- call_api("selectMetadata.php", params)
+  params <- list(variable_name=variable_name, field_name=field_name)
+  result <- call_api("select", params)
 
   #format single return values
   if(!is.null(field_name)){
@@ -116,14 +116,14 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
 #' @export
 #'
 #' @examples
-#' search_test <- search_metadata(query = "policing", field_name = "topic1")
+#' search_test <- search_metadata(query = "oc", field_name = "data_type")
 search_metadata <- function(query = NULL, field_name = NULL) {
   # validate field_name
   if (!(field_name %in% .valid_names)) {
     stop(field_name, " is not a valid field name")
   }
   params <- list(query=query, field_name=field_name)
-  call_api("searchMetadata.php", params)
+  call_api("search", params)
 }
 
 #' Filter Metadata
@@ -173,7 +173,7 @@ search_metadata <- function(query = NULL, field_name = NULL) {
 #' }
 #'
 #' @examples
-#' filter_test <- filter_metadata(wave = 3, source = "constructed", type = "bin")
+#' filter_test <- filter_metadata(wave = 3, data_source = "constructed", data_type = "bin")
 filter_metadata <- function(filter_list=list(), ...) {
   params <- c(filter_list, list(...))
 
@@ -184,6 +184,6 @@ filter_metadata <- function(filter_list=list(), ...) {
     }
   }
 
-  call_api(endpoint="filterMetadata.php", params)
+  call_api(endpoint="filter", params)
 }
 

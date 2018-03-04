@@ -6,18 +6,25 @@ call_api <- function(endpoint, params) {
   base_url <- paste(.base_url, endpoint, "?", sep = "")
   # retrieve and iterate through params
   for (i in 1:length(params)) {
-    if(!is.null(params[[i]]))
+    if(!is.null(params[[i]])) {
+      # rename for naming conventions
+      if (names(params)[i] == "field_name") {
+        names(params)[i] <- "fieldName"
+      } else if (names(params)[i] == "variable_name") {
+        names(params)[i] <- "varName"
+      }
       base_url <- paste(base_url, names(params)[i], "=", params[[i]], "&",
-                     sep = "")
+                        sep = "")
+    }
   }
   # problem with API not returning JSON objects
-  lines <- readLines(utils::URLencode(base_url), warn=FALSE)
-  meta <- list()
-  for(i in 1:length(lines)) {
-    if(!is.na(lines[i]) && nchar(lines[i])>1)
-      meta[[i]] <- as.data.frame(jsonlite::fromJSON(lines[i]))
-  }
-  metadata <- do.call(rbind,meta)
-
+  #lines <- readLines(utils::URLencode(base_url), warn=FALSE)
+  #meta <- list()
+  #for(i in 1:length(lines)) {
+  #  if(!is.na(lines[i]) && nchar(lines[i])>1)
+  #    meta[[i]] <- as.data.frame(jsonlite::fromJSON(lines[i]))
+  #}
+  #metadata <- do.call(rbind,meta)
+  metadata <- jsonlite::fromJSON(base_url)
   return(metadata)
 }
