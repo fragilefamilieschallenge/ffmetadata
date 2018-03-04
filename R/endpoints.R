@@ -13,9 +13,9 @@
 #'
 #' @details List of valid field names:
 #' \itemize{
-#'   \item{new_name: the new, standardized variable name}
+#'   \item{name: the new, standardized variable name}
 #'   \item{old_name: the original variable name from older files}
-#'   \item{type: variable type. Options are binary (bin), continuous (cont),
+#'   \item{data_type: variable type. Options are binary (bin), continuous (cont),
 #'    unordered categorical (uc), ordered categorical (oc), and string (string)}
 #'   \item{warning: flags for issues}
 #'   \item{group: group number (matches the same questions across surveys)}
@@ -26,7 +26,7 @@
 #'   \item{topic2: indicates specific content topic (e.g.
 #'    medication or housing status), there is no hierarchy between topic1 and
 #'    topic2}
-#'   \item{source: source of variable}
+#'   \item{data_source: source of variable}
 #'   \item{respondent: respondent, either the person interviewed or
 #'   the place an interview took place}
 #'   \item{wave: the wave of data collection associated with the variable}
@@ -84,9 +84,9 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
 #'
 #' @details List of valid field names:
 #' \itemize{
-#'   \item{new_name: the new, standardized variable name}
+#'   \item{name: the new, standardized variable name}
 #'   \item{old_name: the original variable name from older files}
-#'   \item{type: variable type. Options are binary (bin), continuous (cont),
+#'   \item{data_type: variable type. Options are binary (bin), continuous (cont),
 #'    unordered categorical (uc), ordered categorical (oc), and string (string)}
 #'   \item{warning: flags for issues}
 #'   \item{group: group number (matches the same questions across surveys)}
@@ -97,7 +97,7 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
 #'   \item{topic2: indicates specific content topic (e.g.
 #'    medication or housing status), there is no hierarchy between topic1 and
 #'    topic2}
-#'   \item{source: source of variable}
+#'   \item{data_source: source of variable}
 #'   \item{respondent: respondent, either the person interviewed or
 #'   the place an interview took place}
 #'   \item{wave: the wave of data collection associated with the variable}
@@ -143,9 +143,9 @@ search_metadata <- function(query = NULL, field_name = NULL) {
 #'
 #' @details List of valid field names:
 #' \itemize{
-#'   \item{new_name: the new, standardized variable name}
+#'   \item{name: the new, standardized variable name}
 #'   \item{old_name: the original variable name from older files}
-#'   \item{type: variable type. Options are binary (bin), continuous (cont),
+#'   \item{data_type: variable type. Options are binary (bin), continuous (cont),
 #'    unordered categorical (uc), ordered categorical (oc), and string (string)}
 #'   \item{warning: flags for issues}
 #'   \item{group: group number (matches the same questions across surveys)}
@@ -156,7 +156,7 @@ search_metadata <- function(query = NULL, field_name = NULL) {
 #'   \item{topic2: indicates specific content topic (e.g.
 #'    medication or housing status), there is no hierarchy between topic1 and
 #'    topic2}
-#'   \item{source: source of variable}
+#'   \item{data_source: source of variable}
 #'   \item{respondent: respondent, either the person interviewed or
 #'   the place an interview took place}
 #'   \item{wave: the wave of data collection associated with the variable}

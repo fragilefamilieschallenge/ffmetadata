@@ -25,9 +25,9 @@ or the entire set of metadata as a data frame if no filters are provided
 \details{
 List of valid field names:
 \itemize{
-  \item{new_name: the new, standardized variable name}
+  \item{name: the new, standardized variable name}
   \item{old_name: the original variable name from older files}
-  \item{type: variable type. Options are binary (bin), continuous (cont),
+  \item{data_type: variable type. Options are binary (bin), continuous (cont),
    unordered categorical (uc), ordered categorical (oc), and string (string)}
   \item{warning: flags for issues}
   \item{group: group number (matches the same questions across surveys)}
@@ -38,7 +38,7 @@ List of valid field names:
   \item{topic2: indicates specific content topic (e.g.
    medication or housing status), there is no hierarchy between topic1 and
    topic2}
-  \item{source: source of variable}
+  \item{data_source: source of variable}
   \item{respondent: respondent, either the person interviewed or
   the place an interview took place}
   \item{wave: the wave of data collection associated with the variable}
@@ -57,4 +57,3 @@ List of valid field names:
 \examples{
 filter_test <- filter_metadata(wave = 3, source = "constructed", type = "bin")
 }
-
