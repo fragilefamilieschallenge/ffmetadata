@@ -11,7 +11,6 @@ To install the package from github, use:
 #install.packages("devtools")
 
 ## Install from github
-devtools::install_github("fragilefamilieschallenge/ffmetadata", 
-  build_vignettes = TRUE)
+devtools::install_github("fragilefamilieschallenge/ffmetadata")
 ```
 
