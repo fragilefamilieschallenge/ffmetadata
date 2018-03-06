@@ -57,4 +57,3 @@ List of valid field names:
 \examples{
 filter_test <- filter_metadata(wave = 3, source = "constructed", type = "bin")
 }
-
