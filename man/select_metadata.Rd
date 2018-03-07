@@ -57,4 +57,3 @@ List of valid field names:
 select1 <- select_metadata(variable_name = "ce3agefc")
 select2 <- select_metadata(variable_name = "ce3agefc", field_name = "type")
 }
-
