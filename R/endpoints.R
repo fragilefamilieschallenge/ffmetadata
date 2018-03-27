@@ -71,16 +71,14 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
 #'
 #' search_metadata allows users to retrieve a data frame of
 #' variables based on whether or not those variables contain a given query
-#' within a given field, or the entire set of metadata if the query
-#' is empty
+#' within a given field
 #'
 #' @param query a substring searched for in the given variable field
 #' @param field_name the field in which the query is searched for.
 #' See details for valid field names.
 #'
 #' @return returns data frame of variables given a query string and a
-#' search category, or the entire set of metadata as a data frame if the
-#' query is empty
+#' search category
 #'
 #' @details List of valid field names:
 #' \itemize{
@@ -117,7 +115,15 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
 #'
 #' @examples
 #' search_test <- search_metadata(query = "policing", field_name = "topic1")
-search_metadata <- function(query = NULL, field_name = NULL) {
+search_metadata <- function(query, field_name) {
+  # error message for if field_name is missing
+  if (missing(field_name)) {
+    stop("search_metadata requires a value for field_name")
+  }
+  # error message for if query is missing
+  if (missing(query)) {
+    stop("search_metadata requires a value for query")
+  }
   # validate field_name
   if (!(field_name %in% .valid_names)) {
     stop(field_name, " is not a valid field name")
