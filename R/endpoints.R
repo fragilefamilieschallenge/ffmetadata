@@ -2,14 +2,14 @@
 #'
 #' select_metadata allows users to retrieve the value of
 #' a specific field of a given variable, or
-#' the entire variable if no field is specified
+#' the entire variable metadata if no field is specified
 #'
 #' @param variable_name name of variable
 #' @param field_name specific field of variable to be accessed. See
 #' details for valid field names
 #'
 #' @return returns string with value of a given field if field is specified,
-#' returns a data.frame with variables for every field if field is unspecified
+#' returns all metadata for variable as a named list if field is unspecified
 #'
 #' @details List of valid field names:
 #' \itemize{
@@ -48,39 +48,29 @@
 #' select1 <- select_metadata(variable_name = "ce3agefc")
 #' select2 <- select_metadata(variable_name = "ce3agefc", field_name = "type")
 select_metadata <- function(variable_name = NULL, field_name = NULL) {
-  # validate field_name
-  if (!is.null(field_name)) {
-    if (!(field_name %in% .valid_names)) {
-      stop(field_name, " is not a valid field name")
-    }
-  }
+  # parse parameters
   params <- list(variable_name=variable_name, field_name=field_name)
+  # pass to api call
   result <- call_api("select", params)
-
-  #format single return values
-  if(!is.null(field_name)){
-    result <- unlist(result)
-    if(is.factor(result))
-      result <- as.character(result)
-    names(result) <- field_name
+  # format single value as character
+  if (length(result) == 1) {
+    result <- as.character(result)
   }
-  result
+  return(result)
 }
 
 #' Search Metadata
 #'
-#' search_metadata allows users to retrieve a data frame of
-#' variables based on whether or not those variables contain a given query
-#' within a given field, or the entire set of metadata if the query
-#' is empty
+#' search_metadata allows users to retrieve a list of
+#' variable names based on whether or not those variables contain a given query
+#' within a given field
 #'
 #' @param query a substring searched for in the given variable field
 #' @param field_name the field in which the query is searched for.
 #' See details for valid field names.
 #'
-#' @return returns data frame of variables given a query string and a
-#' search category, or the entire set of metadata as a data frame if the
-#' query is empty
+#' @return returns list of names of all variables that contain a query string within
+#' a given field
 #'
 #' @details List of valid field names:
 #' \itemize{
@@ -117,20 +107,29 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
 #'
 #' @examples
 #' search_test <- search_metadata(query = "oc", field_name = "data_type")
-search_metadata <- function(query = NULL, field_name = NULL) {
-  # validate field_name
-  if (!(field_name %in% .valid_names)) {
-    stop(field_name, " is not a valid field name")
+search_metadata <- function(query, field_name) {
+  # error message for if field_name is missing
+  if (missing(field_name)) {
+    stop("search_metadata requires a value for field_name")
+  }
+  # error message for if query is missing
+  if (missing(query)) {
+    stop("search_metadata requires a value for query")
   }
   params <- list(query=query, field_name=field_name)
-  call_api("search", params)
+  searched <- call_api("search", params)
+  # error handling
+  if (stringr::str_detect(names(test)[1], "error")) {
+    stop("Error Code: ", test[["error code"]],
+         " Description: ", test[["error_description"]])
+  }
+  return(searched)
 }
 
 #' Filter Metadata
 #'
-#' filter_metadata allows users to retreive a data frame
-#' of variables based on a set of filter values for variable categories,
-#' or the entire set of metadata as a data frame if no filters are provided
+#' filter_metadata allows users to retrieve a list of variable
+#' names based on a set of filter values for variable categories
 #'
 #' @param filter_list a named list of variables to filter metadata on. See
 #' details for valid field names.
@@ -175,15 +174,14 @@ search_metadata <- function(query = NULL, field_name = NULL) {
 #' @examples
 #' filter_test <- filter_metadata(wave = 3, data_source = "constructed", data_type = "bin")
 filter_metadata <- function(filter_list=list(), ...) {
+  # parse and pass parameters to api call
   params <- c(filter_list, list(...))
-
-  # validate parameters, ignoring the first entry (the function name)
-  for (i in 1:length(params)) {
-    if (!(names(params)[i] %in% .valid_names)) {
-      stop(names(params)[i], " is not a valid field name")
-    }
+  filtered <- call_api(endpoint="filter", params)
+  # error handling
+  if (stringr::str_detect(names(test)[1], "error")) {
+    stop("Error Code: ", test[["error code"]],
+         " Description: ", test[["error_description"]])
   }
-
-  call_api(endpoint="filter", params)
+  return(filtered)
 }
 

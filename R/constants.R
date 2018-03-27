@@ -5,4 +5,5 @@
                 "warning", "group", "q_group_N", "topic", "umbrella",
                 "topic2", "data_source", "respondent", "wave",
                 "scope", "section", "leaf", "q_group_list",
-                paste0("value",1:68), paste0("label",1:68))
+                paste0("value",1:68), paste0("label",1:68), "umbrella",
+                "topics")
