@@ -13,7 +13,8 @@ LazyData: true
 Imports:
     jsonlite,
     pander,
-    stringr
+    stringr,
+    httr
 RoxygenNote: 6.0.1.9000
 Suggests:
     testthat,
