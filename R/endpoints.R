@@ -46,10 +46,10 @@
 #'
 #' @examples
 #' select1 <- select_metadata(variable_name = "ce3agefc")
-#' select2 <- select_metadata(variable_name = "ce3agefc", field_name = "type")
+#' select2 <- select_metadata(variable_name = "ce3agefc", field_name = "data_type")
 select_metadata <- function(variable_name = NULL, field_name = NULL) {
   # parse parameters
-  params <- list(variable_name=variable_name, field_name=field_name)
+  params <- list(varName=variable_name, fieldName=field_name)
   # pass to api call
   result <- call_api("select", params)
   # format single value as character
@@ -116,14 +116,9 @@ search_metadata <- function(query, field_name) {
   if (missing(query)) {
     stop("search_metadata requires a value for query")
   }
-  params <- list(query=query, field_name=field_name)
+  params <- list(query=query, fieldName=field_name)
   searched <- call_api("search", params)
-  # error handling
-  if (stringr::str_detect(names(test)[1], "error")) {
-    stop("Error Code: ", test[["error code"]],
-         " Description: ", test[["error_description"]])
-  }
-  return(searched)
+  return(searched$matches)
 }
 
 #' Filter Metadata
@@ -177,11 +172,6 @@ filter_metadata <- function(filter_list=list(), ...) {
   # parse and pass parameters to api call
   params <- c(filter_list, list(...))
   filtered <- call_api(endpoint="filter", params)
-  # error handling
-  if (stringr::str_detect(names(test)[1], "error")) {
-    stop("Error Code: ", test[["error code"]],
-         " Description: ", test[["error_description"]])
-  }
-  return(filtered)
+  return(filtered$matches)
 }
 

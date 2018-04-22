@@ -2,22 +2,35 @@
 # endpoint : api endpoint. e.g. "selectMetadata.php"
 # params : a named list of url parameters
 call_api <- function(endpoint, params) {
-  # create link based on specified endpoint
-  base_url <- paste(.base_url, endpoint, "?", sep = "")
+  endpoint <- paste(endpoint, "?", sep = "")
+  # create url based on specified endpoint
+  url <- httr::modify_url(.base_url, path = endpoint)
   # retrieve and iterate through params
   for (i in 1:length(params)) {
     if(!is.null(params[[i]])) {
-      # rename for naming conventions
-      if (names(params)[i] == "field_name") {
-        names(params)[i] <- "fieldName"
-      } else if (names(params)[i] == "variable_name") {
-        names(params)[i] <- "varName"
-      }
-      base_url <- paste(base_url, names(params)[i], "=", params[[i]], "&",
+      # append parameters
+      url <- paste(url, names(params)[i], "=", params[[i]], "&",
                         sep = "")
     }
   }
+  # get HTTP response
+  resp <- httr::GET(url)
+  # ensure JSON is returned
+  if (http_type(resp) != "application/json") {
+    stop("API did not return json", call. = FALSE)
+  }
   # read JSON
-  metadata <- jsonlite::fromJSON(base_url)
+  metadata <- jsonlite::fromJSON(content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+  # error checking
+  if (!is.null(metadata$`error code`)) {
+    stop(
+      sprintf(
+        "GitHub API request failed [%s]\n<%s>",
+        metadata$`error code`,
+        metadata$error_description
+      ),
+      call. = FALSE
+    )
+  }
   return(metadata)
 }
