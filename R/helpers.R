@@ -16,11 +16,11 @@ call_api <- function(endpoint, params) {
   # get HTTP response
   resp <- httr::GET(url)
   # ensure JSON is returned
-  if (http_type(resp) != "application/json") {
+  if (httr::http_type(resp) != "application/json") {
     stop("API did not return json", call. = FALSE)
   }
   # read JSON
-  metadata <- jsonlite::fromJSON(content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+  metadata <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
   # error checking
   if (!is.null(metadata$`error code`)) {
     stop(
