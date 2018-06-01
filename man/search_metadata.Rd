@@ -4,7 +4,7 @@
 \alias{search_metadata}
 \title{Search Metadata}
 \usage{
-search_metadata(query = NULL, field_name = NULL)
+search_metadata(query, field_name)
 }
 \arguments{
 \item{query}{a substring searched for in the given variable field}
@@ -13,48 +13,38 @@ search_metadata(query = NULL, field_name = NULL)
 See details for valid field names.}
 }
 \value{
-returns data frame of variables given a query string and a
-search category, or the entire set of metadata as a data frame if the
-query is empty
+returns list of names of all variables that have a substring-matched value within
+a given field
 }
 \description{
-search_metadata allows users to retrieve a data frame of
-variables based on whether or not those variables contain a given query
-within a given field, or the entire set of metadata if the query
-is empty
+search_metadata allows users to retrieve a list of
+variable names based on whether or not those variables contain a given query
+within a given field
 }
 \details{
 List of valid field names:
+
+List of valid field names:
 \itemize{
-  \item{name: the new, standardized variable name}
-  \item{old_name: the original variable name from older files}
-  \item{data_type: variable type. Options are binary (bin), continuous (cont),
-   unordered categorical (uc), ordered categorical (oc), and string (string)}
-  \item{warning: flags for issues}
-  \item{group: group number (matches the same questions across surveys)}
-  \item{q_group_N: number of variables that are in the group}
-  \item{topic1: indicates specific content topic (e.g.
-   medication or housing status), there is no hierarchy between topic1 and
-   topic2}
-  \item{topic2: indicates specific content topic (e.g.
-   medication or housing status), there is no hierarchy between topic1 and
-   topic2}
-  \item{data_source: source of variable}
-  \item{respondent: respondent, either the person interviewed or
-  the place an interview took place}
-  \item{wave: the wave of data collection associated with the variable}
-  \item{scope: the reach of a variable's sample population (grouped by
-   city where each person was originally interviewed). The max scope is
-   20 cities.}
-  \item{section: section of survey where question is asked}
-  \item{leaf: the rest of the variable name}
-  \item{q_group_list: a string that lists all of the new variable names
-  for all the variables in the group}
-  \item{value1-value78: all of the potential responses for a given variable}
-  \item{label1-label68: all of the labels for the potential responses for
-  a given variable}
+    \item{data_source}
+    \item{data_type}
+    \item{group_id}
+    \item{group_subid}
+    \item{id}
+    \item{label}
+    \item{leaf}
+    \item{name}
+    \item{old_name}
+    \item{respondent}
+    \item{responses}
+    \item{scope}
+    \item{section}
+    \item{topic}
+    \item{umbrella}
+    \item{warning}
+    \item{wave}
 }
 }
 \examples{
-search_test <- search_metadata(query = "policing", field_name = "topic1")
+search_test <- search_metadata(query = "oc", field_name = "data_type")
 }

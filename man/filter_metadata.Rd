@@ -14,46 +14,35 @@ details for valid field names.}
 valid field names.}
 }
 \value{
-returns data frame of variable metadata based on a set of given
-filter values, or the entire set of metadata if no filters are provided
+returns list of all variable names that match a set of given
+filter values
 }
 \description{
-filter_metadata allows users to retreive a data frame
-of variables based on a set of filter values for variable categories,
-or the entire set of metadata as a data frame if no filters are provided
+filter_metadata allows users to retrieve a list of variable
+names based on a set of filter values for variable categories
 }
 \details{
 List of valid field names:
 \itemize{
-  \item{name: the new, standardized variable name}
-  \item{old_name: the original variable name from older files}
-  \item{data_type: variable type. Options are binary (bin), continuous (cont),
-   unordered categorical (uc), ordered categorical (oc), and string (string)}
-  \item{warning: flags for issues}
-  \item{group: group number (matches the same questions across surveys)}
-  \item{q_group_N: number of variables that are in the group}
-  \item{topic1: indicates specific content topic (e.g.
-   medication or housing status), there is no hierarchy between topic1 and
-   topic2}
-  \item{topic2: indicates specific content topic (e.g.
-   medication or housing status), there is no hierarchy between topic1 and
-   topic2}
-  \item{data_source: source of variable}
-  \item{respondent: respondent, either the person interviewed or
-  the place an interview took place}
-  \item{wave: the wave of data collection associated with the variable}
-  \item{scope: the reach of a variable's sample population (grouped by
-   city where each person was originally interviewed). The max scope is
-   20 cities.}
-  \item{section: section of survey where question is asked}
-  \item{leaf: the rest of the variable name}
-  \item{q_group_list: a string that lists all of the new variable names
-  for all the variables in the group}
-  \item{value1-value78: all of the potential responses for a given variable}
-  \item{label1-label68: all of the labels for the potential responses for
-  a given variable}
+    \item{data_source}
+    \item{data_type}
+    \item{group_id}
+    \item{group_subid}
+    \item{id}
+    \item{label}
+    \item{leaf}
+    \item{name}
+    \item{old_name}
+    \item{respondent}
+    \item{responses}
+    \item{scope}
+    \item{section}
+    \item{topic}
+    \item{umbrella}
+    \item{warning}
+    \item{wave}
 }
 }
 \examples{
-filter_test <- filter_metadata(wave = 3, source = "constructed", type = "bin")
+filter_test <- filter_metadata(wave = 3, data_source = "constructed", data_type = "bin")
 }

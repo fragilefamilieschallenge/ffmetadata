@@ -13,33 +13,23 @@
 #'
 #' @details List of valid field names:
 #' \itemize{
-#'   \item{name: the new, standardized variable name}
-#'   \item{old_name: the original variable name from older files}
-#'   \item{data_type: variable type. Options are binary (bin), continuous (cont),
-#'    unordered categorical (uc), ordered categorical (oc), and string (string)}
-#'   \item{warning: flags for issues}
-#'   \item{group: group number (matches the same questions across surveys)}
-#'   \item{q_group_N: number of variables that are in the group}
-#'   \item{topic1: indicates specific content topic (e.g.
-#'    medication or housing status), there is no hierarchy between topic1 and
-#'    topic2}
-#'   \item{topic2: indicates specific content topic (e.g.
-#'    medication or housing status), there is no hierarchy between topic1 and
-#'    topic2}
-#'   \item{data_source: source of variable}
-#'   \item{respondent: respondent, either the person interviewed or
-#'   the place an interview took place}
-#'   \item{wave: the wave of data collection associated with the variable}
-#'   \item{scope: the reach of a variable's sample population (grouped by
-#'    city where each person was originally interviewed). The max scope is
-#'    20 cities.}
-#'   \item{section: section of survey where question is asked}
-#'   \item{leaf: the rest of the variable name}
-#'   \item{q_group_list: a string that lists all of the new variable names
-#'   for all the variables in the group}
-#'   \item{value1-value78: all of the potential responses for a given variable}
-#'   \item{label1-label68: all of the labels for the potential responses for
-#'   a given variable}
+#'     \item{data_source}
+#'     \item{data_type}
+#'     \item{group_id}
+#'     \item{group_subid}
+#'     \item{id}
+#'     \item{label}
+#'     \item{leaf}
+#'     \item{name}
+#'     \item{old_name}
+#'     \item{respondent}
+#'     \item{responses}
+#'     \item{scope}
+#'     \item{section}
+#'     \item{topic}
+#'     \item{umbrella}
+#'     \item{warning}
+#'     \item{wave}
 #' }
 #'
 #' @export
@@ -69,38 +59,29 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
 #' @param field_name the field in which the query is searched for.
 #' See details for valid field names.
 #'
-#' @return returns list of names of all variables that contain a query string within
+#' @return returns list of names of all variables that have a substring-matched value within
 #' a given field
 #'
 #' @details List of valid field names:
+#' @details List of valid field names:
 #' \itemize{
-#'   \item{name: the new, standardized variable name}
-#'   \item{old_name: the original variable name from older files}
-#'   \item{data_type: variable type. Options are binary (bin), continuous (cont),
-#'    unordered categorical (uc), ordered categorical (oc), and string (string)}
-#'   \item{warning: flags for issues}
-#'   \item{group: group number (matches the same questions across surveys)}
-#'   \item{q_group_N: number of variables that are in the group}
-#'   \item{topic1: indicates specific content topic (e.g.
-#'    medication or housing status), there is no hierarchy between topic1 and
-#'    topic2}
-#'   \item{topic2: indicates specific content topic (e.g.
-#'    medication or housing status), there is no hierarchy between topic1 and
-#'    topic2}
-#'   \item{data_source: source of variable}
-#'   \item{respondent: respondent, either the person interviewed or
-#'   the place an interview took place}
-#'   \item{wave: the wave of data collection associated with the variable}
-#'   \item{scope: the reach of a variable's sample population (grouped by
-#'    city where each person was originally interviewed). The max scope is
-#'    20 cities.}
-#'   \item{section: section of survey where question is asked}
-#'   \item{leaf: the rest of the variable name}
-#'   \item{q_group_list: a string that lists all of the new variable names
-#'   for all the variables in the group}
-#'   \item{value1-value78: all of the potential responses for a given variable}
-#'   \item{label1-label68: all of the labels for the potential responses for
-#'   a given variable}
+#'     \item{data_source}
+#'     \item{data_type}
+#'     \item{group_id}
+#'     \item{group_subid}
+#'     \item{id}
+#'     \item{label}
+#'     \item{leaf}
+#'     \item{name}
+#'     \item{old_name}
+#'     \item{respondent}
+#'     \item{responses}
+#'     \item{scope}
+#'     \item{section}
+#'     \item{topic}
+#'     \item{umbrella}
+#'     \item{warning}
+#'     \item{wave}
 #' }
 #'
 #' @export
@@ -131,39 +112,29 @@ search_metadata <- function(query, field_name) {
 #' @param ... additional value combinations to filter on. See details for
 #' valid field names.
 #'
-#' @return returns data frame of variable metadata based on a set of given
-#' filter values, or the entire set of metadata if no filters are provided
+#' @return returns list of all variable names that match a set of given
+#' filter values
 #' @export
 #'
 #' @details List of valid field names:
 #' \itemize{
-#'   \item{name: the new, standardized variable name}
-#'   \item{old_name: the original variable name from older files}
-#'   \item{data_type: variable type. Options are binary (bin), continuous (cont),
-#'    unordered categorical (uc), ordered categorical (oc), and string (string)}
-#'   \item{warning: flags for issues}
-#'   \item{group: group number (matches the same questions across surveys)}
-#'   \item{q_group_N: number of variables that are in the group}
-#'   \item{topic1: indicates specific content topic (e.g.
-#'    medication or housing status), there is no hierarchy between topic1 and
-#'    topic2}
-#'   \item{topic2: indicates specific content topic (e.g.
-#'    medication or housing status), there is no hierarchy between topic1 and
-#'    topic2}
-#'   \item{data_source: source of variable}
-#'   \item{respondent: respondent, either the person interviewed or
-#'   the place an interview took place}
-#'   \item{wave: the wave of data collection associated with the variable}
-#'   \item{scope: the reach of a variable's sample population (grouped by
-#'    city where each person was originally interviewed). The max scope is
-#'    20 cities.}
-#'   \item{section: section of survey where question is asked}
-#'   \item{leaf: the rest of the variable name}
-#'   \item{q_group_list: a string that lists all of the new variable names
-#'   for all the variables in the group}
-#'   \item{value1-value78: all of the potential responses for a given variable}
-#'   \item{label1-label68: all of the labels for the potential responses for
-#'   a given variable}
+#'     \item{data_source}
+#'     \item{data_type}
+#'     \item{group_id}
+#'     \item{group_subid}
+#'     \item{id}
+#'     \item{label}
+#'     \item{leaf}
+#'     \item{name}
+#'     \item{old_name}
+#'     \item{respondent}
+#'     \item{responses}
+#'     \item{scope}
+#'     \item{section}
+#'     \item{topic}
+#'     \item{umbrella}
+#'     \item{warning}
+#'     \item{wave}
 #' }
 #'
 #' @examples
