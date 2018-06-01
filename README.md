@@ -10,6 +10,6 @@ To install the package from github, use:
 #install.packages("devtools")
 
 ## Install from github
-devtools::install_github("fragilefamilieschallenge/ffmetadata")
+devtools::install_github("fragilefamilieschallenge/ffmetadata", ref = "updated-metadata-source")
 ```
 
