@@ -58,7 +58,7 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
 #' @param query a substring searched for in the given variable field
 #' @param field_name the field in which the query is searched for.
 #' See details for valid field names.
-#'
+
 #' @return returns list of names of all variables that have a substring-matched value within
 #' a given field
 #'

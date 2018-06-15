@@ -46,14 +46,14 @@ The `select_metadata()`, `filter_metadata()`, and `search_metadata()` functions 
 
 ## Using `select_metadata()` to find out information out about a variable
 
-Suppose you want to find out the value of a given variable's field.  For example, let's say we want to find out the source of the variable with the name "ce3datey". To accomplish this, we would call select_metadata using "ce3datey" for variable_name and "data_source" for field_name.
+Suppose we want to find out the value of a given variable's field.  For example, let's say we want to find out the source of the variable with the name "ce3datey". To accomplish this, we would call select_metadata using "ce3datey" for variable_name and "data_source" for field_name.
 
 ```{r}
 select_type <- select_metadata(variable_name = "ce3datey", field_name = "data_source")
 print(select_type)
 ```
 
-If you want to view the entire variable and all the values for its fields, you can call select_metadata without using the field_name parameter and simply using "ce3datey" for variable_name. This will return ce3datey as a named list with each of its fields corresponding to an element of the list.
+If we want to view the entire variable and all the values for its fields, we can call select_metadata without using the field_name parameter and simply using "ce3datey" for variable_name. This will return ce3datey as a named list with each of its fields corresponding to an element of the list.
 
 ```{r}
 select_full <- select_metadata(variable_name = "ce3datey")
@@ -63,7 +63,7 @@ select_full <- select_metadata(variable_name = "ce3datey")
 
 ### `filter_metadata()`
 
-Suppose you want to search for all the variables that satisfy several criteria. `filter_metadata()` will return a list of the names of the variables that satisfy the specified criteria. For example, let's say we want to retrieve all the binary variables from questionnaires administered in all 20 cities involved in the study.  To accomplish this, we could call filter_metadata using "bin" as our type, "questionnaire" as our source, and 20 for our scope. This can be accomplished using a named list, by typing the parameters in explicitly, or by a combination of both approaches.
+Suppose we want to search for all the variables that satisfy several criteria. `filter_metadata()` will return a list of the names of the variables that satisfy the specified criteria. For example, let's say we want to retrieve all the binary variables from questionnaires administered in all 20 cities involved in the study.  To accomplish this, we could call filter_metadata using "bin" as our type, "questionnaire" as our source, and 20 for our scope. This can be accomplished using a named list, by typing the parameters in explicitly, or by a combination of both approaches.
 
 **It is important to note that filter_metadata uses substring matching. This means that if we use 2 for scope, it will return variables for which the scope is either 2 or 20.**
 
@@ -79,8 +79,6 @@ The named-list approach:
 ```{r}
 # named-list approach
 params_list <- list(data_type="bin", data_source="questionnaire", scope=20)
-# call to filter_metadata
-filtered <- filter_metadata(params_list)
 ```
 
 The mixed approach:
