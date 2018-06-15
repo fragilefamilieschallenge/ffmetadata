@@ -14,46 +14,36 @@ details for valid field names}
 }
 \value{
 returns string with value of a given field if field is specified,
-returns a data.frame with variables for every field if field is unspecified
+returns all metadata for variable as a named list if field is unspecified
 }
 \description{
 select_metadata allows users to retrieve the value of
 a specific field of a given variable, or
-the entire variable if no field is specified
+the entire variable metadata if no field is specified
 }
 \details{
 List of valid field names:
 \itemize{
-  \item{new_name: the new, standardized variable name}
-  \item{old_name: the original variable name from older files}
-  \item{type: variable type. Options are binary (bin), continuous (cont),
-   unordered categorical (uc), ordered categorical (oc), and string (string)}
-  \item{warning: flags for issues}
-  \item{group: group number (matches the same questions across surveys)}
-  \item{q_group_N: number of variables that are in the group}
-  \item{topic1: indicates specific content topic (e.g.
-   medication or housing status), there is no hierarchy between topic1 and
-   topic2}
-  \item{topic2: indicates specific content topic (e.g.
-   medication or housing status), there is no hierarchy between topic1 and
-   topic2}
-  \item{source: source of variable}
-  \item{respondent: respondent, either the person interviewed or
-  the place an interview took place}
-  \item{wave: the wave of data collection associated with the variable}
-  \item{scope: the reach of a variable's sample population (grouped by
-   city where each person was originally interviewed). The max scope is
-   20 cities.}
-  \item{section: section of survey where question is asked}
-  \item{leaf: the rest of the variable name}
-  \item{q_group_list: a string that lists all of the new variable names
-  for all the variables in the group}
-  \item{value1-value78: all of the potential responses for a given variable}
-  \item{label1-label68: all of the labels for the potential responses for
-  a given variable}
+    \item{data_source}
+    \item{data_type}
+    \item{group_id}
+    \item{group_subid}
+    \item{id}
+    \item{label}
+    \item{leaf}
+    \item{name}
+    \item{old_name}
+    \item{respondent}
+    \item{responses}
+    \item{scope}
+    \item{section}
+    \item{topic}
+    \item{umbrella}
+    \item{warning}
+    \item{wave}
 }
 }
 \examples{
 select1 <- select_metadata(variable_name = "ce3agefc")
-select2 <- select_metadata(variable_name = "ce3agefc", field_name = "type")
+select2 <- select_metadata(variable_name = "ce3agefc", field_name = "data_type")
 }

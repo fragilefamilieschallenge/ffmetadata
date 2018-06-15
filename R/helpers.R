@@ -2,22 +2,35 @@
 # endpoint : api endpoint. e.g. "selectMetadata.php"
 # params : a named list of url parameters
 call_api <- function(endpoint, params) {
-  # create link based on specified endpoint
-  base_url <- paste(.base_url, endpoint, "?", sep = "")
+  endpoint <- paste(endpoint, "?", sep = "")
+  # create url based on specified endpoint
+  url <- httr::modify_url(.base_url, path = endpoint)
   # retrieve and iterate through params
   for (i in 1:length(params)) {
-    if(!is.null(params[[i]]))
-      base_url <- paste(base_url, names(params)[i], "=", params[[i]], "&",
-                     sep = "")
+    if(!is.null(params[[i]])) {
+      # append parameters
+      url <- paste(url, names(params)[i], "=", params[[i]], "&",
+                        sep = "")
+    }
   }
-  # problem with API not returning JSON objects
-  lines <- readLines(utils::URLencode(base_url), warn=FALSE)
-  meta <- list()
-  for(i in 1:length(lines)) {
-    if(!is.na(lines[i]) && nchar(lines[i])>1)
-      meta[[i]] <- as.data.frame(jsonlite::fromJSON(lines[i]))
+  # get HTTP response
+  resp <- httr::GET(url)
+  # ensure JSON is returned
+  if (httr::http_type(resp) != "application/json") {
+    stop("API did not return json", call. = FALSE)
   }
-  metadata <- do.call(rbind,meta)
-
+  # read JSON
+  metadata <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"), simplifyVector = FALSE)
+  # error checking
+  if (!is.null(metadata$`error code`)) {
+    stop(
+      sprintf(
+        "GitHub API request failed [%s]\n<%s>",
+        metadata$`error code`,
+        metadata$error_description
+      ),
+      call. = FALSE
+    )
+  }
   return(metadata)
 }

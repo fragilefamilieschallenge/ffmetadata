@@ -12,8 +12,12 @@ Description: This package allows one to retrieve metadata for the
 License: MIT License + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports: jsonlite
-RoxygenNote: 6.0.1
+Imports:
+    jsonlite,
+    pander,
+    stringr,
+    httr
+RoxygenNote: 6.0.1.9000
 Suggests:
   pander,
   testthat,

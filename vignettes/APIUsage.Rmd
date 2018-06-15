@@ -12,110 +12,88 @@ vignette: >
 
 ## Introduction
 
-The ffmetadata package provides easy to use access to metadata surrounding the Fragile Families Project data (https://fragilefamilies.princeton.edu/). The data itself is complex, and so this tool makes it easy to find and filter information about the variables included. It does this by querying the Fragile Families web API, available at (http://mayap.mycpanel.princeton.edu/).
+The ffmetadata package provides easy to use access to metadata surrounding the Fragile Families Project data (https://fragilefamilies.princeton.edu/). The data itself is complex, and so this tool makes it easy to find and filter information about the variables included. It does this by querying the Fragile Families web API. Three functions are available for use:
+
+* select_metadata: allows the user the find out specific information about a single variable
+* filter_metadata: allows the user to search for variables that match certain queries
+* search_metadata: another function that allows the user to search for variables
 
 ```{r, echo=FALSE}
 library(ffmetadata)
 ```
 
+## Valid field names that can be used in these functions
 
-## Finding out about a variable with `select_metadata`
+The `select_metadata()`, `filter_metadata()`, and `search_metadata()` functions all involve searching or using the field names of the metadata variables in some way. Below are the field names that can be used when invoking these functions:
+  
+* data_source
+* data_type
+* group_id
+* group_subid
+* id
+* label
+* leaf
+* name
+* old_name
+* respondent
+* responses
+* scope
+* section
+* topic
+* umbrella
+* warning
+* wave
 
-Suppose we want to find out the value of a given variable's field.  For example, let's say we want to find out the source of the variable with the name "ce3datey". To accomplish this, we would call `select_metadata` using "ce3datey" for variable_name and "source" for field_name.
+## Using `select_metadata()` to find out information out about a variable
+
+Suppose we want to find out the value of a given variable's field.  For example, let's say we want to find out the source of the variable with the name "ce3datey". To accomplish this, we would call select_metadata using "ce3datey" for variable_name and "data_source" for field_name.
 
 ```{r}
-select_type <- select_metadata(variable_name = "ce3datey", field_name = "source")
-select_type
+select_type <- select_metadata(variable_name = "ce3datey", field_name = "data_source")
+print(select_type)
 ```
 
-If we want to view the entire variable and all the values for its fields, we can call `select_metadata` without using the field_name parameter and simply use "ce3datey" for the variable_name. This will return all the fields for ce3datey as a data frame with one row.
+If we want to view the entire variable and all the values for its fields, we can call select_metadata without using the field_name parameter and simply using "ce3datey" for variable_name. This will return ce3datey as a named list with each of its fields corresponding to an element of the list.
 
-```{r, results = "asis"}
-select_entire <- select_metadata(variable_name = "ce3datey")
-pander::pandoc.table(select_entire, split.tables = Inf)
+```{r}
+select_full <- select_metadata(variable_name = "ce3datey")
 ```
 
-The metadata fields are defined as follows:
+## Two different ways of searching for variables: `search_metadata()` and `filter_metadata()`
 
-new_name
-: the new, standardized variable name
+### `filter_metadata()`
 
-old_name
-: the original variable name from older files
+Suppose we want to search for all the variables that satisfy several criteria. `filter_metadata()` will return a list of the names of the variables that satisfy the specified criteria. For example, let's say we want to retrieve all the binary variables from questionnaires administered in all 20 cities involved in the study.  To accomplish this, we could call filter_metadata using "bin" as our type, "questionnaire" as our source, and 20 for our scope. This can be accomplished using a named list, by typing the parameters in explicitly, or by a combination of both approaches.
 
-type
-: variable type. Options are binary (bin), continuous (cont), unordered categorical (uc), ordered categorical (oc), and string (string)
+**It is important to note that filter_metadata uses substring matching. This means that if we use 2 for scope, it will return variables for which the scope is either 2 or 20.**
 
-warning
-: flags for issues
-group: group number (matches the same questions across surveys)
-
-q_group_N
-: number of variables that are in the group
-
-topic1
-: indicates specific content topic (e.g.medication or housing status), there is no hierarchy between topic1 and   topic2
-
-topic2
-: indicates specific content topic (e.g. medication or housing status), there is no hierarchy between topic1 and topic2
-
-source
-: source of variable
-
-respondent
-: respondent, either the person interviewed or the place an interview took place
-
-wave
-: the wave of data collection associated with the variable
-
-scope
-: the reach of a variable's sample population (grouped by city where each person was originally interviewed). The max scope is 20 cities.
-
-section
-: section of survey where question is asked
-
-leaf
-: the rest of the variable name
-
-q_group_list
-: a string that lists all of the new variable names for all the variables in the group
-
-value1-value78
-: all of the potential responses for a given variable}
-
-label1-label68
-: all of the labels for the potential responses for a given variable
-
-
-## Searching for variables with `search_metadata` and `filter_metadata`
-
-### search_metadata
-
-Suppose we want to search for all the variables that contain a certain substring within a given field.  For example, let's say we want to retrieve all the variables that have the substring "health" contained in their topic1 field.  To accomplish this, we could call `search_metadata` using "health" as our query and "topic1" as our field_name.  The result will be a data frame of all the variables that have the substring "health" in their topic1 field.
-```{r, results = "asis"}
-search_topic1 <- search_metadata(query = "mental health", field_name = "topic1")
-pander::pandoc.table(search_topic1[1:3,], split.tables = Inf)
-```
-
-### filter_metadata
-
-Suppose we want to search for all the variables that satisfy several criteria.  For example, let's say we want to retrieve all the binary variables from questionnaires administered in all 20 cities involved in the study.  To accomplish this, we could call `filter_metadata` using "bin" as our type, "questionnaire" as our source, and 20 for our scope. This can be accomplished using a named list, by typing the parameters in explicitly, or by a combination of both approaches.
-```{r, eval=FALSE}
-# named-list approach
-params_list <- list(type = "bin", source = "questionnaire", scope = 20)
-# call to filter_metadata
-filtered <- filter_metadata(params_list)
-```
-
-```{r, eval=FALSE}
+Below is the approach using explicit parameters, perhaps the most intuitive way of using `filter_metadata()`:
+```{r}
 # explicit parameter approach
-filtered <- filter_metadata(type = "bin", source = "questionnaire", scope = 20)
+filtered <- filter_metadata(data_type = "bin", data_source = "questionnaire", scope = 20)
 ```
 
+Below are two alternative options: one involves using a named list, the other involves using a combination of a named list and explicit parameters:
+
+The named-list approach:
+```{r}
+# named-list approach
+params_list <- list(data_type="bin", data_source="questionnaire", scope=20)
+```
+
+The mixed approach:
 ```{r, eval=FALSE}
 # mixed approach
-params_list <- c("bin", "questionnaire")
-names(params_list) <- c("type", "source")
+params_list <- list(data_type = "bin", data_source = "questionnaire")
 filtered <- filter_metadata(params_list, scope = 20)
 ```
+
+### `search_metadata()`
+
+`search_metadata()` is a reduced form of `filter_metadata()` that involves searching on one field rather than multiple fields. For the most part, anything that can be accomplished with `select_metadata()` can be done with `filter_metadata()`. Suppose you want to search for all the variables that contain a certain substring within a given field.  For example, let's say we want to retrieve all the variables that have the substring "mother" contained in their "label" field.  To accomplish this, we could call search_metadata using "mother" as our query and "label" as our `field_name`.  The result will be a list of all the variable names that have the substring "mother" in their "label" field.
+
+```{r, results = "asis"}
+search_label <- search_metadata(query = "mother", field_name = "label")
+```
+
 
