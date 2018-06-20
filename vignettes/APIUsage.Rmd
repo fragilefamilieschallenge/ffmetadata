@@ -14,9 +14,9 @@ vignette: >
 
 The ffmetadata package provides easy to use access to metadata surrounding the Fragile Families Project data (https://fragilefamilies.princeton.edu/). The data itself is complex, and so this tool makes it easy to find and filter information about the variables included. It does this by querying the Fragile Families web API. Three functions are available for use:
 
-* select_metadata: allows the user the find out specific information about a single variable
-* filter_metadata: allows the user to search for variables that match certain queries
-* search_metadata: another function that allows the user to search for variables
+* `select_metadata()`: allows the user the find out specific information about a single variable
+* `filter_metadata()`: allows the user to search for variables that match certain queries
+* `search_metadata()`: another function that allows the user to search for variables
 
 ```{r, echo=FALSE}
 library(ffmetadata)
