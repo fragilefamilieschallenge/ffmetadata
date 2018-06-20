@@ -13,4 +13,6 @@ To install the package from github, use:
 ## Install from github
 devtools::install_github("fragilefamilieschallenge/ffmetadata")
 ```
+## Vignette
 
+To learn more abou the how to use the package, please see the [vignette](https://github.com/fragilefamilieschallenge/ffmetadata/blob/master/vignettes/APIUsage.Rmd)
