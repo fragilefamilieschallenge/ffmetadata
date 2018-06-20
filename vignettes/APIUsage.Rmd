@@ -90,7 +90,7 @@ filtered <- filter_metadata(params_list, scope = 20)
 
 ### `search_metadata()`
 
-`search_metadata()` is a reduced form of `filter_metadata()` that involves searching on one field rather than multiple fields. For the most part, anything that can be accomplished with `select_metadata()` can be done with `filter_metadata()`. Suppose we want to search for all the variables that contain a certain substring within a given field.  For example, let's say we want to retrieve all the variables that have the substring "mother" contained in their "label" field.  To accomplish this, we could call search_metadata using "mother" as our query and "label" as our `field_name`.  The result will be a list of all the variable names that have the substring "mother" in their "label" field.
+`search_metadata()` is a reduced form of `filter_metadata()` that involves searching on one field rather than multiple fields. For the most part, anything that can be accomplished with `search_metadata()` can be done with `filter_metadata()`. Suppose we want to search for all the variables that contain a certain substring within a given field.  For example, let's say we want to retrieve all the variables that have the substring "mother" contained in their "label" field.  To accomplish this, we could call `search_metadata()` using "mother" as our query and "label" as our field_name.  The result will be a list of all the variable names that have the substring "mother" in their "label" field.
 
 ```{r, results = "asis"}
 search_label <- search_metadata(query = "mother", field_name = "label")
