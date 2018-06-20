@@ -26,23 +26,23 @@ library(ffmetadata)
 
 The `select_metadata()`, `filter_metadata()`, and `search_metadata()` functions all involve searching or using the field names of the metadata variables in some way. Below are the field names that can be used when invoking these functions:
   
-* data_source
-* data_type
-* group_id
-* group_subid
-* id
-* label
-* leaf
-* name
-* old_name
-* respondent
-* responses
-* scope
-* section
-* topic
-* umbrella
-* warning
-* wave
+* *data_source* options: collected from the questionnaire, constructed from the questionnaire, a survey weight, or the unique ID assigned to each family
+* *data_type* options: ordered continuous, unordered categorical, ordered categorical, binary, or string
+* *group_id*
+* *group_subid*
+* *id* family ID
+* *label* variable description
+* *leaf* survey section and question number or constructed variable name
+* *name* variable name used after 2018
+* *old_name* old variable name, used before 2018
+* *respondent* tell you who answered the question (e.g., "m" = "mother")
+* *responses* possible responses to the question
+* *scope* number of cities in which the question was asked
+* *section* section of the survey
+* *topic* narrow topic area
+* *umbrella* broad topic area 
+* *warning* is there something unusual about the answer choices for this variable?
+* *wave* wave of the survey 
 
 ## Using `select_metadata()` to find out information out about a variable
 
