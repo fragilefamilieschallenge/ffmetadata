@@ -21,16 +21,24 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Select Metadata — select_metadata" />
 
 <meta property="og:description" content="select_metadata allows users to retrieve the value of
 a specific field of a given variable, or
-the entire variable if no field is specified" />
+the entire variable metadata if no field is specified" />
 <meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +61,12 @@ the entire variable if no field is specified" />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">ffmetadata</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">ffmetadata</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -83,6 +95,7 @@ the entire variable if no field is specified" />
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -90,22 +103,25 @@ the entire variable if no field is specified" />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Select Metadata</h1>
     
+    <div class="hidden name"><code>select_metadata.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>select_metadata allows users to retrieve the value of
 a specific field of a given variable, or
-the entire variable if no field is specified</p>
+the entire variable metadata if no field is specified</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>select_metadata</span>(<span class='kw'>variable_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>field_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -122,44 +138,34 @@ details for valid field names</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>returns string with value of a given field if field is specified,
-returns a data.frame with variables for every field if field is unspecified</p>
+returns all metadata for variable as a named list if field is unspecified</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>List of valid field names:</p><ul>
-<li><p>new_name: the new, standardized variable name</p></li>
-<li><p>old_name: the original variable name from older files</p></li>
-<li><p>type: variable type. Options are binary (bin), continuous (cont),
-   unordered categorical (uc), ordered categorical (oc), and string (string)</p></li>
-<li><p>warning: flags for issues</p></li>
-<li><p>group: group number (matches the same questions across surveys)</p></li>
-<li><p>q_group_N: number of variables that are in the group</p></li>
-<li><p>topic1: indicates specific content topic (e.g.
-   medication or housing status), there is no hierarchy between topic1 and
-   topic2</p></li>
-<li><p>topic2: indicates specific content topic (e.g.
-   medication or housing status), there is no hierarchy between topic1 and
-   topic2</p></li>
-<li><p>source: source of variable</p></li>
-<li><p>respondent: respondent, either the person interviewed or
-  the place an interview took place</p></li>
-<li><p>wave: the wave of data collection associated with the variable</p></li>
-<li><p>scope: the reach of a variable's sample population (grouped by
-   city where each person was originally interviewed). The max scope is
-   20 cities.</p></li>
-<li><p>section: section of survey where question is asked</p></li>
-<li><p>leaf: the rest of the variable name</p></li>
-<li><p>q_group_list: a string that lists all of the new variable names
-  for all the variables in the group</p></li>
-<li><p>value1-value78: all of the potential responses for a given variable</p></li>
-<li><p>label1-label68: all of the labels for the potential responses for
-  a given variable</p></li>
+<li><p>data_source</p></li>
+<li><p>data_type</p></li>
+<li><p>group_id</p></li>
+<li><p>group_subid</p></li>
+<li><p>id</p></li>
+<li><p>label</p></li>
+<li><p>leaf</p></li>
+<li><p>name</p></li>
+<li><p>old_name</p></li>
+<li><p>respondent</p></li>
+<li><p>responses</p></li>
+<li><p>scope</p></li>
+<li><p>section</p></li>
+<li><p>topic</p></li>
+<li><p>umbrella</p></li>
+<li><p>warning</p></li>
+<li><p>wave</p></li>
 </ul>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>select1</span> <span class='kw'>&lt;-</span> <span class='fu'>select_metadata</span>(<span class='kw'>variable_name</span> <span class='kw'>=</span> <span class='st'>"ce3agefc"</span>)
-<span class='no'>select2</span> <span class='kw'>&lt;-</span> <span class='fu'>select_metadata</span>(<span class='kw'>variable_name</span> <span class='kw'>=</span> <span class='st'>"ce3agefc"</span>, <span class='kw'>field_name</span> <span class='kw'>=</span> <span class='st'>"type"</span>)</div></pre>
+<span class='no'>select2</span> <span class='kw'>&lt;-</span> <span class='fu'>select_metadata</span>(<span class='kw'>variable_name</span> <span class='kw'>=</span> <span class='st'>"ce3agefc"</span>, <span class='kw'>field_name</span> <span class='kw'>=</span> <span class='st'>"data_type"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -187,6 +193,8 @@ returns a data.frame with variables for every field if field is unspecified</p>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

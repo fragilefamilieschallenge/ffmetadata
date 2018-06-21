@@ -8,8 +8,8 @@
 <title>How to Query Metadata from the Fragile Families API • ffmetadata</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="How to Query Metadata from the Fragile Families API">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><meta property="og:title" content="How to Query Metadata from the Fragile Families API">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -18,7 +18,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -27,8 +27,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">ffmetadata</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">ffmetadata</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -63,1353 +67,110 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>How to Query Metadata from the Fragile Families API</h1>
                         <h4 class="author">Ryan Vinh and Ian E. Fellows</h4>
             
-            <h4 class="date">2018-03-16</h4>
+            <h4 class="date">2018-06-21</h4>
       
       
+      <div class="hidden name"><code>APIUsage.Rmd</code></div>
 
     </div>
 
     
     
-<div class="contents">
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>The ffmetadata package provides easy to use access to metadata surrounding the Fragile Families Project data (<a href="https://fragilefamilies.princeton.edu/" class="uri">https://fragilefamilies.princeton.edu/</a>). The data itself is complex, and so this tool makes it easy to find and filter information about the variables included. It does this by querying the Fragile Families web API, available at (<a href="http://mayap.mycpanel.princeton.edu/" class="uri">http://mayap.mycpanel.princeton.edu/</a>).</p>
+<p>The ffmetadata package provides easy to use access to metadata surrounding the Fragile Families Project data (<a href="https://fragilefamilies.princeton.edu/" class="uri">https://fragilefamilies.princeton.edu/</a>). The data itself is complex, and so this tool makes it easy to find and filter information about the variables included. It does this by querying the Fragile Families web API. Three functions are available for use:</p>
+<ul>
+<li>
+<code><a href="../reference/select_metadata.html">select_metadata()</a></code>: allows the user the find out specific information about a single variable</li>
+<li>
+<code><a href="../reference/filter_metadata.html">filter_metadata()</a></code>: allows the user to search for variables that match certain queries</li>
+<li>
+<code><a href="../reference/search_metadata.html">search_metadata()</a></code>: another function that allows the user to search for variables</li>
+</ul>
 </div>
-<div id="finding-out-about-a-variable-with-select_metadata" class="section level2">
+<div id="valid-field-names-that-can-be-used-in-these-functions" class="section level2">
 <h2 class="hasAnchor">
-<a href="#finding-out-about-a-variable-with-select_metadata" class="anchor"></a>Finding out about a variable with <code>select_metadata</code>
-</h2>
-<p>Suppose we want to find out the value of a given variable’s field. For example, let’s say we want to find out the source of the variable with the name “ce3datey”. To accomplish this, we would call <code>select_metadata</code> using “ce3datey” for variable_name and “source” for field_name.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_type &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_metadata.html">select_metadata</a></span>(<span class="dt">variable_name =</span> <span class="st">"ce3datey"</span>, <span class="dt">field_name =</span> <span class="st">"source"</span>)
-select_type</code></pre></div>
-<pre><code>##        source 
-## "constructed"</code></pre>
-<p>If we want to view the entire variable and all the values for its fields, we can call <code>select_metadata</code> without using the field_name parameter and simply use “ce3datey” for the variable_name. This will return all the fields for ce3datey as a data frame with one row.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_entire &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_metadata.html">select_metadata</a></span>(<span class="dt">variable_name =</span> <span class="st">"ce3datey"</span>)
-pander<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/pander/topics/pandoc.table.return">pandoc.table</a></span>(select_entire, <span class="dt">split.tables =</span> <span class="ot">Inf</span>)</code></pre></div>
-<table style="width:100%;" class="table">
-<colgroup>
-<col width="0%">
-<col width="1%">
-<col width="1%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="1%">
-<col width="0%">
-<col width="1%">
-<col width="0%">
-<col width="1%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="1%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="1%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-</colgroup>
-<thead><tr class="header">
-<th align="center">new_name</th>
-<th align="center">varlab</th>
-<th align="center">old_name</th>
-<th align="center">type</th>
-<th align="center">warning</th>
-<th align="center">group</th>
-<th align="center">q_group_N</th>
-<th align="center">topic1</th>
-<th align="center">topic2</th>
-<th align="center">source</th>
-<th align="center">respondent</th>
-<th align="center">wave</th>
-<th align="center">scope</th>
-<th align="center">section</th>
-<th align="center">leaf</th>
-<th align="center">q_group_list</th>
-<th align="center">value1</th>
-<th align="center">label1</th>
-<th align="center">value2</th>
-<th align="center">label2</th>
-<th align="center">value3</th>
-<th align="center">label3</th>
-<th align="center">value4</th>
-<th align="center">label4</th>
-<th align="center">value5</th>
-<th align="center">label5</th>
-<th align="center">value6</th>
-<th align="center">label6</th>
-<th align="center">value7</th>
-<th align="center">label7</th>
-<th align="center">value8</th>
-<th align="center">label8</th>
-<th align="center">value9</th>
-<th align="center">label9</th>
-<th align="center">value10</th>
-<th align="center">label10</th>
-<th align="center">value11</th>
-<th align="center">label11</th>
-<th align="center">value12</th>
-<th align="center">label12</th>
-<th align="center">value13</th>
-<th align="center">label13</th>
-<th align="center">value14</th>
-<th align="center">label14</th>
-<th align="center">value15</th>
-<th align="center">label15</th>
-<th align="center">value16</th>
-<th align="center">label16</th>
-<th align="center">value17</th>
-<th align="center">label17</th>
-<th align="center">value18</th>
-<th align="center">label18</th>
-<th align="center">value19</th>
-<th align="center">label19</th>
-<th align="center">value20</th>
-<th align="center">label20</th>
-<th align="center">value21</th>
-<th align="center">label21</th>
-<th align="center">value22</th>
-<th align="center">label22</th>
-<th align="center">value23</th>
-<th align="center">label23</th>
-<th align="center">value24</th>
-<th align="center">label24</th>
-<th align="center">value25</th>
-<th align="center">label25</th>
-<th align="center">value26</th>
-<th align="center">label26</th>
-<th align="center">value27</th>
-<th align="center">label27</th>
-<th align="center">value28</th>
-<th align="center">label28</th>
-<th align="center">value29</th>
-<th align="center">label29</th>
-<th align="center">value30</th>
-<th align="center">label30</th>
-<th align="center">value31</th>
-<th align="center">label31</th>
-<th align="center">value32</th>
-<th align="center">label32</th>
-<th align="center">value33</th>
-<th align="center">label33</th>
-<th align="center">value34</th>
-<th align="center">label34</th>
-<th align="center">value35</th>
-<th align="center">label35</th>
-<th align="center">value36</th>
-<th align="center">label36</th>
-<th align="center">value37</th>
-<th align="center">label37</th>
-<th align="center">value38</th>
-<th align="center">label38</th>
-<th align="center">value39</th>
-<th align="center">label39</th>
-<th align="center">value40</th>
-<th align="center">label40</th>
-<th align="center">value41</th>
-<th align="center">label41</th>
-<th align="center">value42</th>
-<th align="center">label42</th>
-<th align="center">value43</th>
-<th align="center">label43</th>
-<th align="center">value44</th>
-<th align="center">label44</th>
-<th align="center">value45</th>
-<th align="center">label45</th>
-<th align="center">value46</th>
-<th align="center">label46</th>
-<th align="center">value47</th>
-<th align="center">label47</th>
-<th align="center">value48</th>
-<th align="center">label48</th>
-<th align="center">value49</th>
-<th align="center">label49</th>
-<th align="center">value50</th>
-<th align="center">label50</th>
-<th align="center">value51</th>
-<th align="center">label51</th>
-<th align="center">value52</th>
-<th align="center">label52</th>
-<th align="center">value53</th>
-<th align="center">label53</th>
-<th align="center">value54</th>
-<th align="center">label54</th>
-<th align="center">value55</th>
-<th align="center">label55</th>
-<th align="center">value56</th>
-<th align="center">label56</th>
-<th align="center">value57</th>
-<th align="center">label57</th>
-<th align="center">value58</th>
-<th align="center">label58</th>
-<th align="center">value59</th>
-<th align="center">label59</th>
-<th align="center">value60</th>
-<th align="center">label60</th>
-<th align="center">value61</th>
-<th align="center">label61</th>
-<th align="center">value62</th>
-<th align="center">label62</th>
-<th align="center">value63</th>
-<th align="center">label63</th>
-<th align="center">value64</th>
-<th align="center">label64</th>
-<th align="center">value65</th>
-<th align="center">label65</th>
-<th align="center">value66</th>
-<th align="center">label66</th>
-<th align="center">value67</th>
-<th align="center">label67</th>
-<th align="center">value68</th>
-<th align="center">label68</th>
-</tr></thead>
-<tbody><tr class="odd">
-<td align="center">ce3datey</td>
-<td align="center">date of observation - year</td>
-<td align="center">ffcc_centobs_datey</td>
-<td align="center">cont</td>
-<td align="center">0</td>
-<td align="center">532</td>
-<td align="center">4</td>
-<td align="center">paradata</td>
-<td align="center"></td>
-<td align="center">constructed</td>
-<td align="center">e</td>
-<td align="center">3</td>
-<td align="center">20</td>
-<td align="center"></td>
-<td align="center">datey</td>
-<td align="center">ce3datem cs3datem cs3datey ce3datey</td>
-<td align="center">-9</td>
-<td align="center">-9 Not in wave</td>
-<td align="center">-8</td>
-<td align="center">-8 Out of range</td>
-<td align="center">-7</td>
-<td align="center">-7 N/A</td>
-<td align="center">-6</td>
-<td align="center">-6 Skip</td>
-<td align="center">-5</td>
-<td align="center">-5 Not asked</td>
-<td align="center">-4</td>
-<td align="center">-4 Multiple ans</td>
-<td align="center">-3</td>
-<td align="center">-3 Missing</td>
-<td align="center">-2</td>
-<td align="center">-2 Don’t know</td>
-<td align="center">-1</td>
-<td align="center">-1 Refuse</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr></tbody>
-</table>
-<p>The metadata fields are defined as follows:</p>
-<dl>
-<dt>new_name</dt>
-<dd>the new, standardized variable name
-</dd>
-<dt>old_name</dt>
-<dd>the original variable name from older files
-</dd>
-<dt>type</dt>
-<dd>variable type. Options are binary (bin), continuous (cont), unordered categorical (uc), ordered categorical (oc), and string (string)
-</dd>
-<dt>warning</dt>
-<dd>flags for issues group: group number (matches the same questions across surveys)
-</dd>
-<dt>q_group_N</dt>
-<dd>number of variables that are in the group
-</dd>
-<dt>topic1</dt>
-<dd>indicates specific content topic (e.g.medication or housing status), there is no hierarchy between topic1 and topic2
-</dd>
-<dt>topic2</dt>
-<dd>indicates specific content topic (e.g. medication or housing status), there is no hierarchy between topic1 and topic2
-</dd>
-<dt>source</dt>
-<dd>source of variable
-</dd>
-<dt>respondent</dt>
-<dd>respondent, either the person interviewed or the place an interview took place
-</dd>
-<dt>wave</dt>
-<dd>the wave of data collection associated with the variable
-</dd>
-<dt>scope</dt>
-<dd>the reach of a variable’s sample population (grouped by city where each person was originally interviewed). The max scope is 20 cities.
-</dd>
-<dt>section</dt>
-<dd>section of survey where question is asked
-</dd>
-<dt>leaf</dt>
-<dd>the rest of the variable name
-</dd>
-<dt>q_group_list</dt>
-<dd>a string that lists all of the new variable names for all the variables in the group
-</dd>
-<dt>value1-value78</dt>
-<dd>all of the potential responses for a given variable}
-</dd>
-<dt>label1-label68</dt>
-<dd>all of the labels for the potential responses for a given variable
-</dd>
-</dl>
+<a href="#valid-field-names-that-can-be-used-in-these-functions" class="anchor"></a>Valid field names that can be used in these functions</h2>
+<p>The <code><a href="../reference/select_metadata.html">select_metadata()</a></code>, <code><a href="../reference/filter_metadata.html">filter_metadata()</a></code>, and <code><a href="../reference/search_metadata.html">search_metadata()</a></code> functions all involve searching or using the field names of the metadata variables in some way. Below are the field names that can be used when invoking these functions:</p>
+<ul>
+<li>
+<strong>data_source</strong> options: collected from the questionnaire, constructed from the questionnaire, a survey weight, or the unique ID assigned to each family</li>
+<li>
+<strong>data_type</strong> options: ordered continuous, unordered categorical, ordered categorical, binary, or string</li>
+<li><strong>group_id</strong></li>
+<li><strong>group_subid</strong></li>
+<li>
+<strong>id</strong> family ID</li>
+<li>
+<strong>label</strong> variable description</li>
+<li>
+<strong>leaf</strong> survey section and question number or constructed variable name</li>
+<li>
+<strong>name</strong> variable name used after 2018</li>
+<li>
+<strong>old_name</strong> old variable name, used before 2018</li>
+<li>
+<strong>respondent</strong> who answered the question (e.g., “m” = “mother”)</li>
+<li>
+<strong>responses</strong> possible responses to the question</li>
+<li>
+<strong>scope</strong> number of cities in which the question was asked</li>
+<li>
+<strong>section</strong> section of the survey</li>
+<li>
+<strong>topic</strong> narrow topic area</li>
+<li>
+<strong>umbrella</strong> broad topic area</li>
+<li>
+<strong>warning</strong> reports if there is something unusual about the answer choices for this variable</li>
+<li>
+<strong>wave</strong> wave of the survey</li>
+</ul>
 </div>
-<div id="searching-for-variables-with-search_metadata-and-filter_metadata" class="section level2">
+<div id="using-select_metadata-to-find-out-information-out-about-a-variable" class="section level2">
 <h2 class="hasAnchor">
-<a href="#searching-for-variables-with-search_metadata-and-filter_metadata" class="anchor"></a>Searching for variables with <code>search_metadata</code> and <code>filter_metadata</code>
-</h2>
-<div id="search_metadata" class="section level3">
-<h3 class="hasAnchor">
-<a href="#search_metadata" class="anchor"></a>search_metadata</h3>
-<p>Suppose we want to search for all the variables that contain a certain substring within a given field. For example, let’s say we want to retrieve all the variables that have the substring “health” contained in their topic1 field. To accomplish this, we could call <code>search_metadata</code> using “health” as our query and “topic1” as our field_name. The result will be a data frame of all the variables that have the substring “health” in their topic1 field.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_topic1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/search_metadata.html">search_metadata</a></span>(<span class="dt">query =</span> <span class="st">"mental health"</span>, <span class="dt">field_name =</span> <span class="st">"topic1"</span>)
-pander<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/pander/topics/pandoc.table.return">pandoc.table</a></span>(search_topic1[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,], <span class="dt">split.tables =</span> <span class="ot">Inf</span>)</code></pre></div>
-<table style="width:100%;" class="table">
-<colgroup>
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="1%">
-<col width="0%">
-<col width="1%">
-<col width="0%">
-<col width="1%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="1%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-<col width="0%">
-</colgroup>
-<thead><tr class="header">
-<th align="center">new_name</th>
-<th align="center">varlab</th>
-<th align="center">old_name</th>
-<th align="center">type</th>
-<th align="center">warning</th>
-<th align="center">group</th>
-<th align="center">q_group_N</th>
-<th align="center">topic1</th>
-<th align="center">topic2</th>
-<th align="center">source</th>
-<th align="center">respondent</th>
-<th align="center">wave</th>
-<th align="center">scope</th>
-<th align="center">section</th>
-<th align="center">leaf</th>
-<th align="center">q_group_list</th>
-<th align="center">value1</th>
-<th align="center">label1</th>
-<th align="center">value2</th>
-<th align="center">label2</th>
-<th align="center">value3</th>
-<th align="center">label3</th>
-<th align="center">value4</th>
-<th align="center">label4</th>
-<th align="center">value5</th>
-<th align="center">label5</th>
-<th align="center">value6</th>
-<th align="center">label6</th>
-<th align="center">value7</th>
-<th align="center">label7</th>
-<th align="center">value8</th>
-<th align="center">label8</th>
-<th align="center">value9</th>
-<th align="center">label9</th>
-<th align="center">value10</th>
-<th align="center">label10</th>
-<th align="center">value11</th>
-<th align="center">label11</th>
-<th align="center">value12</th>
-<th align="center">label12</th>
-<th align="center">value13</th>
-<th align="center">label13</th>
-<th align="center">value14</th>
-<th align="center">label14</th>
-<th align="center">value15</th>
-<th align="center">label15</th>
-<th align="center">value16</th>
-<th align="center">label16</th>
-<th align="center">value17</th>
-<th align="center">label17</th>
-<th align="center">value18</th>
-<th align="center">label18</th>
-<th align="center">value19</th>
-<th align="center">label19</th>
-<th align="center">value20</th>
-<th align="center">label20</th>
-<th align="center">value21</th>
-<th align="center">label21</th>
-<th align="center">value22</th>
-<th align="center">label22</th>
-<th align="center">value23</th>
-<th align="center">label23</th>
-<th align="center">value24</th>
-<th align="center">label24</th>
-<th align="center">value25</th>
-<th align="center">label25</th>
-<th align="center">value26</th>
-<th align="center">label26</th>
-<th align="center">value27</th>
-<th align="center">label27</th>
-<th align="center">value28</th>
-<th align="center">label28</th>
-<th align="center">value29</th>
-<th align="center">label29</th>
-<th align="center">value30</th>
-<th align="center">label30</th>
-<th align="center">value31</th>
-<th align="center">label31</th>
-<th align="center">value32</th>
-<th align="center">label32</th>
-<th align="center">value33</th>
-<th align="center">label33</th>
-<th align="center">value34</th>
-<th align="center">label34</th>
-<th align="center">value35</th>
-<th align="center">label35</th>
-<th align="center">value36</th>
-<th align="center">label36</th>
-<th align="center">value37</th>
-<th align="center">label37</th>
-<th align="center">value38</th>
-<th align="center">label38</th>
-<th align="center">value39</th>
-<th align="center">label39</th>
-<th align="center">value40</th>
-<th align="center">label40</th>
-<th align="center">value41</th>
-<th align="center">label41</th>
-<th align="center">value42</th>
-<th align="center">label42</th>
-<th align="center">value43</th>
-<th align="center">label43</th>
-<th align="center">value44</th>
-<th align="center">label44</th>
-<th align="center">value45</th>
-<th align="center">label45</th>
-<th align="center">value46</th>
-<th align="center">label46</th>
-<th align="center">value47</th>
-<th align="center">label47</th>
-<th align="center">value48</th>
-<th align="center">label48</th>
-<th align="center">value49</th>
-<th align="center">label49</th>
-<th align="center">value50</th>
-<th align="center">label50</th>
-<th align="center">value51</th>
-<th align="center">label51</th>
-<th align="center">value52</th>
-<th align="center">label52</th>
-<th align="center">value53</th>
-<th align="center">label53</th>
-<th align="center">value54</th>
-<th align="center">label54</th>
-<th align="center">value55</th>
-<th align="center">label55</th>
-<th align="center">value56</th>
-<th align="center">label56</th>
-<th align="center">value57</th>
-<th align="center">label57</th>
-<th align="center">value58</th>
-<th align="center">label58</th>
-<th align="center">value59</th>
-<th align="center">label59</th>
-<th align="center">value60</th>
-<th align="center">label60</th>
-<th align="center">value61</th>
-<th align="center">label61</th>
-<th align="center">value62</th>
-<th align="center">label62</th>
-<th align="center">value63</th>
-<th align="center">label63</th>
-<th align="center">value64</th>
-<th align="center">label64</th>
-<th align="center">value65</th>
-<th align="center">label65</th>
-<th align="center">value66</th>
-<th align="center">label66</th>
-<th align="center">value67</th>
-<th align="center">label67</th>
-<th align="center">value68</th>
-<th align="center">label68</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="center">cf2gad_case</td>
-<td align="center">Constructed - Father meets anxious criteria at one-year (CIDI)</td>
-<td align="center">cf2gad_case</td>
-<td align="center">uc</td>
-<td align="center">0</td>
-<td align="center">5338</td>
-<td align="center">4</td>
-<td align="center">mental health</td>
-<td align="center"></td>
-<td align="center">constructed</td>
-<td align="center">f</td>
-<td align="center">2</td>
-<td align="center">20</td>
-<td align="center"></td>
-<td align="center">gad_case</td>
-<td align="center">cm2gad_case cm3gad_case cf3gad_case cf2gad_case</td>
-<td align="center">-9</td>
-<td align="center">-9 Not in wave</td>
-<td align="center">-8</td>
-<td align="center">-8 Out of range</td>
-<td align="center">-7</td>
-<td align="center">-7 N/A</td>
-<td align="center">-6</td>
-<td align="center">-6 Skip</td>
-<td align="center">-5</td>
-<td align="center">-5 Not asked</td>
-<td align="center">-4</td>
-<td align="center">-4 Multiple ans</td>
-<td align="center">-3</td>
-<td align="center">-3 Missing</td>
-<td align="center">-2</td>
-<td align="center">-2 Don’t know</td>
-<td align="center">-1</td>
-<td align="center">-1 Refuse</td>
-<td align="center">0</td>
-<td align="center">0 No</td>
-<td align="center">1</td>
-<td align="center">1 Yes</td>
-<td align="center">2</td>
-<td align="center">2 Sometimes</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr class="even">
-<td align="center">cf2md_case_con</td>
-<td align="center">Constructed - Father meets depression criteria (conservative) at one-year (CIDI)</td>
-<td align="center">cf2md_case_con</td>
-<td align="center">uc</td>
-<td align="center">0</td>
-<td align="center">5339</td>
-<td align="center">10</td>
-<td align="center">mental health</td>
-<td align="center"></td>
-<td align="center">constructed</td>
-<td align="center">f</td>
-<td align="center">2</td>
-<td align="center">20</td>
-<td align="center"></td>
-<td align="center">md_case_con</td>
-<td align="center">cm5md_case_con cm4md_case_con cm2md_case_con cf3md_case_con cn5md_case_con cf4md_case_con cm3md_case_con cf2md_case_con cf5md_case_con cp6md_dsr_con_yr</td>
-<td align="center">-9</td>
-<td align="center">-9 Not in wave</td>
-<td align="center">-8</td>
-<td align="center">-8 Out of range</td>
-<td align="center">-7</td>
-<td align="center">-7 N/A</td>
-<td align="center">-6</td>
-<td align="center">-6 Skip</td>
-<td align="center">-5</td>
-<td align="center">-5 Not asked</td>
-<td align="center">-4</td>
-<td align="center">-4 Multiple ans</td>
-<td align="center">-3</td>
-<td align="center">-3 Missing</td>
-<td align="center">-2</td>
-<td align="center">-2 Don’t know</td>
-<td align="center">-1</td>
-<td align="center">-1 Refuse</td>
-<td align="center">0</td>
-<td align="center">0 No</td>
-<td align="center">1</td>
-<td align="center">1 Yes</td>
-<td align="center">2</td>
-<td align="center">2 Sometimes</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr class="odd">
-<td align="center">cf2md_case_lib</td>
-<td align="center">Constructed - Father meets depression criteria (liberal) at one-year (CIDI)</td>
-<td align="center">cf2md_case_lib</td>
-<td align="center">uc</td>
-<td align="center">0</td>
-<td align="center">5340</td>
-<td align="center">10</td>
-<td align="center">mental health</td>
-<td align="center"></td>
-<td align="center">constructed</td>
-<td align="center">f</td>
-<td align="center">2</td>
-<td align="center">20</td>
-<td align="center"></td>
-<td align="center">md_case_lib</td>
-<td align="center">cf2md_case_lib cm5md_case_lib cf3md_case_lib cp6md_dsr_lib_yr cf5md_case_lib cm2md_case_lib cn5md_case_lib cm4md_case_lib cf4md_case_lib cm3md_case_lib</td>
-<td align="center">-9</td>
-<td align="center">-9 Not in wave</td>
-<td align="center">-8</td>
-<td align="center">-8 Out of range</td>
-<td align="center">-7</td>
-<td align="center">-7 N/A</td>
-<td align="center">-6</td>
-<td align="center">-6 Skip</td>
-<td align="center">-5</td>
-<td align="center">-5 Not asked</td>
-<td align="center">-4</td>
-<td align="center">-4 Multiple ans</td>
-<td align="center">-3</td>
-<td align="center">-3 Missing</td>
-<td align="center">-2</td>
-<td align="center">-2 Don’t know</td>
-<td align="center">-1</td>
-<td align="center">-1 Refuse</td>
-<td align="center">0</td>
-<td align="center">0 No</td>
-<td align="center">1</td>
-<td align="center">1 Yes</td>
-<td align="center">2</td>
-<td align="center">2 Sometimes</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-</tbody>
-</table>
+<a href="#using-select_metadata-to-find-out-information-out-about-a-variable" class="anchor"></a>Using <code><a href="../reference/select_metadata.html">select_metadata()</a></code> to find out information out about a variable</h2>
+<p>Suppose we want to find out the value of a given variable’s field. For example, let’s say we want to find out the source of the variable with the name “ce3datey”. To accomplish this, we would call select_metadata using “ce3datey” for variable_name and “data_source” for field_name.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_type &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_metadata.html">select_metadata</a></span>(<span class="dt">variable_name =</span> <span class="st">"ce3datey"</span>, <span class="dt">field_name =</span> <span class="st">"data_source"</span>)
+<span class="kw">print</span>(select_type)</code></pre></div>
+<pre><code>## [1] "constructed"</code></pre>
+<p>If we want to view the entire variable and all the values for its fields, we can call select_metadata without using the field_name parameter and simply using “ce3datey” for variable_name. This will return ce3datey as a named list with each of its fields corresponding to an element of the list.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_full &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_metadata.html">select_metadata</a></span>(<span class="dt">variable_name =</span> <span class="st">"ce3datey"</span>)</code></pre></div>
 </div>
+<div id="two-different-ways-of-searching-for-variables-search_metadata-and-filter_metadata" class="section level2">
+<h2 class="hasAnchor">
+<a href="#two-different-ways-of-searching-for-variables-search_metadata-and-filter_metadata" class="anchor"></a>Two different ways of searching for variables: <code><a href="../reference/search_metadata.html">search_metadata()</a></code> and <code><a href="../reference/filter_metadata.html">filter_metadata()</a></code>
+</h2>
 <div id="filter_metadata" class="section level3">
 <h3 class="hasAnchor">
-<a href="#filter_metadata" class="anchor"></a>filter_metadata</h3>
-<p>Suppose we want to search for all the variables that satisfy several criteria. For example, let’s say we want to retrieve all the binary variables from questionnaires administered in all 20 cities involved in the study. To accomplish this, we could call <code>filter_metadata</code> using “bin” as our type, “questionnaire” as our source, and 20 for our scope. This can be accomplished using a named list, by typing the parameters in explicitly, or by a combination of both approaches.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># named-list approach</span>
-params_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">type =</span> <span class="st">"bin"</span>, <span class="dt">source =</span> <span class="st">"questionnaire"</span>, <span class="dt">scope =</span> <span class="dv">20</span>)
-<span class="co"># call to filter_metadata</span>
-filtered &lt;-<span class="st"> </span><span class="kw"><a href="../reference/filter_metadata.html">filter_metadata</a></span>(params_list)</code></pre></div>
+<a href="#filter_metadata" class="anchor"></a><code><a href="../reference/filter_metadata.html">filter_metadata()</a></code>
+</h3>
+<p>Suppose we want to search for all the variables that satisfy several criteria. <code><a href="../reference/filter_metadata.html">filter_metadata()</a></code> will return a list of the names of the variables that satisfy the specified criteria. For example, let’s say we want to retrieve all the binary variables from questionnaires administered in all 20 cities involved in the study. To accomplish this, we could call filter_metadata using “bin” as our type, “questionnaire” as our source, and 20 for our scope. This can be accomplished using a named list, by typing the parameters in explicitly, or by a combination of both approaches.</p>
+<p><strong>It is important to note that filter_metadata uses substring matching. This means that if we use 2 for scope, it will return variables for which the scope is either 2 or 20.</strong></p>
+<p>Below is the approach using explicit parameters, perhaps the most intuitive way of using <code><a href="../reference/filter_metadata.html">filter_metadata()</a></code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># explicit parameter approach</span>
-filtered &lt;-<span class="st"> </span><span class="kw"><a href="../reference/filter_metadata.html">filter_metadata</a></span>(<span class="dt">type =</span> <span class="st">"bin"</span>, <span class="dt">source =</span> <span class="st">"questionnaire"</span>, <span class="dt">scope =</span> <span class="dv">20</span>)</code></pre></div>
+filtered &lt;-<span class="st"> </span><span class="kw"><a href="../reference/filter_metadata.html">filter_metadata</a></span>(<span class="dt">data_type =</span> <span class="st">"bin"</span>, <span class="dt">data_source =</span> <span class="st">"questionnaire"</span>, <span class="dt">scope =</span> <span class="dv">20</span>)</code></pre></div>
+<p>Below are two alternative options: one involves using a named list, the other involves using a combination of a named list and explicit parameters:</p>
+<p>The named-list approach:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># named-list approach</span>
+params_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">data_type=</span><span class="st">"bin"</span>, <span class="dt">data_source=</span><span class="st">"questionnaire"</span>, <span class="dt">scope=</span><span class="dv">20</span>)</code></pre></div>
+<p>The mixed approach:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># mixed approach</span>
-params_list &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"bin"</span>, <span class="st">"questionnaire"</span>)
-<span class="kw">names</span>(params_list) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"type"</span>, <span class="st">"source"</span>)
+params_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">data_type =</span> <span class="st">"bin"</span>, <span class="dt">data_source =</span> <span class="st">"questionnaire"</span>)
 filtered &lt;-<span class="st"> </span><span class="kw"><a href="../reference/filter_metadata.html">filter_metadata</a></span>(params_list, <span class="dt">scope =</span> <span class="dv">20</span>)</code></pre></div>
 </div>
+<div id="search_metadata" class="section level3">
+<h3 class="hasAnchor">
+<a href="#search_metadata" class="anchor"></a><code><a href="../reference/search_metadata.html">search_metadata()</a></code>
+</h3>
+<p><code><a href="../reference/search_metadata.html">search_metadata()</a></code> is a reduced form of <code><a href="../reference/filter_metadata.html">filter_metadata()</a></code> that involves searching on one field rather than multiple fields. For the most part, anything that can be accomplished with <code><a href="../reference/search_metadata.html">search_metadata()</a></code> can be done with <code><a href="../reference/filter_metadata.html">filter_metadata()</a></code>. Suppose we want to search for all the variables that contain a certain substring within a given field. For example, let’s say we want to retrieve all the variables that have the substring “mother” contained in their “label” field. To accomplish this, we could call <code><a href="../reference/search_metadata.html">search_metadata()</a></code> using “mother” as our query and “label” as our field_name. The result will be a list of all the variable names that have the substring “mother” in their “label” field.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_label &lt;-<span class="st"> </span><span class="kw"><a href="../reference/search_metadata.html">search_metadata</a></span>(<span class="dt">query =</span> <span class="st">"mother"</span>, <span class="dt">field_name =</span> <span class="st">"label"</span>)</code></pre></div>
 </div>
 </div>
   </div>
@@ -1420,8 +181,9 @@ filtered &lt;-<span class="st"> </span><span class="kw"><a href="../reference/fi
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
-      <li><a href="#finding-out-about-a-variable-with-select_metadata">Finding out about a variable with <code>select_metadata</code></a></li>
-      <li><a href="#searching-for-variables-with-search_metadata-and-filter_metadata">Searching for variables with <code>search_metadata</code> and <code>filter_metadata</code></a></li>
+      <li><a href="#valid-field-names-that-can-be-used-in-these-functions">Valid field names that can be used in these functions</a></li>
+      <li><a href="#using-select_metadata-to-find-out-information-out-about-a-variable">Using <code><a href="--/reference/select_metadata-html">select_metadata()</a></code> to find out information out about a variable</a></li>
+      <li><a href="#two-different-ways-of-searching-for-variables-search_metadata-and-filter_metadata">Two different ways of searching for variables: <code><a href="--/reference/search_metadata-html">search_metadata()</a></code> and <code><a href="--/reference/filter_metadata-html">filter_metadata()</a></code></a></li>
       </ul>
 </div>
       </div>
@@ -1439,6 +201,8 @@ filtered &lt;-<span class="st"> </span><span class="kw"><a href="../reference/fi
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>
