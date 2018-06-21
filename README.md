@@ -15,4 +15,4 @@ devtools::install_github("fragilefamilieschallenge/ffmetadata")
 ```
 ## Vignette
 
-To learn more abou the how to use the package, please see the [vignette](https://github.com/fragilefamilieschallenge/ffmetadata/blob/master/vignettes/APIUsage.html)
+To learn more abou the how to use the package, please see the [vignette](https://fragilefamilieschallenge.github.io/ffmetadata/articles/APIUsage.html)
