@@ -22,7 +22,7 @@ The ffmetadata package provides easy to use access to metadata surrounding the F
 library(ffmetadata)
 ```
 
-## Valid field names that can be used in these functions
+## Field names that can be used in these functions
 
 The `select_metadata()`, `filter_metadata()`, and `search_metadata()` functions all involve searching or using the field names of the metadata variables in some way. Below are the field names that can be used when invoking these functions:
   
@@ -78,7 +78,7 @@ Below are two alternative options: one involves using a named list, the other in
 The named-list approach:
 ```{r}
 # named-list approach
-params_list <- list(data_type="bin", data_source="questionnaire", scope=20)
+params_list <- list(data_type="bin", data_source = "questionnaire", scope=20)
 ```
 
 The mixed approach:

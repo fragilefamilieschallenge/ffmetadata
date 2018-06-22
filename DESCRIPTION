@@ -24,3 +24,5 @@ Suggests:
   knitr,
   rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/fragilefamilieschallenge/ffmetadata
+BugReports: https://github.com/fragilefamilieschallenge/ffmetadata/issues

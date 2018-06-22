@@ -57,7 +57,14 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/fragilefamilieschallenge/ffmetadata">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -72,9 +79,9 @@
       <h1>How to Query Metadata from the Fragile Families API</h1>
                         <h4 class="author">Ryan Vinh and Ian E. Fellows</h4>
             
-            <h4 class="date">2018-06-21</h4>
+            <h4 class="date">2018-06-22</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/fragilefamilieschallenge/ffmetadata/blob/master/vignettes/APIUsage.Rmd"><code>vignettes/APIUsage.Rmd</code></a></small>
       <div class="hidden name"><code>APIUsage.Rmd</code></div>
 
     </div>
@@ -94,9 +101,9 @@
 <code><a href="../reference/search_metadata.html">search_metadata()</a></code>: another function that allows the user to search for variables</li>
 </ul>
 </div>
-<div id="valid-field-names-that-can-be-used-in-these-functions" class="section level2">
+<div id="field-names-that-can-be-used-in-these-functions" class="section level2">
 <h2 class="hasAnchor">
-<a href="#valid-field-names-that-can-be-used-in-these-functions" class="anchor"></a>Valid field names that can be used in these functions</h2>
+<a href="#field-names-that-can-be-used-in-these-functions" class="anchor"></a>Field names that can be used in these functions</h2>
 <p>The <code><a href="../reference/select_metadata.html">select_metadata()</a></code>, <code><a href="../reference/filter_metadata.html">filter_metadata()</a></code>, and <code><a href="../reference/search_metadata.html">search_metadata()</a></code> functions all involve searching or using the field names of the metadata variables in some way. Below are the field names that can be used when invoking these functions:</p>
 <ul>
 <li>
@@ -159,7 +166,7 @@ filtered &lt;-<span class="st"> </span><span class="kw"><a href="../reference/fi
 <p>Below are two alternative options: one involves using a named list, the other involves using a combination of a named list and explicit parameters:</p>
 <p>The named-list approach:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># named-list approach</span>
-params_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">data_type=</span><span class="st">"bin"</span>, <span class="dt">data_source=</span><span class="st">"questionnaire"</span>, <span class="dt">scope=</span><span class="dv">20</span>)</code></pre></div>
+params_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">data_type=</span><span class="st">"bin"</span>, <span class="dt">data_source =</span> <span class="st">"questionnaire"</span>, <span class="dt">scope=</span><span class="dv">20</span>)</code></pre></div>
 <p>The mixed approach:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># mixed approach</span>
 params_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">data_type =</span> <span class="st">"bin"</span>, <span class="dt">data_source =</span> <span class="st">"questionnaire"</span>)
@@ -181,7 +188,7 @@ filtered &lt;-<span class="st"> </span><span class="kw"><a href="../reference/fi
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
-      <li><a href="#valid-field-names-that-can-be-used-in-these-functions">Valid field names that can be used in these functions</a></li>
+      <li><a href="#field-names-that-can-be-used-in-these-functions">Field names that can be used in these functions</a></li>
       <li><a href="#using-select_metadata-to-find-out-information-out-about-a-variable">Using <code><a href="--/reference/select_metadata-html">select_metadata()</a></code> to find out information out about a variable</a></li>
       <li><a href="#two-different-ways-of-searching-for-variables-search_metadata-and-filter_metadata">Two different ways of searching for variables: <code><a href="--/reference/search_metadata-html">search_metadata()</a></code> and <code><a href="--/reference/filter_metadata-html">filter_metadata()</a></code></a></li>
       </ul>
