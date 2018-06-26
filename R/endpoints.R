@@ -45,6 +45,8 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
   # format single value as character
   if (length(result) == 1) {
     result <- as.character(result)
+  } else {
+    result <- convert_json(result)
   }
   return(result)
 }
