@@ -42,11 +42,14 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
   params <- list(varName=variable_name, fieldName=field_name)
   # pass to api call
   result <- call_api("select", params)
-  # format single value as character
+  # format single value as character, otherwise unlist to convert to data frame
   if (length(result) == 1) {
     result <- as.character(result)
   } else {
-    result <- convert_json(result)
+    # un list into a format that can be converted to a data frame
+    result <- unlist(result)
+    result <- as.data.frame(result)
+    result <- t(result)
   }
   return(result)
 }
