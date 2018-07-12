@@ -36,21 +36,3 @@ call_api <- function(endpoint, params) {
   }
   return(metadata)
 }
-
-convert_json <- function(data) {
-  # initialize new data frame with number of columns matching json fields
-  data_frame <- data.frame(matrix(ncol = length(data), nrow = 1))
-  # name columns after json fields
-  names(data_frame) <- names(data)
-  # populate data frame
-  for (name in names(data)) {
-    # test if list object
-    if (is.atomic(data[[name]])) {
-      data_frame[1, name] <- ifelse(is.null(data[[name]]), NA, data[[name]])
-    } else {
-      # store list in row
-      data_frame[1, name][[1]] <- list(data[[name]])
-    }
-  }
-  return(data_frame)
-}
