@@ -25,14 +25,14 @@ call_api <- function(endpoint, params) {
 
   # error checking
   if (!is.null(metadata$`error code`)) {
-    stop(
-      sprintf(
-        "GitHub API request failed [%s]\n<%s>",
-        metadata$`error code`,
-        metadata$error_description
-      ),
-      call. = FALSE
-    )
+     stop(
+       sprintf(
+         "GitHub API request failed [%s]\n<%s>",
+         metadata$`error code`,
+         metadata$error_description
+       ),
+       call. = FALSE
+     )
   }
   return(metadata)
 }
