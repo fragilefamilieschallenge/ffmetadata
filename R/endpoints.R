@@ -36,12 +36,26 @@
 #'
 #' @examples
 #' select1 <- select_metadata(variable_name = "ce3agefc")
-#' select2 <- select_metadata(variable_name = "ce3agefc", field_name = "data_type")
-select_metadata <- function(variable_name = NULL, field_name = NULL) {
-  # parse parameters
-  params <- list(varName=variable_name, fieldName=field_name)
-  # pass to api call
-  result <- call_api("select", params)
+#' select2 <- select_metadata(variable_name = "ce3agefc", fields = "data_type")
+#' select3 <- select_metadata(variable_name = "ce3agefc", fields = c("data_type", "data_source"))
+select_metadata <- function(variable_name = NULL, fields = NULL) {
+  # format endpoint
+  endpoint <- paste("/", variable_name, sep = "")
+  url <- paste(.base_url, endpoint, sep = "")
+  # null check
+  if (!is.null(fields)) {
+    if (is.vector(fields)) {
+      # format url by appending list items
+      url <- paste(url, "?", fields[1], sep = "")
+      for (i in 2:length(fields)) {
+        url <- paste(url, "&", fields[i], sep = "")
+      }
+    } else {
+      # single field
+      url <- paste(url, "?", fields, sep = "")
+    }
+  }
+  result <- call_api(url)
   # format single value as character, otherwise unlist to convert to data frame
   if (length(result) == 1) {
     result <- as.character(result)
@@ -105,49 +119,5 @@ search_metadata <- function(query, field_name) {
   params <- list(query=query, fieldName=field_name)
   searched <- call_api("search", params)
   return(searched$matches)
-}
-
-#' Filter Metadata
-#'
-#' filter_metadata allows users to retrieve a list of variable
-#' names based on a set of filter values for variable categories
-#'
-#' @param filter_list a named list of variables to filter metadata on. See
-#' details for valid field names.
-#' @param ... additional value combinations to filter on. See details for
-#' valid field names.
-#'
-#' @return returns list of all variable names that match a set of given
-#' filter values
-#' @export
-#'
-#' @details List of valid field names:
-#' \itemize{
-#'     \item{data_source}
-#'     \item{data_type}
-#'     \item{group_id}
-#'     \item{group_subid}
-#'     \item{id}
-#'     \item{label}
-#'     \item{leaf}
-#'     \item{name}
-#'     \item{old_name}
-#'     \item{respondent}
-#'     \item{responses}
-#'     \item{scope}
-#'     \item{section}
-#'     \item{topic}
-#'     \item{umbrella}
-#'     \item{warning}
-#'     \item{wave}
-#' }
-#'
-#' @examples
-#' filter_test <- filter_metadata(wave = 3, data_source = "constructed", data_type = "bin")
-filter_metadata <- function(filter_list=list(), ...) {
-  # parse and pass parameters to api call
-  params <- c(filter_list, list(...))
-  filtered <- call_api(endpoint="filter", params)
-  return(filtered$matches)
 }
 

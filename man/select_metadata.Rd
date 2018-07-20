@@ -4,7 +4,7 @@
 \alias{select_metadata}
 \title{Select Metadata}
 \usage{
-select_metadata(variable_name = NULL, field_name = NULL)
+select_metadata(variable_name = NULL, fields = NULL)
 }
 \arguments{
 \item{variable_name}{name of variable}
