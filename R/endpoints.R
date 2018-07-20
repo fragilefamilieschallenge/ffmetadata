@@ -39,6 +39,10 @@
 #' select2 <- select_metadata(variable_name = "ce3agefc", fields = "data_type")
 #' select3 <- select_metadata(variable_name = "ce3agefc", fields = c("data_type", "data_source"))
 select_metadata <- function(variable_name = NULL, fields = NULL) {
+  # error message for if variable_name is missing
+  if (missing(variable_name)) {
+    stop("select_metadata requires a value for variable_name")
+  }
   # format endpoint
   endpoint <- paste("/", variable_name, sep = "")
   url <- paste(.base_url, endpoint, sep = "")
