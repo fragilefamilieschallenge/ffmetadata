@@ -5,7 +5,7 @@
 #' the entire variable metadata if no field is specified
 #'
 #' @param variable_name name of variable
-#' @param field_name specific field of variable to be accessed. See
+#' @param field_name specific field or list of fields of variable to be accessed. See
 #' details for valid field names
 #'
 #' @return returns string with value of a given field if field is specified,
@@ -110,18 +110,29 @@ select_metadata <- function(variable_name = NULL, fields = NULL) {
 #' @export
 #'
 #' @examples
-#' search_test <- search_metadata(query = "oc", field_name = "data_type")
-search_metadata <- function(query, field_name) {
-  # error message for if field_name is missing
-  if (missing(field_name)) {
-    stop("search_metadata requires a value for field_name")
+#' search_test1 <- search_metadata(wave = 3)
+search_metadata <- function(filter_list=list(), ...) {
+  # format url without parameters
+  url <- paste(.base_url, "?q=", sep = "")
+  # format parameters
+  params <- c(filter_list, list(...))
+  # format list
+  filters <- list()
+  for (i in 1:length(params)) {
+    filters["name"] <- names(params)[i]
+    filters["op"] <- "eq"
+    filters["val"] <- params[[i]]
   }
-  # error message for if query is missing
-  if (missing(query)) {
-    stop("search_metadata requires a value for query")
-  }
-  params <- list(query=query, fieldName=field_name)
-  searched <- call_api("search", params)
-  return(searched$matches)
+  # convert to data frame
+  filter_frame <- as.data.frame(filters)
+  # convert to data frame nested in list
+  filter_list <- list(filters = filter_frame)
+  # convert to JSON as per endpoint syntax
+  formatted_params <- jsonlite::toJSON(filter_list)
+  # append to url
+  url <- paste(url, formatted_params, sep = "")
+  # call api
+  searched <- call_api(url)
+  return(searched)
 }
 
