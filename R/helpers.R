@@ -1,6 +1,7 @@
 # params : a named list of url parameters
 call_api <- function(url) {
-  # get HTTP response
+  # get HTTP response, can add here, path and query list
+  # returnDataFrame = TRUE / FALSE
   resp <- httr::GET(url)
   # ensure JSON is returned
   if (httr::http_type(resp) != "application/json") {

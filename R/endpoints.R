@@ -49,6 +49,7 @@ select_metadata <- function(variable_name = NULL, fields = NULL) {
   # null check
   if (!is.null(fields)) {
     if (is.vector(fields)) {
+      # use httr for this, pass named list, twfy package examples
       # format url by appending list items
       url <- paste(url, "?", fields[1], sep = "")
       for (i in 2:length(fields)) {
@@ -64,6 +65,9 @@ select_metadata <- function(variable_name = NULL, fields = NULL) {
   if (length(result) == 1) {
     result <- as.character(result)
   } else {
+    # return list of lists instead, add examples of lapply/etc to documentation,
+    # check on naming schemes
+    # lapply()
     # un list into a format that can be converted to a data frame
     result <- unlist(result)
     result <- as.data.frame(result)
@@ -111,22 +115,20 @@ select_metadata <- function(variable_name = NULL, fields = NULL) {
 #'
 #' @examples
 #' search_test1 <- search_metadata(wave = 3)
+#' search_test2 <- search_meatadata(wave = 3, data_type = "oc")
 search_metadata <- function(filter_list=list(), ...) {
   # format url without parameters
-  url <- paste(.base_url, "?q=", sep = "")
+  url <- httr::modify_url(.base_url, query = "q=")
   # format parameters
   params <- c(filter_list, list(...))
   # format list
-  filters <- list()
+  filters <- data.frame()
   for (i in 1:length(params)) {
-    filters["name"] <- names(params)[i]
-    filters["op"] <- "eq"
-    filters["val"] <- params[[i]]
+    # add variable
+    item <- list(name = names(params)[i], op = "eq", val = params[[i]])
+    filters <- rbind(filters, item, stringsAsFactors = FALSE)
   }
-  # convert to data frame
-  filter_frame <- as.data.frame(filters)
-  # convert to data frame nested in list
-  filter_list <- list(filters = filter_frame)
+  filter_list <- list(filters = filters)
   # convert to JSON as per endpoint syntax
   formatted_params <- jsonlite::toJSON(filter_list)
   # append to url
