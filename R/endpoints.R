@@ -1,15 +1,17 @@
 #' Select Metadata
 #'
 #' select_metadata allows users to retrieve the value of
-#' a specific field of a given variable, or
+#' a specific field or fields of a given variable, or
 #' the entire variable metadata if no field is specified
 #'
 #' @param variable_name name of variable
-#' @param field_name specific field or list of fields of variable to be accessed. See
+#' @param fields specific field or list of fields of variable to be accessed. See
 #' details for valid field names
+#' @param returnDataFrame optional paramater set to TRUE by default, output is
+#' named list if set to FALSE
 #'
 #' @return returns string with value of a given field if field is specified,
-#' returns all metadata for variable as a named list if field is unspecified
+#' returns all metadata for variable as data frame if field is unspecified
 #'
 #' @details List of valid field names:
 #' \itemize{
@@ -38,37 +40,29 @@
 #' select1 <- select_metadata(variable_name = "ce3agefc")
 #' select2 <- select_metadata(variable_name = "ce3agefc", fields = "data_type")
 #' select3 <- select_metadata(variable_name = "ce3agefc", fields = c("data_type", "data_source"))
-select_metadata <- function(variable_name = NULL, fields = NULL) {
+select_metadata <- function(variable_name = NULL, fields = NULL, returnDataFrame = TRUE) {
   # error message for if variable_name is missing
   if (missing(variable_name)) {
     stop("select_metadata requires a value for variable_name")
   }
-  # format endpoint
-  endpoint <- paste("/", variable_name, sep = "")
-  url <- paste(.base_url, endpoint, sep = "")
-  # null check
+  # format url
+  url <- httr::modify_url(.base_url, path = paste0("variable/", variable_name))
   if (!is.null(fields)) {
-    if (is.vector(fields)) {
-      # use httr for this, pass named list, twfy package examples
-      # format url by appending list items
-      url <- paste(url, "?", fields[1], sep = "")
-      for (i in 2:length(fields)) {
-        url <- paste(url, "&", fields[i], sep = "")
-      }
-    } else {
-      # single field
-      url <- paste(url, "?", fields, sep = "")
-    }
+    url <- httr::modify_url(url, query = ifelse(length(fields) == 1, fields, fields[1]))
+  }
+  # TODO: FIX THIS
+  # TODO: how to use modify_url for multiple queries that aren't key-value pairs
+  i <- 2
+  while (i <= length(fields)) {
+    url <- paste0(url, "&", fields[i])
+    i <- i + 1
   }
   result <- call_api(url)
   # format single value as character, otherwise unlist to convert to data frame
   if (length(result) == 1) {
     result <- as.character(result)
-  } else {
-    # return list of lists instead, add examples of lapply/etc to documentation,
-    # check on naming schemes
-    # lapply()
-    # un list into a format that can be converted to a data frame
+  } else if (returnDataFrame == TRUE){
+    # return data frame
     result <- unlist(result)
     result <- as.data.frame(result)
     result <- t(result)
@@ -82,12 +76,7 @@ select_metadata <- function(variable_name = NULL, fields = NULL) {
 #' variable names based on whether or not those variables contain a given query
 #' within a given field
 #'
-#' @param query a substring searched for in the given variable field
-#' @param field_name the field in which the query is searched for.
-#' See details for valid field names.
-
-#' @return returns list of names of all variables that have a substring-matched value within
-#' a given field
+#' @return returns list of names of all variables that match specified parameter values
 #'
 #' @details List of valid field names:
 #' @details List of valid field names:
@@ -115,10 +104,8 @@ select_metadata <- function(variable_name = NULL, fields = NULL) {
 #'
 #' @examples
 #' search_test1 <- search_metadata(wave = 3)
-#' search_test2 <- search_meatadata(wave = 3, data_type = "oc")
+#' search_test2 <- search_metadata(wave = 3, data_type = "oc")
 search_metadata <- function(filter_list=list(), ...) {
-  # format url without parameters
-  url <- httr::modify_url(.base_url, query = "q=")
   # format parameters
   params <- c(filter_list, list(...))
   # format list
@@ -131,8 +118,8 @@ search_metadata <- function(filter_list=list(), ...) {
   filter_list <- list(filters = filters)
   # convert to JSON as per endpoint syntax
   formatted_params <- jsonlite::toJSON(filter_list)
-  # append to url
-  url <- paste(url, formatted_params, sep = "")
+  # create url
+  url <- httr::modify_url(.base_url, query = list(q = formatted_params))
   # call api
   searched <- call_api(url)
   return(searched)

@@ -2,31 +2,18 @@
 library(ffmetadata)
 
 ## ------------------------------------------------------------------------
-select_type <- select_metadata(variable_name = "ce3datey", field_name = "source")
+select_type <- select_metadata(variable_name = "ce3datey", fields = "data_source")
 print(select_type)
 
-## ---- results = "asis"---------------------------------------------------
-select_entire <- select_metadata(variable_name = "ce3datey")
-pander::pandoc.table(select_entire, split.tables=Inf)
+## ------------------------------------------------------------------------
+select <- select_metadata(variable_name = "ce3datey", fields = c("data_source", "data_type"))
+
+## ------------------------------------------------------------------------
+select_full <- select_metadata(variable_name = "ce3datey")
 
 ## ---- results = "asis"---------------------------------------------------
-search_topic1 <- search_metadata(query = "mental health", field_name = "topic1")
-pander::pandoc.table(search_topic1[1:3,], split.tables=Inf)
+search <- search_metadata(wave = 3)
 
-## ---- eval=FALSE---------------------------------------------------------
-#  # named-list approach
-#  params_list <- list(type="bin", source="questionnaire", scope=20)
-#  #names(params_list) <- c("type", "source", "scope")
-#  # call to filter_metadata
-#  filtered <- filter_metadata(params_list)
-
-## ---- eval=FALSE---------------------------------------------------------
-#  # explicit parameter approach
-#  filtered <- filter_metadata(type = "bin", source = "questionnaire", scope = 20)
-
-## ---- eval=FALSE---------------------------------------------------------
-#  # mixed approach
-#  params_list <- c("bin", "questionnaire")
-#  names(params_list) <- c("type", "source")
-#  filtered <- filter_metadata(params_list, scope = 20)
+## ------------------------------------------------------------------------
+search <- search_metadata(wave = 3, data_type = "oc")
 
