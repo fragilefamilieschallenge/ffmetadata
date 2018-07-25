@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ryan Vinh and Ian E. Fellows" />
 
-<meta name="date" content="2018-07-24" />
+<meta name="date" content="2018-07-25" />
 
 <title>How to Query Metadata from the Fragile Families API</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">How to Query Metadata from the Fragile Families API</h1>
 <h4 class="author"><em>Ryan Vinh and Ian E. Fellows</em></h4>
-<h4 class="date"><em>2018-07-24</em></h4>
+<h4 class="date"><em>2018-07-25</em></h4>
 
 
 
@@ -115,7 +115,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>, <span class="dt">fields =</span> <span class="kw">c</span>(<span class="st">&quot;data_source&quot;</span>, <span class="st">&quot;data_type&quot;</span>))</code></pre></div>
 <p>If we want to view the entire variable and all the values for its fields, we can call select_metadata without using the <code>fields</code> parameter and simply using “ce3datey” for <code>variable_name</code>. This will return ce3datey as a data frame row, with each of its fields corresponding to a column of that row.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_full &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>)</code></pre></div>
-<p><code>select_metadata()</code> also has an optional <code>returnDataFrame</code> parameter that is set to <code>TRUE</code> by default. This means that <code>select_metadata()</code> will return a data frame by default for when no fields are specified or multiple fields are specified. However, if <code>returnDataFrame</code> is set to <code>FALSE</code>, a nested list object will be returned instead.</p>
+<div id="a-quick-note-on-the-returndataframe-parameter-of-select_metadata" class="section level3">
+<h3>A quick note on the <code>returnDataFrame</code> parameter of select_metadata()</h3>
+<p>It is important to note that the JSON read from the web API endpoints is not “rectangular” by design. In other words, it is not necessarily formatted for the purpose of being represented in a data frame. Nevertheless, given that data frames are the predominant object used to analyze and represent data in R, <code>select_metadata()</code> formats and returns the data as a data frame by default when no fields are specified or multiple fields are specified. However, for those who seek greater control over the formatting process, the <code>returnDataFrame</code> parameter can be set to <code>FALSE</code>. This will cause <code>select_metadata()</code> to return a nested list object instead that aligns more directly with the underlying JSON represenation of the data.</p>
+</div>
 </div>
 <div id="using-search_metadata-to-search-for-variables" class="section level2">
 <h2>Using <code>search_metadata()</code> to search for variables</h2>

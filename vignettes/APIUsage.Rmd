@@ -65,7 +65,8 @@ If we want to view the entire variable and all the values for its fields, we can
 select_full <- select_metadata(variable_name = "ce3datey")
 ```
 
-`select_metadata()` also has an optional `returnDataFrame` parameter that is set to `TRUE` by default.  This means that `select_metadata()` will return a data frame by default for when no fields are specified or multiple fields are specified. However, if `returnDataFrame` is set to `FALSE`, a nested list object will be returned instead. 
+### A quick note on the `returnDataFrame` parameter of select_metadata()
+It is important to note that the JSON read from the web API endpoints is not "rectangular" by design. In other words, it is not necessarily formatted for the purpose of being represented in a data frame. Nevertheless, given that data frames are the predominant object used to analyze and represent data in R, `select_metadata()` formats and returns the data as a data frame by default when no fields are specified or multiple fields are specified. However, for those who seek greater control over the formatting process, the `returnDataFrame` parameter can be set to `FALSE`. This will cause `select_metadata()` to return a nested list object instead that aligns more directly with the underlying JSON represenation of the data.
 
 ## Using `search_metadata()` to search for variables
 
