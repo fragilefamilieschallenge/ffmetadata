@@ -104,10 +104,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3>Using <code>search_metadata()</code> to search for variables</h3>
 <p><code>search_metadata()</code> allows users to search for variables based on specified field values. This function returns a list of all the variable names that match the specified parameters. For instance, suppose we want to search for all the variables from wave 3. To accomplish this, we would call <code>search_metadata()</code> in the following way:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">wave =</span> <span class="dv">3</span>)</code></pre></div>
-<p><a href="http://api.metadata.fragilefamilies.princeton.edu/variable?q" class="uri">http://api.metadata.fragilefamilies.princeton.edu/variable?q</a>={“filters”:[{“name”:“wave”,“op”:“eq”,“val”:3}]}</p>
 <p>Any of the above-specified fields can be used to search for variables in combination with one another. For example, suppose we want to search for all the variables from wave 3 that also have the value “oc” for data_type. To accomplish this, we would call <code>search_metadata()</code> like so:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">wave =</span> <span class="dv">3</span>, <span class="dt">data_type =</span> <span class="st">&quot;oc&quot;</span>)</code></pre></div>
-<pre><code>## http://api.metadata.fragilefamilies.princeton.edu/variable?q={&quot;filters&quot;:[{&quot;name&quot;:&quot;wave&quot;,&quot;op&quot;:&quot;eq&quot;,&quot;val&quot;:&quot;3&quot;},{&quot;name&quot;:&quot;data_type&quot;,&quot;op&quot;:&quot;eq&quot;,&quot;val&quot;:&quot;oc&quot;}]}</code></pre>
 <p>TODO: <code>search_metadata()</code> also provides functionality for wild card matching.</p>
 </div>
 </div>
