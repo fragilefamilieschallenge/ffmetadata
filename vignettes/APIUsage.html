@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ryan Vinh and Ian E. Fellows" />
 
-<meta name="date" content="2018-07-25" />
+<meta name="date" content="2018-07-30" />
 
 <title>How to Query Metadata from the Fragile Families API</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">How to Query Metadata from the Fragile Families API</h1>
 <h4 class="author"><em>Ryan Vinh and Ian E. Fellows</em></h4>
-<h4 class="date"><em>2018-07-25</em></h4>
+<h4 class="date"><em>2018-07-30</em></h4>
 
 
 
@@ -81,6 +81,35 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><code>select_metadata()</code>: allows the user the find out specific information about a single variable</li>
 <li><code>search_metadata()</code>: allows the user to search for a variable / variables based on certain parameters</li>
 </ul>
+</div>
+<div id="select_metadata" class="section level2">
+<h2><code>select_metadata()</code></h2>
+<div id="using-select_metadata-to-find-out-information-out-about-a-variable" class="section level3">
+<h3>Using <code>select_metadata()</code> to find out information out about a variable</h3>
+<p>Suppose we want to find out the value of a given variable’s field. For example, let’s say we want to find out the source of the variable with the name “ce3datey”. To accomplish this, we would call <code>select_metadata()</code> using “ce3datey” for <code>variable_name</code> and “data_source” for <code>fields</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_type &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>, <span class="dt">fields =</span> <span class="st">&quot;data_source&quot;</span>)
+<span class="kw">print</span>(select_type)</code></pre></div>
+<pre><code>## [1] &quot;constructed&quot;</code></pre>
+<p><code>select_metadata()</code> can also be used to find out information about several fields of a given variable along the following lines:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>, <span class="dt">fields =</span> <span class="kw">c</span>(<span class="st">&quot;data_source&quot;</span>, <span class="st">&quot;data_type&quot;</span>))</code></pre></div>
+<p>If we want to view the entire variable and all the values for its fields, we can call select_metadata without using the <code>fields</code> parameter and simply using “ce3datey” for <code>variable_name</code>. This will return ce3datey as a data frame row, with each of its fields corresponding to a column of that row.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_full &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>)</code></pre></div>
+<p>For those who seek greater control over the formatting process, the <code>returnDataFrame</code> parameter can be set to <code>FALSE</code>. This will cause <code>select_metadata()</code> to return a nested list object that aligns more directly with the underlying JSON represenation of the data. By default, <code>select_metadata()</code> will return a dataframe unless this parameter’s value is specified.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_return_list &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>, <span class="dt">returnDataFrame =</span> <span class="ot">FALSE</span>)</code></pre></div>
+</div>
+</div>
+<div id="search_metadata" class="section level2">
+<h2><code>search_metadata()</code></h2>
+<div id="using-search_metadata-to-search-for-variables" class="section level3">
+<h3>Using <code>search_metadata()</code> to search for variables</h3>
+<p><code>search_metadata()</code> allows users to search for variables based on specified field values. This function returns a list of all the variable names that match the specified parameters. For instance, suppose we want to search for all the variables from wave 3. To accomplish this, we would call <code>search_metadata()</code> in the following way:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">wave =</span> <span class="dv">3</span>)</code></pre></div>
+<p><a href="http://api.metadata.fragilefamilies.princeton.edu/variable?q" class="uri">http://api.metadata.fragilefamilies.princeton.edu/variable?q</a>={“filters”:[{“name”:“wave”,“op”:“eq”,“val”:3}]}</p>
+<p>Any of the above-specified fields can be used to search for variables in combination with one another. For example, suppose we want to search for all the variables from wave 3 that also have the value “oc” for data_type. To accomplish this, we would call <code>search_metadata()</code> like so:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">wave =</span> <span class="dv">3</span>, <span class="dt">data_type =</span> <span class="st">&quot;oc&quot;</span>)</code></pre></div>
+<pre><code>## http://api.metadata.fragilefamilies.princeton.edu/variable?q={&quot;filters&quot;:[{&quot;name&quot;:&quot;wave&quot;,&quot;op&quot;:&quot;eq&quot;,&quot;val&quot;:&quot;3&quot;},{&quot;name&quot;:&quot;data_type&quot;,&quot;op&quot;:&quot;eq&quot;,&quot;val&quot;:&quot;oc&quot;}]}</code></pre>
+<p>TODO: <code>search_metadata()</code> also provides functionality for wild card matching.</p>
+</div>
 </div>
 <div id="field-names-that-can-be-used-in-these-functions" class="section level2">
 <h2>Field names that can be used in these functions</h2>
@@ -104,29 +133,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><strong>warning</strong> reports if there is something unusual about the answer choices for this variable</li>
 <li><strong>wave</strong> wave of the survey</li>
 </ul>
-</div>
-<div id="using-select_metadata-to-find-out-information-out-about-a-variable" class="section level2">
-<h2>Using <code>select_metadata()</code> to find out information out about a variable</h2>
-<p>Suppose we want to find out the value of a given variable’s field. For example, let’s say we want to find out the source of the variable with the name “ce3datey”. To accomplish this, we would call <code>select_metadata()</code> using “ce3datey” for <code>variable_name</code> and “data_source” for <code>fields</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_type &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>, <span class="dt">fields =</span> <span class="st">&quot;data_source&quot;</span>)
-<span class="kw">print</span>(select_type)</code></pre></div>
-<pre><code>## [1] &quot;constructed&quot;</code></pre>
-<p><code>select_metadata()</code> can also be used to find out information about several fields of a given variable along the following lines:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>, <span class="dt">fields =</span> <span class="kw">c</span>(<span class="st">&quot;data_source&quot;</span>, <span class="st">&quot;data_type&quot;</span>))</code></pre></div>
-<p>If we want to view the entire variable and all the values for its fields, we can call select_metadata without using the <code>fields</code> parameter and simply using “ce3datey” for <code>variable_name</code>. This will return ce3datey as a data frame row, with each of its fields corresponding to a column of that row.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_full &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>)</code></pre></div>
-<div id="a-quick-note-on-the-returndataframe-parameter-of-select_metadata" class="section level3">
-<h3>A quick note on the <code>returnDataFrame</code> parameter of select_metadata()</h3>
-<p>It is important to note that the JSON read from the web API endpoints is not “rectangular” by design. In other words, it is not necessarily formatted for the purpose of being represented in a data frame. Nevertheless, given that data frames are the predominant object used to analyze and represent data in R, <code>select_metadata()</code> formats and returns the data as a data frame by default when no fields are specified or multiple fields are specified. However, for those who seek greater control over the formatting process, the <code>returnDataFrame</code> parameter can be set to <code>FALSE</code>. This will cause <code>select_metadata()</code> to return a nested list object instead that aligns more directly with the underlying JSON represenation of the data.</p>
-</div>
-</div>
-<div id="using-search_metadata-to-search-for-variables" class="section level2">
-<h2>Using <code>search_metadata()</code> to search for variables</h2>
-<p><code>search_metadata()</code> allows users to search for variables based on specified field values. This function returns a list of all the variable names that match the specified parameters. For instance, suppose we want to search for all the variables from wave 3. To accomplish this, we would call <code>search_metadata()</code> in the following way:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">wave =</span> <span class="dv">3</span>)</code></pre></div>
-<p>Any of the above-specified fields can be used to search for variables in combination with one another. For example, suppose we want to search for all the variables from wave 3 that also have the value “oc” for data_type. To accomplish this, we would call <code>search_metadata()</code> like so:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">wave =</span> <span class="dv">3</span>, <span class="dt">data_type =</span> <span class="st">&quot;oc&quot;</span>)</code></pre></div>
-<p>TODO: <code>search_metadata()</code> also provides functionality for wild card matching.</p>
 </div>
 
 
