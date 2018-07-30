@@ -21,29 +21,9 @@ The ffmetadata package provides easy to use access to metadata surrounding the F
 library(ffmetadata)
 ```
 
-## Field names that can be used in these functions
 
-The `select_metadata()` and `search_metadata()` functions both involve searching or using the field names of the metadata variables in some way. Below are the field names that can be used when invoking these functions:
-  
-* **data_source** options: collected from the questionnaire, constructed from the questionnaire, a survey weight, or the unique ID assigned to each family
-* **data_type** options: ordered continuous, unordered categorical, ordered categorical, binary, or string
-* **group_id**
-* **group_subid**
-* **id** family ID
-* **label** variable description
-* **leaf** survey section and question number or constructed variable name
-* **name** variable name used after 2018
-* **old_name** old variable name, used before 2018
-* **respondent** who answered the question (e.g., "m" = "mother")
-* **responses** possible responses to the question
-* **scope** number of cities in which the question was asked
-* **section** section of the survey
-* **topic** narrow topic area
-* **umbrella** broad topic area 
-* **warning** reports if there is something unusual about the answer choices for this variable
-* **wave** wave of the survey 
-
-## Using `select_metadata()` to find out information out about a variable
+## `select_metadata()`
+### Using `select_metadata()` to find out information out about a variable
 
 Suppose we want to find out the value of a given variable's field.  For example, let's say we want to find out the source of the variable with the name "ce3datey". To accomplish this, we would call `select_metadata()` using "ce3datey" for `variable_name` and "data_source" for `fields`.
 
@@ -68,7 +48,8 @@ select_full <- select_metadata(variable_name = "ce3datey")
 ### A quick note on the `returnDataFrame` parameter of select_metadata()
 It is important to note that the JSON read from the web API endpoints is not "rectangular" by design. In other words, it is not necessarily formatted for the purpose of being represented in a data frame. Nevertheless, given that data frames are the predominant object used to analyze and represent data in R, `select_metadata()` formats and returns the data as a data frame by default when no fields are specified or multiple fields are specified. However, for those who seek greater control over the formatting process, the `returnDataFrame` parameter can be set to `FALSE`. This will cause `select_metadata()` to return a nested list object instead that aligns more directly with the underlying JSON represenation of the data.
 
-## Using `search_metadata()` to search for variables
+## `search_metadata()`
+### Using `search_metadata()` to search for variables
 
 `search_metadata()` allows users to search for variables based on specified field values. This function returns a list of all the variable names that match the specified parameters.  For instance, suppose we want to search for all the variables from wave 3. To accomplish this, we would call `search_metadata()` in the following way:
 
@@ -84,3 +65,25 @@ search <- search_metadata(wave = 3, data_type = "oc")
 
 
 TODO: `search_metadata()` also provides functionality for wild card matching.
+
+## Field names that can be used in these functions
+
+The `select_metadata()` and `search_metadata()` functions both involve searching or using the field names of the metadata variables in some way. Below are the field names that can be used when invoking these functions:
+  
+* **data_source** options: collected from the questionnaire, constructed from the questionnaire, a survey weight, or the unique ID assigned to each family
+* **data_type** options: ordered continuous, unordered categorical, ordered categorical, binary, or string
+* **group_id**
+* **group_subid**
+* **id** family ID
+* **label** variable description
+* **leaf** survey section and question number or constructed variable name
+* **name** variable name used after 2018
+* **old_name** old variable name, used before 2018
+* **respondent** who answered the question (e.g., "m" = "mother")
+* **responses** possible responses to the question
+* **scope** number of cities in which the question was asked
+* **section** section of the survey
+* **topic** narrow topic area
+* **umbrella** broad topic area 
+* **warning** reports if there is something unusual about the answer choices for this variable
+* **wave** wave of the survey 
