@@ -4,21 +4,25 @@
 \alias{select_metadata}
 \title{Select Metadata}
 \usage{
-select_metadata(variable_name = NULL, field_name = NULL)
+select_metadata(variable_name = NULL, fields = NULL,
+  returnDataFrame = TRUE)
 }
 \arguments{
 \item{variable_name}{name of variable}
 
-\item{field_name}{specific field of variable to be accessed. See
+\item{fields}{specific field or list of fields of variable to be accessed. See
 details for valid field names}
+
+\item{returnDataFrame}{optional paramater set to TRUE by default, output is
+named list if set to FALSE}
 }
 \value{
 returns string with value of a given field if field is specified,
-returns all metadata for variable as a named list if field is unspecified
+returns all metadata for variable as data frame if field is unspecified
 }
 \description{
 select_metadata allows users to retrieve the value of
-a specific field of a given variable, or
+a specific field or fields of a given variable, or
 the entire variable metadata if no field is specified
 }
 \details{
@@ -45,5 +49,6 @@ List of valid field names:
 }
 \examples{
 select1 <- select_metadata(variable_name = "ce3agefc")
-select2 <- select_metadata(variable_name = "ce3agefc", field_name = "data_type")
+select2 <- select_metadata(variable_name = "ce3agefc", fields = "data_type")
+select3 <- select_metadata(variable_name = "ce3agefc", fields = c("data_type", "data_source"))
 }

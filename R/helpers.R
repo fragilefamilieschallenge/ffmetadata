@@ -1,19 +1,7 @@
-
-# endpoint : api endpoint. e.g. "selectMetadata.php"
 # params : a named list of url parameters
-call_api <- function(endpoint, params) {
-  endpoint <- paste(endpoint, "?", sep = "")
-  # create url based on specified endpoint
-  url <- httr::modify_url(.base_url, path = endpoint)
-  # retrieve and iterate through params
-  for (i in 1:length(params)) {
-    if(!is.null(params[[i]])) {
-      # append parameters
-      url <- paste(url, names(params)[i], "=", params[[i]], "&",
-                        sep = "")
-    }
-  }
-  # get HTTP response
+call_api <- function(url) {
+  # get HTTP response, can add here, path and query list
+  # returnDataFrame = TRUE / FALSE
   resp <- httr::GET(url)
   # ensure JSON is returned
   if (httr::http_type(resp) != "application/json") {

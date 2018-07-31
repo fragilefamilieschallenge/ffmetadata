@@ -12,19 +12,98 @@ vignette: >
 
 ## Introduction
 
-The ffmetadata package provides easy to use access to metadata surrounding the Fragile Families Project data (https://fragilefamilies.princeton.edu/). The data itself is complex, and so this tool makes it easy to find and filter information about the variables included. It does this by querying the Fragile Families web API. Three functions are available for use:
+The ffmetadata package provides easy to use access to metadata surrounding the Fragile Families Project data (https://fragilefamilies.princeton.edu/). The data itself is complex, but this tool makes it easy to find and filter information about the variables included in the data. It does this by querying the Fragile Families web API. Two functions are available for use:
 
 * `select_metadata()`: allows the user the find out specific information about a single variable
-* `filter_metadata()`: allows the user to search for variables that match certain queries
-* `search_metadata()`: another function that allows the user to search for variables
+* `search_metadata()`: allows the user to search for a variable / variables based on certain parameters
 
 ```{r, echo=FALSE}
+library(pander)
 library(ffmetadata)
 ```
 
+
+## `select_metadata()`
+### Using `select_metadata()` to find out information out about a variable
+
+
+#### Selecting one field
+Suppose we want to find out the value of a given variable's field.  For example, let's say we want to find out the source of the variable with the name "ce3datey". To accomplish this, we would call `select_metadata()` using "ce3datey" for `variable_name` and "data_source" for `fields`.
+
+```{r}
+select_type <- select_metadata(variable_name = "ce3datey", fields = "data_source")
+```
+
+`select_type` output:
+
+```{r, echo=FALSE}
+pander(select_type)
+```
+
+#### Selecting multiple fields
+
+`select_metadata()` can also be used to find out information about several fields of a given variable along the following lines:
+
+```{r, results='asis'}
+select_multiple_fields <- select_metadata(variable_name = "ce3datey", fields = c("data_source", "data_type"))
+```
+
+`select_multiple_fields` output:
+
+```{r, echo=FALSE}
+pander(select_multiple_fields)
+```
+
+#### Selecting the entire variable
+
+If we want to view the entire variable and all the values for its fields, we can call select_metadata without using the `fields` parameter and simply using "ce3datey" for `variable_name`. This will return ce3datey as a data frame row, with each of its fields corresponding to a column of that row.
+
+```{r, results='asis'}
+select_full <- select_metadata(variable_name = "ce3datey")
+```
+
+`select_full` output:
+
+```{r, echo=FALSE}
+  pander(select_full)
+```
+
+#### Modifying the return type
+
+For those who seek greater control over the formatting process, the `returnDataFrame` parameter can be set to `FALSE`. This will cause `select_metadata()` to return a nested list object that aligns more directly with the underlying JSON represenation of the data. By default, `select_metadata()` will return a dataframe unless this parameter's value is specified.
+
+```{r}
+select_return_list <- select_metadata(variable_name = "ce3datey", returnDataFrame = FALSE)
+```
+
+`select_return_list` output:
+
+```{r, echo=FALSE}
+pander(select_return_list)
+```
+
+
+## `search_metadata()`
+### Using `search_metadata()` to search for variables
+
+`search_metadata()` allows users to search for variables based on specified field values. This function returns a list of all the variable names that match the specified parameters.  For instance, suppose we want to search for all the variables from wave 3. To accomplish this, we would call `search_metadata()` in the following way:
+
+```{r, results = "asis"}
+search <- search_metadata(wave = 3)
+```
+
+Any of the above-specified fields can be used to search for variables in combination with one another.  For example, suppose we want to search for all the variables from wave 3 that also have the value "oc" for data_type.  To accomplish this, we would call `search_metadata()` like so:
+
+```{r}
+search <- search_metadata(wave = 3, data_type = "oc")
+```
+
+
+TODO: `search_metadata()` also provides functionality for wild card matching.
+
 ## Field names that can be used in these functions
 
-The `select_metadata()`, `filter_metadata()`, and `search_metadata()` functions all involve searching or using the field names of the metadata variables in some way. Below are the field names that can be used when invoking these functions:
+The `select_metadata()` and `search_metadata()` functions both involve searching or using the field names of the metadata variables in some way. Below are the field names that can be used when invoking these functions:
   
 * **data_source** options: collected from the questionnaire, constructed from the questionnaire, a survey weight, or the unique ID assigned to each family
 * **data_type** options: ordered continuous, unordered categorical, ordered categorical, binary, or string
@@ -43,57 +122,3 @@ The `select_metadata()`, `filter_metadata()`, and `search_metadata()` functions 
 * **umbrella** broad topic area 
 * **warning** reports if there is something unusual about the answer choices for this variable
 * **wave** wave of the survey 
-
-## Using `select_metadata()` to find out information out about a variable
-
-Suppose we want to find out the value of a given variable's field.  For example, let's say we want to find out the source of the variable with the name "ce3datey". To accomplish this, we would call select_metadata using "ce3datey" for variable_name and "data_source" for field_name.
-
-```{r}
-select_type <- select_metadata(variable_name = "ce3datey", field_name = "data_source")
-print(select_type)
-```
-
-If we want to view the entire variable and all the values for its fields, we can call select_metadata without using the field_name parameter and simply using "ce3datey" for variable_name. This will return ce3datey as a named list with each of its fields corresponding to an element of the list.
-
-```{r}
-select_full <- select_metadata(variable_name = "ce3datey")
-```
-
-## Two different ways of searching for variables: `search_metadata()` and `filter_metadata()`
-
-### `filter_metadata()`
-
-Suppose we want to search for all the variables that satisfy several criteria. `filter_metadata()` will return a list of the names of the variables that satisfy the specified criteria. For example, let's say we want to retrieve all the binary variables from questionnaires administered in all 20 cities involved in the study.  To accomplish this, we could call filter_metadata using "bin" as our type, "questionnaire" as our source, and 20 for our scope. This can be accomplished using a named list, by typing the parameters in explicitly, or by a combination of both approaches.
-
-**It is important to note that filter_metadata uses substring matching. This means that if we use 2 for scope, it will return variables for which the scope is either 2 or 20.**
-
-Below is the approach using explicit parameters, perhaps the most intuitive way of using `filter_metadata()`:
-```{r}
-# explicit parameter approach
-filtered <- filter_metadata(data_type = "bin", data_source = "questionnaire", scope = 20)
-```
-
-Below are two alternative options: one involves using a named list, the other involves using a combination of a named list and explicit parameters:
-
-The named-list approach:
-```{r}
-# named-list approach
-params_list <- list(data_type="bin", data_source = "questionnaire", scope=20)
-```
-
-The mixed approach:
-```{r, eval=FALSE}
-# mixed approach
-params_list <- list(data_type = "bin", data_source = "questionnaire")
-filtered <- filter_metadata(params_list, scope = 20)
-```
-
-### `search_metadata()`
-
-`search_metadata()` is a reduced form of `filter_metadata()` that involves searching on one field rather than multiple fields. For the most part, anything that can be accomplished with `search_metadata()` can be done with `filter_metadata()`. Suppose we want to search for all the variables that contain a certain substring within a given field.  For example, let's say we want to retrieve all the variables that have the substring "mother" contained in their "label" field.  To accomplish this, we could call `search_metadata()` using "mother" as our query and "label" as our field_name.  The result will be a list of all the variable names that have the substring "mother" in their "label" field.
-
-```{r, results = "asis"}
-search_label <- search_metadata(query = "mother", field_name = "label")
-```
-
-

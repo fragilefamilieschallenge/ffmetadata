@@ -4,17 +4,10 @@
 \alias{search_metadata}
 \title{Search Metadata}
 \usage{
-search_metadata(query, field_name)
-}
-\arguments{
-\item{query}{a substring searched for in the given variable field}
-
-\item{field_name}{the field in which the query is searched for.
-See details for valid field names.}
+search_metadata(filter_list = list(), ...)
 }
 \value{
-returns list of names of all variables that have a substring-matched value within
-a given field
+returns list of names of all variables that match specified parameter values
 }
 \description{
 search_metadata allows users to retrieve a list of
@@ -46,5 +39,6 @@ List of valid field names:
 }
 }
 \examples{
-search_test <- search_metadata(query = "oc", field_name = "data_type")
+search_test1 <- search_metadata(wave = 3)
+search_test2 <- search_metadata(wave = 3, data_type = "oc")
 }

@@ -1,15 +1,17 @@
 #' Select Metadata
 #'
 #' select_metadata allows users to retrieve the value of
-#' a specific field of a given variable, or
+#' a specific field or fields of a given variable, or
 #' the entire variable metadata if no field is specified
 #'
 #' @param variable_name name of variable
-#' @param field_name specific field of variable to be accessed. See
+#' @param fields specific field or list of fields of variable to be accessed. See
 #' details for valid field names
+#' @param returnDataFrame optional paramater set to TRUE by default, output is
+#' named list if set to FALSE
 #'
 #' @return returns string with value of a given field if field is specified,
-#' returns all metadata for variable as a named list if field is unspecified
+#' returns all metadata for variable as data frame if field is unspecified
 #'
 #' @details List of valid field names:
 #' \itemize{
@@ -36,17 +38,31 @@
 #'
 #' @examples
 #' select1 <- select_metadata(variable_name = "ce3agefc")
-#' select2 <- select_metadata(variable_name = "ce3agefc", field_name = "data_type")
-select_metadata <- function(variable_name = NULL, field_name = NULL) {
-  # parse parameters
-  params <- list(varName=variable_name, fieldName=field_name)
-  # pass to api call
-  result <- call_api("select", params)
+#' select2 <- select_metadata(variable_name = "ce3agefc", fields = "data_type")
+#' select3 <- select_metadata(variable_name = "ce3agefc", fields = c("data_type", "data_source"))
+select_metadata <- function(variable_name = NULL, fields = NULL, returnDataFrame = TRUE) {
+  # error message for if variable_name is missing
+  if (missing(variable_name)) {
+    stop("select_metadata requires a value for variable_name")
+  }
+  # format url
+  url <- httr::modify_url(.base_url, path = paste0("variable/", variable_name))
+  if (!is.null(fields)) {
+    url <- httr::modify_url(url, query = ifelse(length(fields) == 1, fields, fields[1]))
+  }
+  # TODO: FIX THIS
+  # TODO: how to use modify_url for multiple queries that aren't key-value pairs
+  i <- 2
+  while (i <= length(fields)) {
+    url <- paste0(url, "&", fields[i])
+    i <- i + 1
+  }
+  result <- call_api(url)
   # format single value as character, otherwise unlist to convert to data frame
   if (length(result) == 1) {
     result <- as.character(result)
-  } else {
-    # un list into a format that can be converted to a data frame
+  } else if (returnDataFrame == TRUE){
+    # return data frame
     result <- unlist(result)
     result <- as.data.frame(result)
     result <- t(result)
@@ -60,12 +76,7 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
 #' variable names based on whether or not those variables contain a given query
 #' within a given field
 #'
-#' @param query a substring searched for in the given variable field
-#' @param field_name the field in which the query is searched for.
-#' See details for valid field names.
-
-#' @return returns list of names of all variables that have a substring-matched value within
-#' a given field
+#' @return returns list of names of all variables that match specified parameter values
 #'
 #' @details List of valid field names:
 #' @details List of valid field names:
@@ -92,62 +103,25 @@ select_metadata <- function(variable_name = NULL, field_name = NULL) {
 #' @export
 #'
 #' @examples
-#' search_test <- search_metadata(query = "oc", field_name = "data_type")
-search_metadata <- function(query, field_name) {
-  # error message for if field_name is missing
-  if (missing(field_name)) {
-    stop("search_metadata requires a value for field_name")
-  }
-  # error message for if query is missing
-  if (missing(query)) {
-    stop("search_metadata requires a value for query")
-  }
-  params <- list(query=query, fieldName=field_name)
-  searched <- call_api("search", params)
-  return(searched$matches)
-}
-
-#' Filter Metadata
-#'
-#' filter_metadata allows users to retrieve a list of variable
-#' names based on a set of filter values for variable categories
-#'
-#' @param filter_list a named list of variables to filter metadata on. See
-#' details for valid field names.
-#' @param ... additional value combinations to filter on. See details for
-#' valid field names.
-#'
-#' @return returns list of all variable names that match a set of given
-#' filter values
-#' @export
-#'
-#' @details List of valid field names:
-#' \itemize{
-#'     \item{data_source}
-#'     \item{data_type}
-#'     \item{group_id}
-#'     \item{group_subid}
-#'     \item{id}
-#'     \item{label}
-#'     \item{leaf}
-#'     \item{name}
-#'     \item{old_name}
-#'     \item{respondent}
-#'     \item{responses}
-#'     \item{scope}
-#'     \item{section}
-#'     \item{topic}
-#'     \item{umbrella}
-#'     \item{warning}
-#'     \item{wave}
-#' }
-#'
-#' @examples
-#' filter_test <- filter_metadata(wave = 3, data_source = "constructed", data_type = "bin")
-filter_metadata <- function(filter_list=list(), ...) {
-  # parse and pass parameters to api call
+#' search_test1 <- search_metadata(wave = 3)
+#' search_test2 <- search_metadata(wave = 3, data_type = "oc")
+search_metadata <- function(filter_list=list(), ...) {
+  # format parameters
   params <- c(filter_list, list(...))
-  filtered <- call_api(endpoint="filter", params)
-  return(filtered$matches)
+  # format list
+  filters <- data.frame()
+  for (i in 1:length(params)) {
+    # add variable
+    item <- list(name = names(params)[i], op = "eq", val = params[[i]])
+    filters <- rbind(filters, item, stringsAsFactors = FALSE)
+  }
+  filter_list <- list(filters = filters)
+  # convert to JSON as per endpoint syntax
+  formatted_params <- jsonlite::toJSON(filter_list)
+  # create url
+  url <- httr::modify_url(.base_url, query = list(q = formatted_params))
+  # call api
+  searched <- call_api(url)
+  return(searched)
 }
 
