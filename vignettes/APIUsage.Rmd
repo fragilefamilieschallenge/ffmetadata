@@ -18,6 +18,7 @@ The ffmetadata package provides easy to use access to metadata surrounding the F
 * `search_metadata()`: allows the user to search for a variable / variables based on certain parameters
 
 ```{r, echo=FALSE}
+library(pander)
 library(ffmetadata)
 ```
 
@@ -25,34 +26,60 @@ library(ffmetadata)
 ## `select_metadata()`
 ### Using `select_metadata()` to find out information out about a variable
 
+
+#### Selecting one field
 Suppose we want to find out the value of a given variable's field.  For example, let's say we want to find out the source of the variable with the name "ce3datey". To accomplish this, we would call `select_metadata()` using "ce3datey" for `variable_name` and "data_source" for `fields`.
 
 ```{r}
 select_type <- select_metadata(variable_name = "ce3datey", fields = "data_source")
-print(select_type)
 ```
+
+`select_type` output:
+
+```{r, echo=FALSE}
+pander(select_type)
+```
+
+#### Selecting multiple fields
 
 `select_metadata()` can also be used to find out information about several fields of a given variable along the following lines:
 
-```{r}
+```{r, results='asis'}
 select_multiple_fields <- select_metadata(variable_name = "ce3datey", fields = c("data_source", "data_type"))
-print(select_multiple_fields)
 ```
 
+`select_multiple_fields` output:
+
+```{r, echo=FALSE}
+pander(select_multiple_fields)
+```
+
+#### Selecting the entire variable
 
 If we want to view the entire variable and all the values for its fields, we can call select_metadata without using the `fields` parameter and simply using "ce3datey" for `variable_name`. This will return ce3datey as a data frame row, with each of its fields corresponding to a column of that row.
 
-```{r}
+```{r, results='asis'}
 select_full <- select_metadata(variable_name = "ce3datey")
-print(select_full)
 ```
 
+`select_full` output:
+
+```{r, echo=FALSE}
+  pander(select_full)
+```
+
+#### Modifying the return type
 
 For those who seek greater control over the formatting process, the `returnDataFrame` parameter can be set to `FALSE`. This will cause `select_metadata()` to return a nested list object that aligns more directly with the underlying JSON represenation of the data. By default, `select_metadata()` will return a dataframe unless this parameter's value is specified.
 
 ```{r}
 select_return_list <- select_metadata(variable_name = "ce3datey", returnDataFrame = FALSE)
-print(select_return_list)
+```
+
+`select_return_list` output:
+
+```{r, echo=FALSE}
+pander(select_return_list)
 ```
 
 

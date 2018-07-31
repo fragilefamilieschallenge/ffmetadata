@@ -1,21 +1,30 @@
 ## ---- echo=FALSE---------------------------------------------------------
+library(pander)
 library(ffmetadata)
 
 ## ------------------------------------------------------------------------
 select_type <- select_metadata(variable_name = "ce3datey", fields = "data_source")
-print(select_type)
 
-## ------------------------------------------------------------------------
+## ---- echo=FALSE---------------------------------------------------------
+pander(select_type)
+
+## ---- results='asis'-----------------------------------------------------
 select_multiple_fields <- select_metadata(variable_name = "ce3datey", fields = c("data_source", "data_type"))
-print(select_multiple_fields)
 
-## ------------------------------------------------------------------------
+## ---- echo=FALSE---------------------------------------------------------
+pander(select_multiple_fields)
+
+## ---- results='asis'-----------------------------------------------------
 select_full <- select_metadata(variable_name = "ce3datey")
-print(select_full)
+
+## ---- echo=FALSE---------------------------------------------------------
+  pander(select_full)
 
 ## ------------------------------------------------------------------------
 select_return_list <- select_metadata(variable_name = "ce3datey", returnDataFrame = FALSE)
-print(select_return_list)
+
+## ---- echo=FALSE---------------------------------------------------------
+pander(select_return_list)
 
 ## ---- results = "asis"---------------------------------------------------
 search <- search_metadata(wave = 3)
