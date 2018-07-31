@@ -35,7 +35,8 @@ print(select_type)
 `select_metadata()` can also be used to find out information about several fields of a given variable along the following lines:
 
 ```{r}
-select <- select_metadata(variable_name = "ce3datey", fields = c("data_source", "data_type"))
+select_multiple_fields <- select_metadata(variable_name = "ce3datey", fields = c("data_source", "data_type"))
+print(select_multiple_fields)
 ```
 
 
@@ -43,6 +44,7 @@ If we want to view the entire variable and all the values for its fields, we can
 
 ```{r}
 select_full <- select_metadata(variable_name = "ce3datey")
+print(select_full)
 ```
 
 
@@ -50,6 +52,7 @@ For those who seek greater control over the formatting process, the `returnDataF
 
 ```{r}
 select_return_list <- select_metadata(variable_name = "ce3datey", returnDataFrame = FALSE)
+print(select_return_list)
 ```
 
 

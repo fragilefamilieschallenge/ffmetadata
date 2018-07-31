@@ -91,11 +91,120 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">print</span>(select_type)</code></pre></div>
 <pre><code>## [1] &quot;constructed&quot;</code></pre>
 <p><code>select_metadata()</code> can also be used to find out information about several fields of a given variable along the following lines:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>, <span class="dt">fields =</span> <span class="kw">c</span>(<span class="st">&quot;data_source&quot;</span>, <span class="st">&quot;data_type&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_multiple_fields &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>, <span class="dt">fields =</span> <span class="kw">c</span>(<span class="st">&quot;data_source&quot;</span>, <span class="st">&quot;data_type&quot;</span>))
+<span class="kw">print</span>(select_multiple_fields)</code></pre></div>
+<pre><code>##        data_source   data_type   
+## result &quot;constructed&quot; &quot;Continuous&quot;</code></pre>
 <p>If we want to view the entire variable and all the values for its fields, we can call select_metadata without using the <code>fields</code> parameter and simply using “ce3datey” for <code>variable_name</code>. This will return ce3datey as a data frame row, with each of its fields corresponding to a column of that row.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_full &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_full &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>)
+<span class="kw">print</span>(select_full)</code></pre></div>
+<pre><code>##        data_source   data_type    focal_person fp_PCG fp_father fp_fchild
+## result &quot;constructed&quot; &quot;Continuous&quot; &quot;&quot;           &quot;0&quot;    &quot;0&quot;       &quot;0&quot;      
+##        fp_mother fp_other fp_partner group_id group_subid id     
+## result &quot;0&quot;       &quot;0&quot;      &quot;0&quot;        &quot;1520&quot;   &quot;b&quot;         &quot;38728&quot;
+##        label                        leaf    name      
+## result &quot;date of observation - year&quot; &quot;datey&quot; &quot;ce3datey&quot;
+##        old_name             respondent            scope subtopic1 
+## result &quot;ffcc_centobs_datey&quot; &quot;Child Care Provider&quot; &quot;20&quot;  &quot;paradata&quot;
+##        subtopics  survey                       topic1                
+## result &quot;paradata&quot; &quot;Child care center (survey)&quot; &quot;Paradata and weights&quot;
+##        topics                 warning wave    
+## result &quot;Paradata and weights&quot; &quot;0&quot;     &quot;Year 3&quot;</code></pre>
 <p>For those who seek greater control over the formatting process, the <code>returnDataFrame</code> parameter can be set to <code>FALSE</code>. This will cause <code>select_metadata()</code> to return a nested list object that aligns more directly with the underlying JSON represenation of the data. By default, <code>select_metadata()</code> will return a dataframe unless this parameter’s value is specified.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_return_list &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>, <span class="dt">returnDataFrame =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_return_list &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>, <span class="dt">returnDataFrame =</span> <span class="ot">FALSE</span>)
+<span class="kw">print</span>(select_return_list)</code></pre></div>
+<pre><code>## $data_source
+## [1] &quot;constructed&quot;
+## 
+## $data_type
+## [1] &quot;Continuous&quot;
+## 
+## $focal_person
+## [1] &quot;&quot;
+## 
+## $fp_PCG
+## [1] 0
+## 
+## $fp_father
+## [1] 0
+## 
+## $fp_fchild
+## [1] 0
+## 
+## $fp_mother
+## [1] 0
+## 
+## $fp_other
+## [1] 0
+## 
+## $fp_partner
+## [1] 0
+## 
+## $group_id
+## [1] &quot;1520&quot;
+## 
+## $group_subid
+## [1] &quot;b&quot;
+## 
+## $id
+## [1] 38728
+## 
+## $label
+## [1] &quot;date of observation - year&quot;
+## 
+## $leaf
+## [1] &quot;datey&quot;
+## 
+## $measures
+## NULL
+## 
+## $name
+## [1] &quot;ce3datey&quot;
+## 
+## $old_name
+## [1] &quot;ffcc_centobs_datey&quot;
+## 
+## $probe
+## NULL
+## 
+## $qText
+## NULL
+## 
+## $respondent
+## [1] &quot;Child Care Provider&quot;
+## 
+## $scope
+## [1] &quot;20&quot;
+## 
+## $section
+## NULL
+## 
+## $subtopic1
+## [1] &quot;paradata&quot;
+## 
+## $subtopic2
+## NULL
+## 
+## $subtopics
+## [1] &quot;paradata&quot;
+## 
+## $survey
+## [1] &quot;Child care center (survey)&quot;
+## 
+## $topic1
+## [1] &quot;Paradata and weights&quot;
+## 
+## $topic2
+## NULL
+## 
+## $topics
+## [1] &quot;Paradata and weights&quot;
+## 
+## $warning
+## [1] 0
+## 
+## $wave
+## [1] &quot;Year 3&quot;</code></pre>
 </div>
 </div>
 <div id="search_metadata" class="section level2">
