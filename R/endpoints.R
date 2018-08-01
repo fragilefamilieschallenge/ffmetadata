@@ -103,8 +103,8 @@ select_metadata <- function(variable_name = NULL, fields = NULL, returnDataFrame
 #' @export
 #'
 #' @examples
-#' search_test1 <- search_metadata(wave = 3)
-#' search_test2 <- search_metadata(wave = 3, data_type = "oc")
+#' search_test1 <- search_metadata(wave = "Year 1")
+#' search_test2 <- search_metadata(wave = "Year 1", respondent = "Mother")
 search_metadata <- function(filter_list=list(), ...) {
   # format parameters
   params <- c(filter_list, list(...))
