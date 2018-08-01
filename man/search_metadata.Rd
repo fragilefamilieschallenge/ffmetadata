@@ -39,6 +39,6 @@ List of valid field names:
 }
 }
 \examples{
-search_test1 <- search_metadata(wave = 3)
-search_test2 <- search_metadata(wave = 3, data_type = "oc")
+search_test1 <- search_metadata(wave = "Year 1")
+search_test2 <- search_metadata(wave = "Year 1", respondent = "Mother")
 }

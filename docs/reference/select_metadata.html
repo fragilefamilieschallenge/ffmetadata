@@ -33,7 +33,7 @@
 <meta property="og:title" content="Select Metadata — select_metadata" />
 
 <meta property="og:description" content="select_metadata allows users to retrieve the value of
-a specific field of a given variable, or
+a specific field or fields of a given variable, or
 the entire variable metadata if no field is specified" />
 <meta name="twitter:card" content="summary" />
 
@@ -119,12 +119,13 @@ the entire variable metadata if no field is specified" />
     <div class="ref-description">
     
     <p>select_metadata allows users to retrieve the value of
-a specific field of a given variable, or
+a specific field or fields of a given variable, or
 the entire variable metadata if no field is specified</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>select_metadata</span>(<span class='kw'>variable_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>field_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>select_metadata</span>(<span class='kw'>variable_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fields</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>returnDataFrame</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -134,16 +135,21 @@ the entire variable metadata if no field is specified</p>
       <td><p>name of variable</p></td>
     </tr>
     <tr>
-      <th>field_name</th>
-      <td><p>specific field of variable to be accessed. See
+      <th>fields</th>
+      <td><p>specific field or list of fields of variable to be accessed. See
 details for valid field names</p></td>
+    </tr>
+    <tr>
+      <th>returnDataFrame</th>
+      <td><p>optional paramater set to TRUE by default, output is
+named list if set to FALSE</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>returns string with value of a given field if field is specified,
-returns all metadata for variable as a named list if field is unspecified</p>
+returns all metadata for variable as data frame if field is unspecified</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -170,7 +176,8 @@ returns all metadata for variable as a named list if field is unspecified</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>select1</span> <span class='kw'>&lt;-</span> <span class='fu'>select_metadata</span>(<span class='kw'>variable_name</span> <span class='kw'>=</span> <span class='st'>"ce3agefc"</span>)
-<span class='no'>select2</span> <span class='kw'>&lt;-</span> <span class='fu'>select_metadata</span>(<span class='kw'>variable_name</span> <span class='kw'>=</span> <span class='st'>"ce3agefc"</span>, <span class='kw'>field_name</span> <span class='kw'>=</span> <span class='st'>"data_type"</span>)</div></pre>
+<span class='no'>select2</span> <span class='kw'>&lt;-</span> <span class='fu'>select_metadata</span>(<span class='kw'>variable_name</span> <span class='kw'>=</span> <span class='st'>"ce3agefc"</span>, <span class='kw'>fields</span> <span class='kw'>=</span> <span class='st'>"data_type"</span>)
+<span class='no'>select3</span> <span class='kw'>&lt;-</span> <span class='fu'>select_metadata</span>(<span class='kw'>variable_name</span> <span class='kw'>=</span> <span class='st'>"ce3agefc"</span>, <span class='kw'>fields</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data_type"</span>, <span class='st'>"data_source"</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

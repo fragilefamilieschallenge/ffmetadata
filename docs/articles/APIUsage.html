@@ -79,7 +79,7 @@
       <h1>How to Query Metadata from the Fragile Families API</h1>
                         <h4 class="author">Ryan Vinh and Ian E. Fellows</h4>
             
-            <h4 class="date">2018-06-22</h4>
+            <h4 class="date">2018-08-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/fragilefamilieschallenge/ffmetadata/blob/master/vignettes/APIUsage.Rmd"><code>vignettes/APIUsage.Rmd</code></a></small>
       <div class="hidden name"><code>APIUsage.Rmd</code></div>
@@ -91,20 +91,176 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>The ffmetadata package provides easy to use access to metadata surrounding the Fragile Families Project data (<a href="https://fragilefamilies.princeton.edu/" class="uri">https://fragilefamilies.princeton.edu/</a>). The data itself is complex, and so this tool makes it easy to find and filter information about the variables included. It does this by querying the Fragile Families web API. Three functions are available for use:</p>
+<p>The ffmetadata package provides easy to use access to metadata surrounding the Fragile Families Project data (<a href="https://fragilefamilies.princeton.edu/" class="uri">https://fragilefamilies.princeton.edu/</a>). The data itself is complex, but this tool makes it easy to find and filter information about the variables included in the data. It does this by querying the Fragile Families web API. Two functions are available for use:</p>
 <ul>
 <li>
 <code><a href="../reference/select_metadata.html">select_metadata()</a></code>: allows the user the find out specific information about a single variable</li>
 <li>
-<code><a href="../reference/filter_metadata.html">filter_metadata()</a></code>: allows the user to search for variables that match certain queries</li>
-<li>
-<code><a href="../reference/search_metadata.html">search_metadata()</a></code>: another function that allows the user to search for variables</li>
+<code><a href="../reference/search_metadata.html">search_metadata()</a></code>: allows the user to search for a variable / variables based on certain parameters</li>
 </ul>
+</div>
+<div id="select_metadata" class="section level2">
+<h2 class="hasAnchor">
+<a href="#select_metadata" class="anchor"></a><code><a href="../reference/select_metadata.html">select_metadata()</a></code>
+</h2>
+<div id="using-select_metadata-to-find-out-information-out-about-a-variable" class="section level3">
+<h3 class="hasAnchor">
+<a href="#using-select_metadata-to-find-out-information-out-about-a-variable" class="anchor"></a>Using <code><a href="../reference/select_metadata.html">select_metadata()</a></code> to find out information out about a variable</h3>
+<div id="selecting-one-field" class="section level4">
+<h4 class="hasAnchor">
+<a href="#selecting-one-field" class="anchor"></a>Selecting one field</h4>
+<p>Suppose we want to find out the value of a given variable’s field. For example, let’s say we want to find out the source of the variable with the name “ce3datey”. To accomplish this, we would call <code><a href="../reference/select_metadata.html">select_metadata()</a></code> using “ce3datey” for <code>variable_name</code> and “data_source” for <code>fields</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_type &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_metadata.html">select_metadata</a></span>(<span class="dt">variable_name =</span> <span class="st">"ce3datey"</span>, <span class="dt">fields =</span> <span class="st">"data_source"</span>)</code></pre></div>
+<p><code>select_type</code>:</p>
+<pre><code>## [1] "constructed"</code></pre>
+</div>
+<div id="selecting-multiple-fields" class="section level4">
+<h4 class="hasAnchor">
+<a href="#selecting-multiple-fields" class="anchor"></a>Selecting multiple fields</h4>
+<p><code><a href="../reference/select_metadata.html">select_metadata()</a></code> can also be used to find out information about several fields of a given variable along the following lines:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_multiple_fields &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_metadata.html">select_metadata</a></span>(<span class="dt">variable_name =</span> <span class="st">"ce3datey"</span>, <span class="dt">fields =</span> <span class="kw">c</span>(<span class="st">"data_source"</span>, <span class="st">"data_type"</span>))</code></pre></div>
+<p><code>select_multiple_fields</code>:</p>
+<pre><code>##        data_source   data_type   
+## result "constructed" "Continuous"</code></pre>
+</div>
+<div id="selecting-the-entire-variable" class="section level4">
+<h4 class="hasAnchor">
+<a href="#selecting-the-entire-variable" class="anchor"></a>Selecting the entire variable</h4>
+<p>If we want to view the entire variable and all the values for its fields, we can call select_metadata without using the <code>fields</code> parameter and simply using “ce3datey” for <code>variable_name</code>. This will return ce3datey as a data frame row, with each of its fields corresponding to a column of that row.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_full &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_metadata.html">select_metadata</a></span>(<span class="dt">variable_name =</span> <span class="st">"ce3datey"</span>)</code></pre></div>
+<p><code>select_full</code>:</p>
+<pre><code>##        data_source   data_type    focal_person fp_PCG fp_father fp_fchild
+## result "constructed" "Continuous" ""           "0"    "0"       "0"      
+##        fp_mother fp_other fp_partner group_id group_subid id     
+## result "0"       "0"      "0"        "1520"   "b"         "38728"
+##        label                        leaf    name      
+## result "date of observation - year" "datey" "ce3datey"
+##        old_name             respondent            scope subtopic1 
+## result "ffcc_centobs_datey" "Child Care Provider" "20"  "paradata"
+##        subtopics  survey                       topic1                
+## result "paradata" "Child care center (survey)" "Paradata and weights"
+##        topics                 warning wave    
+## result "Paradata and weights" "0"     "Year 3"</code></pre>
+</div>
+<div id="modifying-the-return-type" class="section level4">
+<h4 class="hasAnchor">
+<a href="#modifying-the-return-type" class="anchor"></a>Modifying the return type</h4>
+<p>For those who seek greater control over the formatting process, the <code>returnDataFrame</code> parameter can be set to <code>FALSE</code>. This will cause <code><a href="../reference/select_metadata.html">select_metadata()</a></code> to return a nested list object that aligns more directly with the underlying JSON represenation of the data. By default, <code><a href="../reference/select_metadata.html">select_metadata()</a></code> will return a dataframe unless this parameter’s value is specified.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_return_list &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_metadata.html">select_metadata</a></span>(<span class="dt">variable_name =</span> <span class="st">"ce3datey"</span>, <span class="dt">returnDataFrame =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p><code>select_return_list</code>:</p>
+<pre><code>## $data_source
+## [1] "constructed"
+## 
+## $data_type
+## [1] "Continuous"
+## 
+## $focal_person
+## [1] ""
+## 
+## $fp_PCG
+## [1] 0
+## 
+## $fp_father
+## [1] 0
+## 
+## $fp_fchild
+## [1] 0
+## 
+## $fp_mother
+## [1] 0
+## 
+## $fp_other
+## [1] 0
+## 
+## $fp_partner
+## [1] 0
+## 
+## $group_id
+## [1] "1520"
+## 
+## $group_subid
+## [1] "b"
+## 
+## $id
+## [1] 38728
+## 
+## $label
+## [1] "date of observation - year"
+## 
+## $leaf
+## [1] "datey"
+## 
+## $measures
+## NULL
+## 
+## $name
+## [1] "ce3datey"
+## 
+## $old_name
+## [1] "ffcc_centobs_datey"
+## 
+## $probe
+## NULL
+## 
+## $qText
+## NULL
+## 
+## $respondent
+## [1] "Child Care Provider"
+## 
+## $scope
+## [1] "20"
+## 
+## $section
+## NULL
+## 
+## $subtopic1
+## [1] "paradata"
+## 
+## $subtopic2
+## NULL
+## 
+## $subtopics
+## [1] "paradata"
+## 
+## $survey
+## [1] "Child care center (survey)"
+## 
+## $topic1
+## [1] "Paradata and weights"
+## 
+## $topic2
+## NULL
+## 
+## $topics
+## [1] "Paradata and weights"
+## 
+## $warning
+## [1] 0
+## 
+## $wave
+## [1] "Year 3"</code></pre>
+</div>
+</div>
+</div>
+<div id="search_metadata" class="section level2">
+<h2 class="hasAnchor">
+<a href="#search_metadata" class="anchor"></a><code><a href="../reference/search_metadata.html">search_metadata()</a></code>
+</h2>
+<div id="using-search_metadata-to-search-for-variables" class="section level3">
+<h3 class="hasAnchor">
+<a href="#using-search_metadata-to-search-for-variables" class="anchor"></a>Using <code><a href="../reference/search_metadata.html">search_metadata()</a></code> to search for variables</h3>
+<p><code><a href="../reference/search_metadata.html">search_metadata()</a></code> allows users to search for variables based on specified field values. This function returns a list of all the variable names that match the specified parameters. For instance, suppose we want to search for all the variables from the “Year 1” wave. To accomplish this, we would call <code><a href="../reference/search_metadata.html">search_metadata()</a></code> in the following way:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/search_metadata.html">search_metadata</a></span>(<span class="dt">wave =</span> <span class="st">"Year 1"</span>)</code></pre></div>
+<p>Any of the above-specified fields can be used to search for variables in combination with one another. For example, suppose we want to search for all the variables from the “Year 1” wave that have “Mother” listedd as the respondent. To accomplish this, we would call <code><a href="../reference/search_metadata.html">search_metadata()</a></code> like so:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_1_and &lt;-<span class="st"> </span><span class="kw"><a href="../reference/search_metadata.html">search_metadata</a></span>(<span class="dt">wave =</span> <span class="st">"Year 1"</span>, <span class="dt">respondent =</span> <span class="st">"Mother"</span>)</code></pre></div>
+<p>TODO: <code><a href="../reference/search_metadata.html">search_metadata()</a></code> also provides functionality for wild card matching.</p>
+</div>
 </div>
 <div id="field-names-that-can-be-used-in-these-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#field-names-that-can-be-used-in-these-functions" class="anchor"></a>Field names that can be used in these functions</h2>
-<p>The <code><a href="../reference/select_metadata.html">select_metadata()</a></code>, <code><a href="../reference/filter_metadata.html">filter_metadata()</a></code>, and <code><a href="../reference/search_metadata.html">search_metadata()</a></code> functions all involve searching or using the field names of the metadata variables in some way. Below are the field names that can be used when invoking these functions:</p>
+<p>The <code><a href="../reference/select_metadata.html">select_metadata()</a></code> and <code><a href="../reference/search_metadata.html">search_metadata()</a></code> functions both involve searching or using the field names of the metadata variables in some way. Below are the field names that can be used when invoking these functions:</p>
 <ul>
 <li>
 <strong>data_source</strong> options: collected from the questionnaire, constructed from the questionnaire, a survey weight, or the unique ID assigned to each family</li>
@@ -140,46 +296,6 @@
 <strong>wave</strong> wave of the survey</li>
 </ul>
 </div>
-<div id="using-select_metadata-to-find-out-information-out-about-a-variable" class="section level2">
-<h2 class="hasAnchor">
-<a href="#using-select_metadata-to-find-out-information-out-about-a-variable" class="anchor"></a>Using <code><a href="../reference/select_metadata.html">select_metadata()</a></code> to find out information out about a variable</h2>
-<p>Suppose we want to find out the value of a given variable’s field. For example, let’s say we want to find out the source of the variable with the name “ce3datey”. To accomplish this, we would call select_metadata using “ce3datey” for variable_name and “data_source” for field_name.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_type &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_metadata.html">select_metadata</a></span>(<span class="dt">variable_name =</span> <span class="st">"ce3datey"</span>, <span class="dt">field_name =</span> <span class="st">"data_source"</span>)
-<span class="kw">print</span>(select_type)</code></pre></div>
-<pre><code>## [1] "constructed"</code></pre>
-<p>If we want to view the entire variable and all the values for its fields, we can call select_metadata without using the field_name parameter and simply using “ce3datey” for variable_name. This will return ce3datey as a named list with each of its fields corresponding to an element of the list.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_full &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_metadata.html">select_metadata</a></span>(<span class="dt">variable_name =</span> <span class="st">"ce3datey"</span>)</code></pre></div>
-</div>
-<div id="two-different-ways-of-searching-for-variables-search_metadata-and-filter_metadata" class="section level2">
-<h2 class="hasAnchor">
-<a href="#two-different-ways-of-searching-for-variables-search_metadata-and-filter_metadata" class="anchor"></a>Two different ways of searching for variables: <code><a href="../reference/search_metadata.html">search_metadata()</a></code> and <code><a href="../reference/filter_metadata.html">filter_metadata()</a></code>
-</h2>
-<div id="filter_metadata" class="section level3">
-<h3 class="hasAnchor">
-<a href="#filter_metadata" class="anchor"></a><code><a href="../reference/filter_metadata.html">filter_metadata()</a></code>
-</h3>
-<p>Suppose we want to search for all the variables that satisfy several criteria. <code><a href="../reference/filter_metadata.html">filter_metadata()</a></code> will return a list of the names of the variables that satisfy the specified criteria. For example, let’s say we want to retrieve all the binary variables from questionnaires administered in all 20 cities involved in the study. To accomplish this, we could call filter_metadata using “bin” as our type, “questionnaire” as our source, and 20 for our scope. This can be accomplished using a named list, by typing the parameters in explicitly, or by a combination of both approaches.</p>
-<p><strong>It is important to note that filter_metadata uses substring matching. This means that if we use 2 for scope, it will return variables for which the scope is either 2 or 20.</strong></p>
-<p>Below is the approach using explicit parameters, perhaps the most intuitive way of using <code><a href="../reference/filter_metadata.html">filter_metadata()</a></code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># explicit parameter approach</span>
-filtered &lt;-<span class="st"> </span><span class="kw"><a href="../reference/filter_metadata.html">filter_metadata</a></span>(<span class="dt">data_type =</span> <span class="st">"bin"</span>, <span class="dt">data_source =</span> <span class="st">"questionnaire"</span>, <span class="dt">scope =</span> <span class="dv">20</span>)</code></pre></div>
-<p>Below are two alternative options: one involves using a named list, the other involves using a combination of a named list and explicit parameters:</p>
-<p>The named-list approach:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># named-list approach</span>
-params_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">data_type=</span><span class="st">"bin"</span>, <span class="dt">data_source =</span> <span class="st">"questionnaire"</span>, <span class="dt">scope=</span><span class="dv">20</span>)</code></pre></div>
-<p>The mixed approach:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># mixed approach</span>
-params_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">data_type =</span> <span class="st">"bin"</span>, <span class="dt">data_source =</span> <span class="st">"questionnaire"</span>)
-filtered &lt;-<span class="st"> </span><span class="kw"><a href="../reference/filter_metadata.html">filter_metadata</a></span>(params_list, <span class="dt">scope =</span> <span class="dv">20</span>)</code></pre></div>
-</div>
-<div id="search_metadata" class="section level3">
-<h3 class="hasAnchor">
-<a href="#search_metadata" class="anchor"></a><code><a href="../reference/search_metadata.html">search_metadata()</a></code>
-</h3>
-<p><code><a href="../reference/search_metadata.html">search_metadata()</a></code> is a reduced form of <code><a href="../reference/filter_metadata.html">filter_metadata()</a></code> that involves searching on one field rather than multiple fields. For the most part, anything that can be accomplished with <code><a href="../reference/search_metadata.html">search_metadata()</a></code> can be done with <code><a href="../reference/filter_metadata.html">filter_metadata()</a></code>. Suppose we want to search for all the variables that contain a certain substring within a given field. For example, let’s say we want to retrieve all the variables that have the substring “mother” contained in their “label” field. To accomplish this, we could call <code><a href="../reference/search_metadata.html">search_metadata()</a></code> using “mother” as our query and “label” as our field_name. The result will be a list of all the variable names that have the substring “mother” in their “label” field.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_label &lt;-<span class="st"> </span><span class="kw"><a href="../reference/search_metadata.html">search_metadata</a></span>(<span class="dt">query =</span> <span class="st">"mother"</span>, <span class="dt">field_name =</span> <span class="st">"label"</span>)</code></pre></div>
-</div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -188,9 +304,9 @@ filtered &lt;-<span class="st"> </span><span class="kw"><a href="../reference/fi
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#select_metadata"><code><a href="--/reference/select_metadata-html">select_metadata()</a></code></a></li>
+      <li><a href="#search_metadata"><code><a href="--/reference/search_metadata-html">search_metadata()</a></code></a></li>
       <li><a href="#field-names-that-can-be-used-in-these-functions">Field names that can be used in these functions</a></li>
-      <li><a href="#using-select_metadata-to-find-out-information-out-about-a-variable">Using <code><a href="--/reference/select_metadata-html">select_metadata()</a></code> to find out information out about a variable</a></li>
-      <li><a href="#two-different-ways-of-searching-for-variables-search_metadata-and-filter_metadata">Two different ways of searching for variables: <code><a href="--/reference/search_metadata-html">search_metadata()</a></code> and <code><a href="--/reference/filter_metadata-html">filter_metadata()</a></code></a></li>
       </ul>
 </div>
       </div>
