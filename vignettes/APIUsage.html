@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ryan Vinh and Ian E. Fellows" />
 
-<meta name="date" content="2018-07-30" />
+<meta name="date" content="2018-08-01" />
 
 <title>How to Query Metadata from the Fragile Families API</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">How to Query Metadata from the Fragile Families API</h1>
 <h4 class="author"><em>Ryan Vinh and Ian E. Fellows</em></h4>
-<h4 class="date"><em>2018-07-30</em></h4>
+<h4 class="date"><em>2018-08-01</em></h4>
 
 
 
@@ -90,251 +90,132 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h4>Selecting one field</h4>
 <p>Suppose we want to find out the value of a given variable’s field. For example, let’s say we want to find out the source of the variable with the name “ce3datey”. To accomplish this, we would call <code>select_metadata()</code> using “ce3datey” for <code>variable_name</code> and “data_source” for <code>fields</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_type &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>, <span class="dt">fields =</span> <span class="st">&quot;data_source&quot;</span>)</code></pre></div>
-<p><code>select_type</code> output:</p>
-<p>constructed</p>
+<p><code>select_type</code>:</p>
+<pre><code>## [1] &quot;constructed&quot;</code></pre>
 </div>
 <div id="selecting-multiple-fields" class="section level4">
 <h4>Selecting multiple fields</h4>
 <p><code>select_metadata()</code> can also be used to find out information about several fields of a given variable along the following lines:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_multiple_fields &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>, <span class="dt">fields =</span> <span class="kw">c</span>(<span class="st">&quot;data_source&quot;</span>, <span class="st">&quot;data_type&quot;</span>))</code></pre></div>
-<p><code>select_multiple_fields</code> output:</p>
-<table style="width:57%;">
-<colgroup>
-<col width="18%"></col>
-<col width="19%"></col>
-<col width="19%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">data_source</th>
-<th align="center">data_type</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>result</strong></td>
-<td align="center">constructed</td>
-<td align="center">Continuous</td>
-</tr>
-</tbody>
-</table>
+<p><code>select_multiple_fields</code>:</p>
+<pre><code>##        data_source   data_type   
+## result &quot;constructed&quot; &quot;Continuous&quot;</code></pre>
 </div>
 <div id="selecting-the-entire-variable" class="section level4">
 <h4>Selecting the entire variable</h4>
 <p>If we want to view the entire variable and all the values for its fields, we can call select_metadata without using the <code>fields</code> parameter and simply using “ce3datey” for <code>variable_name</code>. This will return ce3datey as a data frame row, with each of its fields corresponding to a column of that row.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_full &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>)</code></pre></div>
-<p><code>select_full</code> output:</p>
-<table>
-<caption>Table continues below</caption>
-<colgroup>
-<col width="17%"></col>
-<col width="18%"></col>
-<col width="17%"></col>
-<col width="20%"></col>
-<col width="12%"></col>
-<col width="14%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">data_source</th>
-<th align="center">data_type</th>
-<th align="center">focal_person</th>
-<th align="center">fp_PCG</th>
-<th align="center">fp_father</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>result</strong></td>
-<td align="center">constructed</td>
-<td align="center">Continuous</td>
-<td align="center"></td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-</tbody>
-</table>
-<table style="width:99%;">
-<caption>Table continues below</caption>
-<colgroup>
-<col width="18%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="15%"></col>
-<col width="18%"></col>
-<col width="13%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">fp_fchild</th>
-<th align="center">fp_mother</th>
-<th align="center">fp_other</th>
-<th align="center">fp_partner</th>
-<th align="center">group_id</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>result</strong></td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1520</td>
-</tr>
-</tbody>
-</table>
-<table style="width:99%;">
-<caption>Table continues below</caption>
-<colgroup>
-<col width="18%"></col>
-<col width="19%"></col>
-<col width="11%"></col>
-<col width="40%"></col>
-<col width="9%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">group_subid</th>
-<th align="center">id</th>
-<th align="center">label</th>
-<th align="center">leaf</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>result</strong></td>
-<td align="center">b</td>
-<td align="center">38728</td>
-<td align="center">date of observation - year</td>
-<td align="center">datey</td>
-</tr>
-</tbody>
-</table>
-<table>
-<caption>Table continues below</caption>
-<colgroup>
-<col width="17%"></col>
-<col width="14%"></col>
-<col width="28%"></col>
-<col width="29%"></col>
-<col width="9%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">name</th>
-<th align="center">old_name</th>
-<th align="center">respondent</th>
-<th align="center">scope</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>result</strong></td>
-<td align="center">ce3datey</td>
-<td align="center">ffcc_centobs_datey</td>
-<td align="center">Child Care Provider</td>
-<td align="center">20</td>
-</tr>
-</tbody>
-</table>
-<table style="width:90%;">
-<caption>Table continues below</caption>
-<colgroup>
-<col width="18%"></col>
-<col width="16%"></col>
-<col width="16%"></col>
-<col width="38%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">subtopic1</th>
-<th align="center">subtopics</th>
-<th align="center">survey</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>result</strong></td>
-<td align="center">paradata</td>
-<td align="center">paradata</td>
-<td align="center">Child care center (survey)</td>
-</tr>
-</tbody>
-</table>
-<table>
-<colgroup>
-<col width="16%"></col>
-<col width="29%"></col>
-<col width="29%"></col>
-<col width="12%"></col>
-<col width="12%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">topic1</th>
-<th align="center">topics</th>
-<th align="center">warning</th>
-<th align="center">wave</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>result</strong></td>
-<td align="center">Paradata and weights</td>
-<td align="center">Paradata and weights</td>
-<td align="center">0</td>
-<td align="center">Year 3</td>
-</tr>
-</tbody>
-</table>
+<p><code>select_full</code>:</p>
+<pre><code>##        data_source   data_type    focal_person fp_PCG fp_father fp_fchild
+## result &quot;constructed&quot; &quot;Continuous&quot; &quot;&quot;           &quot;0&quot;    &quot;0&quot;       &quot;0&quot;      
+##        fp_mother fp_other fp_partner group_id group_subid id     
+## result &quot;0&quot;       &quot;0&quot;      &quot;0&quot;        &quot;1520&quot;   &quot;b&quot;         &quot;38728&quot;
+##        label                        leaf    name      
+## result &quot;date of observation - year&quot; &quot;datey&quot; &quot;ce3datey&quot;
+##        old_name             respondent            scope subtopic1 
+## result &quot;ffcc_centobs_datey&quot; &quot;Child Care Provider&quot; &quot;20&quot;  &quot;paradata&quot;
+##        subtopics  survey                       topic1                
+## result &quot;paradata&quot; &quot;Child care center (survey)&quot; &quot;Paradata and weights&quot;
+##        topics                 warning wave    
+## result &quot;Paradata and weights&quot; &quot;0&quot;     &quot;Year 3&quot;</code></pre>
 </div>
 <div id="modifying-the-return-type" class="section level4">
 <h4>Modifying the return type</h4>
 <p>For those who seek greater control over the formatting process, the <code>returnDataFrame</code> parameter can be set to <code>FALSE</code>. This will cause <code>select_metadata()</code> to return a nested list object that aligns more directly with the underlying JSON represenation of the data. By default, <code>select_metadata()</code> will return a dataframe unless this parameter’s value is specified.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">select_return_list &lt;-<span class="st"> </span><span class="kw">select_metadata</span>(<span class="dt">variable_name =</span> <span class="st">&quot;ce3datey&quot;</span>, <span class="dt">returnDataFrame =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<p><code>select_return_list</code> output:</p>
-<ul>
-<li><strong>data_source</strong>: constructed</li>
-<li><strong>data_type</strong>: Continuous</li>
-<li><strong>focal_person</strong>:</li>
-<li><strong>fp_PCG</strong>: <em>0</em></li>
-<li><strong>fp_father</strong>: <em>0</em></li>
-<li><strong>fp_fchild</strong>: <em>0</em></li>
-<li><strong>fp_mother</strong>: <em>0</em></li>
-<li><strong>fp_other</strong>: <em>0</em></li>
-<li><strong>fp_partner</strong>: <em>0</em></li>
-<li><strong>group_id</strong>: 1520</li>
-<li><strong>group_subid</strong>: b</li>
-<li><strong>id</strong>: <em>38728</em></li>
-<li><strong>label</strong>: date of observation - year</li>
-<li><strong>leaf</strong>: datey</li>
-<li><strong>measures</strong>:</li>
-<li><strong>name</strong>: ce3datey</li>
-<li><strong>old_name</strong>: ffcc_centobs_datey</li>
-<li><strong>probe</strong>:</li>
-<li><strong>qText</strong>:</li>
-<li><strong>respondent</strong>: Child Care Provider</li>
-<li><strong>scope</strong>: 20</li>
-<li><strong>section</strong>:</li>
-<li><strong>subtopic1</strong>: paradata</li>
-<li><strong>subtopic2</strong>:</li>
-<li><strong>subtopics</strong>: paradata</li>
-<li><strong>survey</strong>: Child care center (survey)</li>
-<li><strong>topic1</strong>: Paradata and weights</li>
-<li><strong>topic2</strong>:</li>
-<li><strong>topics</strong>: Paradata and weights</li>
-<li><strong>warning</strong>: <em>0</em></li>
-<li><strong>wave</strong>: Year 3</li>
-</ul>
-<!-- end of list -->
+<p><code>select_return_list</code>:</p>
+<pre><code>## $data_source
+## [1] &quot;constructed&quot;
+## 
+## $data_type
+## [1] &quot;Continuous&quot;
+## 
+## $focal_person
+## [1] &quot;&quot;
+## 
+## $fp_PCG
+## [1] 0
+## 
+## $fp_father
+## [1] 0
+## 
+## $fp_fchild
+## [1] 0
+## 
+## $fp_mother
+## [1] 0
+## 
+## $fp_other
+## [1] 0
+## 
+## $fp_partner
+## [1] 0
+## 
+## $group_id
+## [1] &quot;1520&quot;
+## 
+## $group_subid
+## [1] &quot;b&quot;
+## 
+## $id
+## [1] 38728
+## 
+## $label
+## [1] &quot;date of observation - year&quot;
+## 
+## $leaf
+## [1] &quot;datey&quot;
+## 
+## $measures
+## NULL
+## 
+## $name
+## [1] &quot;ce3datey&quot;
+## 
+## $old_name
+## [1] &quot;ffcc_centobs_datey&quot;
+## 
+## $probe
+## NULL
+## 
+## $qText
+## NULL
+## 
+## $respondent
+## [1] &quot;Child Care Provider&quot;
+## 
+## $scope
+## [1] &quot;20&quot;
+## 
+## $section
+## NULL
+## 
+## $subtopic1
+## [1] &quot;paradata&quot;
+## 
+## $subtopic2
+## NULL
+## 
+## $subtopics
+## [1] &quot;paradata&quot;
+## 
+## $survey
+## [1] &quot;Child care center (survey)&quot;
+## 
+## $topic1
+## [1] &quot;Paradata and weights&quot;
+## 
+## $topic2
+## NULL
+## 
+## $topics
+## [1] &quot;Paradata and weights&quot;
+## 
+## $warning
+## [1] 0
+## 
+## $wave
+## [1] &quot;Year 3&quot;</code></pre>
 </div>
 </div>
 </div>
@@ -342,10 +223,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><code>search_metadata()</code></h2>
 <div id="using-search_metadata-to-search-for-variables" class="section level3">
 <h3>Using <code>search_metadata()</code> to search for variables</h3>
-<p><code>search_metadata()</code> allows users to search for variables based on specified field values. This function returns a list of all the variable names that match the specified parameters. For instance, suppose we want to search for all the variables from wave 3. To accomplish this, we would call <code>search_metadata()</code> in the following way:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">wave =</span> <span class="dv">3</span>)</code></pre></div>
-<p>Any of the above-specified fields can be used to search for variables in combination with one another. For example, suppose we want to search for all the variables from wave 3 that also have the value “oc” for data_type. To accomplish this, we would call <code>search_metadata()</code> like so:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">wave =</span> <span class="dv">3</span>, <span class="dt">data_type =</span> <span class="st">&quot;oc&quot;</span>)</code></pre></div>
+<p><code>search_metadata()</code> allows users to search for variables based on specified field values. This function returns a list of all the variable names that match the specified parameters. For instance, suppose we want to search for all the variables from the “Year 1” wave. To accomplish this, we would call <code>search_metadata()</code> in the following way:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">wave =</span> <span class="st">&quot;Year 1&quot;</span>)</code></pre></div>
+<p>Any of the above-specified fields can be used to search for variables in combination with one another. For example, suppose we want to search for all the variables from the “Year 1” wave that have “Mother” listedd as the respondent. To accomplish this, we would call <code>search_metadata()</code> like so:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_1_and &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">wave =</span> <span class="st">&quot;Year 1&quot;</span>, <span class="dt">respondent =</span> <span class="st">&quot;Mother&quot;</span>)</code></pre></div>
 <p>TODO: <code>search_metadata()</code> also provides functionality for wild card matching.</p>
 </div>
 </div>

@@ -18,7 +18,6 @@ The ffmetadata package provides easy to use access to metadata surrounding the F
 * `search_metadata()`: allows the user to search for a variable / variables based on certain parameters
 
 ```{r, echo=FALSE}
-library(pander)
 library(ffmetadata)
 ```
 
@@ -34,10 +33,10 @@ Suppose we want to find out the value of a given variable's field.  For example,
 select_type <- select_metadata(variable_name = "ce3datey", fields = "data_source")
 ```
 
-`select_type` output:
+`select_type`:
 
 ```{r, echo=FALSE}
-pander(select_type)
+select_type
 ```
 
 #### Selecting multiple fields
@@ -48,10 +47,10 @@ pander(select_type)
 select_multiple_fields <- select_metadata(variable_name = "ce3datey", fields = c("data_source", "data_type"))
 ```
 
-`select_multiple_fields` output:
+`select_multiple_fields`:
 
 ```{r, echo=FALSE}
-pander(select_multiple_fields)
+select_multiple_fields
 ```
 
 #### Selecting the entire variable
@@ -62,10 +61,10 @@ If we want to view the entire variable and all the values for its fields, we can
 select_full <- select_metadata(variable_name = "ce3datey")
 ```
 
-`select_full` output:
+`select_full`:
 
 ```{r, echo=FALSE}
-  pander(select_full)
+select_full
 ```
 
 #### Modifying the return type
@@ -76,26 +75,26 @@ For those who seek greater control over the formatting process, the `returnDataF
 select_return_list <- select_metadata(variable_name = "ce3datey", returnDataFrame = FALSE)
 ```
 
-`select_return_list` output:
+`select_return_list`:
 
 ```{r, echo=FALSE}
-pander(select_return_list)
+select_return_list
 ```
 
 
 ## `search_metadata()`
 ### Using `search_metadata()` to search for variables
 
-`search_metadata()` allows users to search for variables based on specified field values. This function returns a list of all the variable names that match the specified parameters.  For instance, suppose we want to search for all the variables from wave 3. To accomplish this, we would call `search_metadata()` in the following way:
+`search_metadata()` allows users to search for variables based on specified field values. This function returns a list of all the variable names that match the specified parameters.  For instance, suppose we want to search for all the variables from the "Year 1" wave. To accomplish this, we would call `search_metadata()` in the following way:
 
 ```{r, results = "asis"}
-search <- search_metadata(wave = 3)
+search_1 <- search_metadata(wave = "Year 1")
 ```
 
-Any of the above-specified fields can be used to search for variables in combination with one another.  For example, suppose we want to search for all the variables from wave 3 that also have the value "oc" for data_type.  To accomplish this, we would call `search_metadata()` like so:
+Any of the above-specified fields can be used to search for variables in combination with one another.  For example, suppose we want to search for all the variables from the "Year 1" wave that have "Mother" listedd as the respondent.  To accomplish this, we would call `search_metadata()` like so:
 
 ```{r}
-search <- search_metadata(wave = 3, data_type = "oc")
+search_1_and <- search_metadata(wave = "Year 1", respondent = "Mother")
 ```
 
 
