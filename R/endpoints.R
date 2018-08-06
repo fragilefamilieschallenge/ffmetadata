@@ -76,9 +76,12 @@ select_metadata <- function(variable_name = NULL, fields = NULL, returnDataFrame
 #' variable names based on whether or not those variables contain a given query
 #' within a given field
 #'
+#' @param ... any valid field name
+#' @param operation optional parameter that allows one to specify the given
+#' the method of comparison for search, "equals" is the default
+#'
 #' @return returns list of names of all variables that match specified parameter values
 #'
-#' @details List of valid field names:
 #' @details List of valid field names:
 #' \itemize{
 #'     \item{data_source}
@@ -105,14 +108,28 @@ select_metadata <- function(variable_name = NULL, fields = NULL, returnDataFrame
 #' @examples
 #' search_test1 <- search_metadata(wave = "Year 1")
 #' search_test2 <- search_metadata(wave = "Year 1", respondent = "Mother")
-search_metadata <- function(filter_list=list(), ...) {
+#' search_test3 <- search_metadata(name = "f1%", operation = "like")
+search_metadata <- function(filter_list=list(), ..., operation = "eq") {
+
+  if (length(list(...)) > length(operation) & length(operation) > 1) {
+    stop("number of comparison operators must equal number of field names being
+         used for search if multiple comparison operators are specified")
+  }
+
   # format parameters
   params <- c(filter_list, list(...))
   # format list
   filters <- data.frame()
   for (i in 1:length(params)) {
     # add variable
-    item <- list(name = names(params)[i], op = "eq", val = params[[i]])
+    # if multiple comparison operators used
+    if (length(operation) > 1) {
+      item <- list(name = names(params)[i], op = operation[[i]], val = params[[i]])
+    } else {
+      # only one comparison operator used
+      item <- list(name = names(params)[i], op = operation, val = params[[i]])
+    }
+
     filters <- rbind(filters, item, stringsAsFactors = FALSE)
   }
   filter_list <- list(filters = filters)
