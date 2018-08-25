@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ryan Vinh and Ian E. Fellows" />
 
-<meta name="date" content="2018-08-01" />
+<meta name="date" content="2018-08-25" />
 
 <title>How to Query Metadata from the Fragile Families API</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">How to Query Metadata from the Fragile Families API</h1>
 <h4 class="author"><em>Ryan Vinh and Ian E. Fellows</em></h4>
-<h4 class="date"><em>2018-08-01</em></h4>
+<h4 class="date"><em>2018-08-25</em></h4>
 
 
 
@@ -225,9 +225,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3>Using <code>search_metadata()</code> to search for variables</h3>
 <p><code>search_metadata()</code> allows users to search for variables based on specified field values. This function returns a list of all the variable names that match the specified parameters. For instance, suppose we want to search for all the variables from the “Year 1” wave. To accomplish this, we would call <code>search_metadata()</code> in the following way:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">wave =</span> <span class="st">&quot;Year 1&quot;</span>)</code></pre></div>
-<p>Any of the above-specified fields can be used to search for variables in combination with one another. For example, suppose we want to search for all the variables from the “Year 1” wave that have “Mother” listedd as the respondent. To accomplish this, we would call <code>search_metadata()</code> like so:</p>
+<p>Any of the above-specified fields can be used to search for variables in combination with one another. For example, suppose we want to search for all the variables from the “Year 1” wave that have “Mother” listed as the respondent. To accomplish this, we would call <code>search_metadata()</code> like so:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_1_and &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">wave =</span> <span class="st">&quot;Year 1&quot;</span>, <span class="dt">respondent =</span> <span class="st">&quot;Mother&quot;</span>)</code></pre></div>
-<p>TODO: <code>search_metadata()</code> also provides functionality for wild card matching.</p>
+<p><code>search_metadata()</code> also provides functionality for wild card matching. For instance, if we want to find all the variables with names that start with the string “f1”, we can use the “like” operator like so:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_start_with &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">name =</span> <span class="st">&quot;f1%&quot;</span>, <span class="dt">operation =</span> <span class="st">&quot;like&quot;</span>)</code></pre></div>
+<p>By default, the <code>operation</code> parameter is set to equals, but it can be specified for wild card matching as in the above.</p>
 </div>
 </div>
 <div id="field-names-that-can-be-used-in-these-functions" class="section level2">
@@ -243,7 +245,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><strong>leaf</strong> survey section and question number or constructed variable name</li>
 <li><strong>name</strong> variable name used after 2018</li>
 <li><strong>old_name</strong> old variable name, used before 2018</li>
-<li><strong>respondent</strong> who answered the question (e.g., “m” = “mother”)</li>
+<li><strong>respondent</strong> who answered the question (e.g., “mother”)</li>
 <li><strong>responses</strong> possible responses to the question</li>
 <li><strong>scope</strong> number of cities in which the question was asked</li>
 <li><strong>section</strong> section of the survey</li>

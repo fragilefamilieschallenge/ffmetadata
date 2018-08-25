@@ -31,3 +31,6 @@ search_1 <- search_metadata(wave = "Year 1")
 ## ------------------------------------------------------------------------
 search_1_and <- search_metadata(wave = "Year 1", respondent = "Mother")
 
+## ------------------------------------------------------------------------
+search_start_with <- search_metadata(name = "f1%", operation = "like")
+

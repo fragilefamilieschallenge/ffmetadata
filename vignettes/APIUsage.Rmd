@@ -91,14 +91,20 @@ select_return_list
 search_1 <- search_metadata(wave = "Year 1")
 ```
 
-Any of the above-specified fields can be used to search for variables in combination with one another.  For example, suppose we want to search for all the variables from the "Year 1" wave that have "Mother" listedd as the respondent.  To accomplish this, we would call `search_metadata()` like so:
+Any of the above-specified fields can be used to search for variables in combination with one another.  For example, suppose we want to search for all the variables from the "Year 1" wave that have "Mother" listed as the respondent.  To accomplish this, we would call `search_metadata()` like so:
 
 ```{r}
 search_1_and <- search_metadata(wave = "Year 1", respondent = "Mother")
 ```
 
 
-TODO: `search_metadata()` also provides functionality for wild card matching.
+`search_metadata()` also provides functionality for wild card matching. For instance, if we want to find all the variables with names that start with the string "f1", we can use the "like" operator like so:
+
+```{r}
+search_start_with <- search_metadata(name = "f1%", operation = "like")
+```
+
+By default, the `operation` parameter is set to equals, but it can be specified for wild card matching as in the above.
 
 ## Field names that can be used in these functions
 
@@ -113,7 +119,7 @@ The `select_metadata()` and `search_metadata()` functions both involve searching
 * **leaf** survey section and question number or constructed variable name
 * **name** variable name used after 2018
 * **old_name** old variable name, used before 2018
-* **respondent** who answered the question (e.g., "m" = "mother")
+* **respondent** who answered the question (e.g., "mother")
 * **responses** possible responses to the question
 * **scope** number of cities in which the question was asked
 * **section** section of the survey
