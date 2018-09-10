@@ -14,7 +14,6 @@ Fragile Families Project.
 To search or filter variables by string:
 \itemize{
   \item{\code{\link{search_metadata}}}
-  \item{\code{\link{filter_metadata}}}
 }
 }
 

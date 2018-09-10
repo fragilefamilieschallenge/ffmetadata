@@ -4,7 +4,16 @@
 \alias{search_metadata}
 \title{Search Metadata}
 \usage{
-search_metadata(filter_list = list(), ...)
+search_metadata(filter_list = list(), ..., operation = "eq")
+}
+\arguments{
+\item{filter_list}{an optional named list that can be passed to search_metadata in addition
+to explicitly named parameters}
+
+\item{...}{any valid field name}
+
+\item{operation}{optional parameter that allows one to specify the given
+the method of comparison for search, "equals" is the default}
 }
 \value{
 returns list of names of all variables that match specified parameter values
@@ -15,8 +24,6 @@ variable names based on whether or not those variables contain a given query
 within a given field
 }
 \details{
-List of valid field names:
-
 List of valid field names:
 \itemize{
     \item{data_source}
@@ -41,4 +48,5 @@ List of valid field names:
 \examples{
 search_test1 <- search_metadata(wave = "Year 1")
 search_test2 <- search_metadata(wave = "Year 1", respondent = "Mother")
+search_test3 <- search_metadata(name = "f1\%", operation = "like")
 }
