@@ -1,8 +1,8 @@
 # Fragile Families R-package
 
 This package allows one to retrieve metadata for the Fragile Families challenge 
-via the Web API.  Users can select, filter, and search metadata for relevant 
-variables.
+via the Web API.  Users can select and search metadata for relevant 
+variables. `select_metadata()` allows users to retrieve more information about a given variable.  `search_metadata()` allows users to search and filter for variables with certain attributes.
 
 To install the package from github, use:
 

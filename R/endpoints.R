@@ -77,6 +77,8 @@ select_metadata <- function(variable_name = NULL, fields = NULL, returnDataFrame
 #' within a given field
 #'
 #' @param ... any valid field name
+#' @param filter_list an optional named list that can be passed to search_metadata in addition
+#' to explicitly named parameters
 #' @param operation optional parameter that allows one to specify the given
 #' the method of comparison for search, "equals" is the default
 #'

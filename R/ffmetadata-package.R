@@ -7,7 +7,6 @@
 #' To search or filter variables by string:
 #' \itemize{
 #'   \item{\code{\link{search_metadata}}}
-#'   \item{\code{\link{filter_metadata}}}
 #' }
 #' @section Information functions:
 #' To get more detail on a variable:
