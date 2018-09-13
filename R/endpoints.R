@@ -36,6 +36,8 @@
 #'
 #' @export
 #'
+#' @importFrom utils URLencode
+#'
 #' @examples
 #' select1 <- select_metadata(variable_name = "ce3agefc")
 #' select2 <- select_metadata(variable_name = "ce3agefc", fields = "data_type")
@@ -50,18 +52,18 @@ select_metadata <- function(variable_name = NULL, fields = NULL, returnDataFrame
   if (!is.null(fields)) {
     url <- httr::modify_url(url, query = ifelse(length(fields) == 1, fields, fields[1]))
   }
-  # TODO: FIX THIS
-  # TODO: how to use modify_url for multiple queries that aren't key-value pairs
+  # encode url after adding fields
   i <- 2
   while (i <= length(fields)) {
     url <- paste0(url, "&", fields[i])
+    url <- URLencode(url)
     i <- i + 1
   }
   result <- call_api(url)
   # format single value as character, otherwise unlist to convert to data frame
   if (length(result) == 1) {
     result <- as.character(result)
-  } else if (returnDataFrame == TRUE){
+  } else if (returnDataFrame == TRUE) {
     # return data frame
     result <- unlist(result)
     result <- as.data.frame(result)
