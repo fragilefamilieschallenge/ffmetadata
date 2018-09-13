@@ -21,9 +21,14 @@ test_that("select_metadata returns a character type when one field is specified"
   expect_that(one_field, is_a("character"))
 })
 
+
 test_that("select_metadata returns a data frame when multiple fields specified", {
   multiple_fields <- select_metadata(variable_name = "ce3agefc",
                                      fields = c("data_type", "data_source"))
   expect_that(multiple_fields, is_a("matrix"))
+})
+
+test_that("select_metadata returns endpoint error when invalid variable name used", {
+  expect_that(select_metadata("m1a2"), is_equivalent_to("Invalid variable name."))
 })
 
