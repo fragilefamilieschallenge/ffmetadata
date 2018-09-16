@@ -21,3 +21,13 @@ test_that("search_metadata returns the correct number of variables for f1% wild 
   wild_card_search <- search_metadata(name = "f1%", operation = "like")
   expect_that(length(wild_card_search), equals(407))
 })
+
+test_that("search_metadata returns the correct number of variables when multiple operators used", {
+  multiple_operators <- search_metadata(wave = "Year 1", name = "f%", operation = c("eq", "like"))
+  expect_that(length(multiple_operators), equals(858))
+})
+
+test_that("search_metadata returns the correct number of variables when using in operator", {
+  in_operator <- search_metadata(respondent = list("Interviewer", "Child Care Provider"), operation = "in")
+  expect_that(length(in_operator), equals(1408))
+})
