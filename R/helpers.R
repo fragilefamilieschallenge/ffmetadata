@@ -12,12 +12,11 @@ call_api <- function(url) {
                                  simplifyVector = FALSE, simplifyDataFrame = TRUE)
 
   # error checking
-  if (!is.null(metadata$`error code`)) {
+  if (!is.null(metadata$message)) {
      stop(
        sprintf(
-         "GitHub API request failed [%s]\n<%s>",
-         metadata$`error code`,
-         metadata$error_description
+         "GitHub API request failed \n<%s>",
+         metadata$messsage
        ),
        call. = FALSE
      )

@@ -75,8 +75,8 @@ select_metadata <- function(variable_name = NULL, fields = NULL, returnDataFrame
 #' Search Metadata
 #'
 #' search_metadata allows users to retrieve a list of
-#' variable names based on whether or not those variables contain a given query
-#' within a given field
+#' variable names based on whether or not those variables contain a given query or set of
+#' queires within a given field or set of fields
 #'
 #' @param ... any valid field name
 #' @param filter_list an optional named list that can be passed to search_metadata in addition
