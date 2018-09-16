@@ -98,13 +98,30 @@ search_1_and <- search_metadata(wave = "Year 1", respondent = "Mother")
 ```
 
 
-`search_metadata()` also provides functionality for wild card matching. For instance, if we want to find all the variables with names that start with the string "f1", we can use the "like" operator like so:
+`search_metadata()` also provides functionality for a number of other operators. For instance, if we want to find all the variables with names that start with the string "f1", we can use the "like" operator like so:
 
 ```{r}
 search_start_with <- search_metadata(name = "f1%", operation = "like")
 ```
 
-By default, the `operation` parameter is set to equals, but it can be specified for wild card matching as in the above.
+As another example, if we want to find all the variables with for which the respondent was either the father or the mother, we can use the "in" operator like so:
+
+```{r}
+search_respondents <- search_metadata(respondent = list("Interviewer", "Child Care Provider"), operation = "in")
+```
+
+By default, the `operation` parameter is set to equals, but it can be specified for wild card matching as in the above. Below is a list of valid operations:
+
+* **like**: search for a pattern
+* **lt**: less-than
+* **le**: less-than-or-equal-to
+* **gt**: greater-than
+* **gte**: greater-than-or-equal-to
+* **neq**: not equals
+* **in**: is in (requires list value)
+* **not_in*: is not in (requires list value)
+* **is_null*: is null / missing (does not require a value)
+* **is_not_null*: is not null / not missing (does not require a value)
 
 ## Field names that can be used in these functions
 

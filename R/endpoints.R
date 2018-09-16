@@ -112,7 +112,8 @@ select_metadata <- function(variable_name = NULL, fields = NULL, returnDataFrame
 #' @examples
 #' search_test1 <- search_metadata(wave = "Year 1")
 #' search_test2 <- search_metadata(wave = "Year 1", respondent = "Mother")
-#' search_test3 <- search_metadata(name = "f1%", operation = "like")
+#' search_test3 <- search_metadata(wave = "Year 1", name = "f%", operation = c("eq", "like"))
+#' search_test4 <- search_metadata(name = "f1%", operation = "like")
 search_metadata <- function(filter_list=list(), ..., operation = "eq") {
 
   if (length(list(...)) > length(operation) & length(operation) > 1) {
@@ -122,20 +123,25 @@ search_metadata <- function(filter_list=list(), ..., operation = "eq") {
 
   # format parameters
   params <- c(filter_list, list(...))
-  # format list
-  filters <- data.frame()
+  # create data frame to hold filters
+  # 3 columns: name, op, val
+  filters <-  as.data.frame(matrix(nrow = length(params), ncol = 3))
+  colnames(filters) <- c("name", "val", "op")
   for (i in 1:length(params)) {
-    # add variable
-    # if multiple comparison operators used
+    # add filter
+    filters[i, ]$name <- names(params)[i]
+    # nest in list to account for cases where param value is non atomic
+    filters[i, ]$val <- list(params[[i]])
+    # if multiple operators used
     if (length(operation) > 1) {
-      item <- list(name = names(params)[i], op = operation[[i]], val = params[[i]])
-    } else {
-      # only one comparison operator used
-      item <- list(name = names(params)[i], op = operation, val = params[[i]])
+      filters[i, ]$op <- operation[[i]]
     }
-
-    filters <- rbind(filters, item, stringsAsFactors = FALSE)
+    else {
+      # only one comparison operator used
+      filters[i, ]$op <- operation
+    }
   }
+  # name data frame as "filters" in list
   filter_list <- list(filters = filters)
   # convert to JSON as per endpoint syntax
   formatted_params <- jsonlite::toJSON(filter_list)
