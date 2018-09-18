@@ -40,7 +40,9 @@
 #'
 #' @examples
 #' select1 <- select_metadata(variable_name = "ce3agefc")
+#'
 #' select2 <- select_metadata(variable_name = "ce3agefc", fields = "data_type")
+#'
 #' select3 <- select_metadata(variable_name = "ce3agefc", fields = c("data_type", "data_source"))
 select_metadata <- function(variable_name = NULL, fields = NULL, returnDataFrame = TRUE) {
   # error message for if variable_name is missing
@@ -111,9 +113,16 @@ select_metadata <- function(variable_name = NULL, fields = NULL, returnDataFrame
 #'
 #' @examples
 #' search_test1 <- search_metadata(wave = "Year 1")
+#'
 #' search_test2 <- search_metadata(wave = "Year 1", respondent = "Mother")
+#'
 #' search_test3 <- search_metadata(wave = "Year 1", name = "f%", operation = c("eq", "like"))
+#'
 #' search_test4 <- search_metadata(name = "f1%", operation = "like")
+#'
+#' # Note that when using operators checking for null values (or lack thereof), the operation
+#' # parameter should not be included in the call which should be formatted instead like so:
+#' search_test5 <- search_metadata(qText = "is_null")
 search_metadata <- function(filter_list=list(), ..., operation = "eq") {
 
   if (length(list(...)) > length(operation) & length(operation) > 1) {
@@ -123,24 +132,33 @@ search_metadata <- function(filter_list=list(), ..., operation = "eq") {
 
   # format parameters
   params <- c(filter_list, list(...))
+
   # create data frame to hold filters
-  # 3 columns: name, op, val
   filters <-  as.data.frame(matrix(nrow = length(params), ncol = 3))
   colnames(filters) <- c("name", "val", "op")
+
   for (i in 1:length(params)) {
     # add filter
     filters[i, ]$name <- names(params)[i]
-    # nest in list to account for cases where param value is non atomic
-    filters[i, ]$val <- list(params[[i]])
-    # if multiple operators used
-    if (length(operation) > 1) {
-      filters[i, ]$op <- operation[[i]]
-    }
-    else {
-      # only one comparison operator used
-      filters[i, ]$op <- operation
+
+    # check for null operators
+    if (params[[i]] == "is_null" | params[[i]] == "is_not_null") {
+      filters[i, ]$op <- params[[i]]
+    } else {
+      # otherwise standard operators
+      # nest in list to account for cases where param value is non atomic
+      filters[i, ]$val <- list(params[[i]])
+      # if multiple operators used
+      if (length(operation) > 1) {
+        filters[i, ]$op <- operation[[i]]
+      }
+      else {
+        # only one comparison operator used
+        filters[i, ]$op <- operation
+      }
     }
   }
+
   # name data frame as "filters" in list
   filter_list <- list(filters = filters)
   # convert to JSON as per endpoint syntax

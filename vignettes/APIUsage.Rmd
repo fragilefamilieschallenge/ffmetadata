@@ -110,6 +110,12 @@ As another example, if we want to find all the variables with for which the resp
 search_respondents <- search_metadata(respondent = list("Interviewer", "Child Care Provider"), operation = "in")
 ```
 
+The operation convention changes slightly when using either of the operations related to null checking. Rather than specify the operation using the `operation` parameter, the null check is specifed by the field value.  For instance, if we want to find all the variables in which the question text is null, we can format the call like so:
+
+```{r}
+search_qtext <- search_metadata(qText = "is_null")
+```
+
 By default, the `operation` parameter is set to equals, but it can be specified for wild card matching as in the above. Below is a list of valid operations:
 
 * **like**: search for a pattern
