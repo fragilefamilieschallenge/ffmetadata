@@ -10,13 +10,12 @@ call_api <- function(url) {
   # read JSON
   metadata <- jsonlite::fromJSON(httr::content(resp, "text", encoding = "UTF-8"),
                                  simplifyVector = FALSE, simplifyDataFrame = TRUE)
-
   # error checking
   if (!is.null(metadata$message)) {
      stop(
        sprintf(
          "GitHub API request failed \n<%s>",
-         metadata$messsage
+         metadata$message
        ),
        call. = FALSE
      )

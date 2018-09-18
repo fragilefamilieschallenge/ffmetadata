@@ -29,6 +29,6 @@ test_that("select_metadata returns a data frame when multiple fields specified",
 })
 
 test_that("select_metadata returns endpoint error when invalid variable name used", {
-  expect_that(select_metadata("m1a2"), is_equivalent_to("Invalid variable name."))
+  expect_that(select_metadata("m1a2"), throws_error())
 })
 
