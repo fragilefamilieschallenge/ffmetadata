@@ -6,7 +6,7 @@ Authors@R: c(
   person("Ryan", "Vinh", email = "rvinh@princeton.edu", role = c("aut", "cre")),
   person("Ian", "Fellows", email = "ian@fellstat.com", role = "aut"),
   person("Will", "Lowe", email = "wlowe@princeton.edu", role = "ctb"))
-Description: ffmetadata allows one to retrieve metadata for the
+Description: An easy to use package for retrieving metadata for the
   Fragile Families challenge via a Web API.  Users can
   select and search metadata for relevant variables.
 License: MIT License + file LICENSE
