@@ -13,7 +13,7 @@ select_metadata(variable_name = NULL, fields = NULL,
 \item{fields}{specific field or list of fields of variable to be accessed. See
 details for valid field names}
 
-\item{returnDataFrame}{optional paramater set to TRUE by default, output is
+\item{returnDataFrame}{optional parameter set to TRUE by default, output is
 named list if set to FALSE}
 }
 \value{

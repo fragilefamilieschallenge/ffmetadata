@@ -21,7 +21,7 @@ returns list of names of all variables that match specified parameter values
 \description{
 search_metadata allows users to retrieve a list of
 variable names based on whether or not those variables contain a given query or set of
-queires within a given field or set of fields
+queries within a given field or set of fields
 }
 \details{
 List of valid field names:
