@@ -17,19 +17,25 @@
 #' \itemize{
 #'     \item{data_source}
 #'     \item{data_type}
+#'     \item{fp_PCG}
+#'     \item{fp_father}
+#'     \item{fp_fchild}
+#'     \item{fp_mother}
+#'     \item{fp_other}
+#'     \item{fp_partner}
 #'     \item{group_id}
 #'     \item{group_subid}
 #'     \item{id}
 #'     \item{label}
 #'     \item{leaf}
+#'     \item{measures}
 #'     \item{name}
 #'     \item{old_name}
+#'     \item{probe}
+#'     \item{qText}
 #'     \item{respondent}
-#'     \item{responses}
 #'     \item{scope}
 #'     \item{section}
-#'     \item{topic}
-#'     \item{umbrella}
 #'     \item{warning}
 #'     \item{wave}
 #' }
@@ -92,23 +98,28 @@ select_metadata <- function(variable_name = NULL, fields = NULL, returnDataFrame
 #' \itemize{
 #'     \item{data_source}
 #'     \item{data_type}
+#'     \item{fp_PCG}
+#'     \item{fp_father}
+#'     \item{fp_fchild}
+#'     \item{fp_mother}
+#'     \item{fp_other}
+#'     \item{fp_partner}
 #'     \item{group_id}
 #'     \item{group_subid}
 #'     \item{id}
 #'     \item{label}
 #'     \item{leaf}
+#'     \item{measures}
 #'     \item{name}
 #'     \item{old_name}
+#'     \item{probe}
+#'     \item{qText}
 #'     \item{respondent}
-#'     \item{responses}
 #'     \item{scope}
 #'     \item{section}
-#'     \item{topic}
-#'     \item{umbrella}
 #'     \item{warning}
 #'     \item{wave}
 #' }
-#'
 #' @export
 #'
 #' @examples
@@ -138,21 +149,32 @@ search_metadata <- function(filter_list=list(), ..., operation = "eq") {
   colnames(filters) <- c("name", "val", "op")
 
   for (i in 1:length(params)) {
-    # add filter
+    # add name
     filters[i, ]$name <- names(params)[i]
 
-    # check for null operators
-    if (params[[i]] == "is_null" | params[[i]] == "is_not_null") {
-      filters[i, ]$op <- params[[i]]
-    } else {
-      # otherwise standard operators
-      # nest in list to account for cases where param value is non atomic
+    # check if parameter value is list
+    if (length(params[[i]]) > 1) {
+      # nest in list to format for JSON
       filters[i, ]$val <- list(params[[i]])
       # if multiple operators used
       if (length(operation) > 1) {
         filters[i, ]$op <- operation[[i]]
+      } else {
+        # only one comparison operator used
+        filters[i, ]$op <- operation
       }
-      else {
+    }
+    # check for null operators
+    else if (params[[i]] == "is_null" | params[[i]] == "is_not_null") {
+        filters[i, ]$op <- params[[i]]
+    }
+    # otherwise standard operators
+    else {
+      filters[i, ]$val <- params[[i]]
+      # if multiple operators used
+      if (length(operation) > 1) {
+        filters[i, ]$op <- operation[[i]]
+      } else {
         # only one comparison operator used
         filters[i, ]$op <- operation
       }
