@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ryan Vinh and Ian E. Fellows" />
 
-<meta name="date" content="2018-09-16" />
+<meta name="date" content="2018-09-17" />
 
 <title>How to Query Metadata from the Fragile Families API</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">How to Query Metadata from the Fragile Families API</h1>
 <h4 class="author"><em>Ryan Vinh and Ian E. Fellows</em></h4>
-<h4 class="date"><em>2018-09-16</em></h4>
+<h4 class="date"><em>2018-09-17</em></h4>
 
 
 
@@ -227,11 +227,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">wave =</span> <span class="st">&quot;Year 1&quot;</span>)</code></pre></div>
 <p>Any of the above-specified fields can be used to search for variables in combination with one another. For example, suppose we want to search for all the variables from the “Year 1” wave that have “Mother” listed as the respondent. To accomplish this, we would call <code>search_metadata()</code> like so:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_1_and &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">wave =</span> <span class="st">&quot;Year 1&quot;</span>, <span class="dt">respondent =</span> <span class="st">&quot;Mother&quot;</span>)</code></pre></div>
+<div id="using-operations-with-search_metadata" class="section level4">
+<h4>Using Operations with <code>search_metadata()</code></h4>
 <p><code>search_metadata()</code> also provides functionality for a number of other operators. For instance, if we want to find all the variables with names that start with the string “f1”, we can use the “like” operator like so:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_start_with &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">name =</span> <span class="st">&quot;f1%&quot;</span>, <span class="dt">operation =</span> <span class="st">&quot;like&quot;</span>)</code></pre></div>
-<p>As another example, if we want to find all the variables with for which the respondent was either the father or the mother, we can use the “in” operator like so:</p>
+<p>As another example, if we want to find all the variables for which the respondent was either the father or the mother, we can use the “in” operator like so:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_respondents &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">respondent =</span> <span class="kw">list</span>(<span class="st">&quot;Interviewer&quot;</span>, <span class="st">&quot;Child Care Provider&quot;</span>), <span class="dt">operation =</span> <span class="st">&quot;in&quot;</span>)</code></pre></div>
-<p>By default, the <code>operation</code> parameter is set to equals, but it can be specified for wild card matching as in the above. Below is a list of valid operations:</p>
+<p>The operation convention changes slightly when using either of the operations related to null checking. Rather than specify the operation using the <code>operation</code> parameter, the null check is specifed by the field value. For instance, if we want to find all the variables in which the question text is null, we can format the call like so:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">search_qtext &lt;-<span class="st"> </span><span class="kw">search_metadata</span>(<span class="dt">qText =</span> <span class="st">&quot;is_null&quot;</span>)</code></pre></div>
+<p>By default, the <code>operation</code> parameter is set to equals, but it can be specified for a variety of operations. Below is a list of valid operations:</p>
 <ul>
 <li><strong>like</strong>: search for a pattern</li>
 <li><strong>lt</strong>: less-than</li>
@@ -240,10 +244,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><strong>gte</strong>: greater-than-or-equal-to</li>
 <li><strong>neq</strong>: not equals</li>
 <li><strong>in</strong>: is in (requires list value)</li>
-<li>**not_in*: is not in (requires list value)</li>
-<li>**is_null*: is null / missing (does not require a value)</li>
-<li>**is_not_null*: is not null / not missing (does not require a value)</li>
+<li><strong>not_in</strong>: is not in (requires list value)</li>
+<li><strong>is_null</strong>: is null / missing</li>
+<li><strong>is_not_null</strong>: is not null / not missing</li>
 </ul>
+</div>
 </div>
 </div>
 <div id="field-names-that-can-be-used-in-these-functions" class="section level2">
@@ -252,19 +257,25 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li><strong>data_source</strong> options: collected from the questionnaire, constructed from the questionnaire, a survey weight, or the unique ID assigned to each family</li>
 <li><strong>data_type</strong> options: ordered continuous, unordered categorical, ordered categorical, binary, or string</li>
+<li><strong>fp_PCG</strong> binary variable indicating whether or not focal person is primary care giver</li>
+<li><strong>fp_father</strong> binary variable indicating whether or not focal person is father</li>
+<li><strong>fp_fchild</strong> binary variable indicating whether or not focal person is child</li>
+<li><strong>fp_mother</strong> binary variable indicating whether or not focal person is mother</li>
+<li><strong>fp_other</strong> binary variable indicating whether or not focal person is other</li>
+<li><strong>fp_partner</strong> binary variable indicating whether or not focal person is partner</li>
 <li><strong>group_id</strong></li>
 <li><strong>group_subid</strong></li>
 <li><strong>id</strong> family ID</li>
 <li><strong>label</strong> variable description</li>
 <li><strong>leaf</strong> survey section and question number or constructed variable name</li>
+<li><strong>measures</strong></li>
 <li><strong>name</strong> variable name used after 2018</li>
 <li><strong>old_name</strong> old variable name, used before 2018</li>
+<li><strong>probe</strong></li>
+<li><strong>qText</strong></li>
 <li><strong>respondent</strong> who answered the question (e.g., “mother”)</li>
-<li><strong>responses</strong> possible responses to the question</li>
 <li><strong>scope</strong> number of cities in which the question was asked</li>
 <li><strong>section</strong> section of the survey</li>
-<li><strong>topic</strong> narrow topic area</li>
-<li><strong>umbrella</strong> broad topic area</li>
 <li><strong>warning</strong> reports if there is something unusual about the answer choices for this variable</li>
 <li><strong>wave</strong> wave of the survey</li>
 </ul>

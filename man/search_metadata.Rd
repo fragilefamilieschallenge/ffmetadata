@@ -61,6 +61,6 @@ search_test3 <- search_metadata(wave = "Year 1", name = "f\%", operation = c("eq
 search_test4 <- search_metadata(name = "f1\%", operation = "like")
 
 # Note that when using operators checking for null values (or lack thereof), the operation
-# parameter should not be included in the call which should be formatted instead like so:
+# parameter should not be included in the call. It should be formatted instead like so:
 search_test5 <- search_metadata(qText = "is_null")
 }
