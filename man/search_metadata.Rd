@@ -28,19 +28,25 @@ List of valid field names:
 \itemize{
     \item{data_source}
     \item{data_type}
+    \item{fp_PCG}
+    \item{fp_father}
+    \item{fp_fchild}
+    \item{fp_mother}
+    \item{fp_other}
+    \item{fp_partner}
     \item{group_id}
     \item{group_subid}
     \item{id}
     \item{label}
     \item{leaf}
+    \item{measures}
     \item{name}
     \item{old_name}
+    \item{probe}
+    \item{qText}
     \item{respondent}
-    \item{responses}
     \item{scope}
     \item{section}
-    \item{topic}
-    \item{umbrella}
     \item{warning}
     \item{wave}
 }
