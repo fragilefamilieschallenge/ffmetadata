@@ -2,4 +2,5 @@
 ^\.Rproj\.user$
 ^_pkgdown\.yml$
 ^cran-comments\.md$
+^README\.md$
 ^docs$
