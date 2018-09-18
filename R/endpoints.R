@@ -7,7 +7,7 @@
 #' @param variable_name name of variable
 #' @param fields specific field or list of fields of variable to be accessed. See
 #' details for valid field names
-#' @param returnDataFrame optional paramater set to TRUE by default, output is
+#' @param returnDataFrame optional parameter set to TRUE by default, output is
 #' named list if set to FALSE
 #'
 #' @return returns string with value of a given field if field is specified,
@@ -84,7 +84,7 @@ select_metadata <- function(variable_name = NULL, fields = NULL, returnDataFrame
 #'
 #' search_metadata allows users to retrieve a list of
 #' variable names based on whether or not those variables contain a given query or set of
-#' queires within a given field or set of fields
+#' queries within a given field or set of fields
 #'
 #' @param ... any valid field name
 #' @param filter_list an optional named list that can be passed to search_metadata in addition
