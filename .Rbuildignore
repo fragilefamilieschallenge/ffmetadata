@@ -2,5 +2,4 @@
 ^\.Rproj\.user$
 ^_pkgdown\.yml$
 ^cran-comments\.md$
-^NEWS\.md$
 ^docs$
