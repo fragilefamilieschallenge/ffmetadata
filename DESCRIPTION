@@ -9,7 +9,7 @@ Authors@R: c(
 Description: An easy to use package for retrieving metadata for the
   Fragile Families challenge via a Web API.  Users can
   select and search metadata for relevant variables.
-License: MIT License + file LICENSE
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
