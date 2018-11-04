@@ -143,18 +143,17 @@ The `select_metadata()` and `search_metadata()` functions both involve searching
 * **fp_mother** binary variable indicating whether or not focal person is mother
 * **fp_other** binary variable indicating whether or not focal person is other
 * **fp_partner** binary variable indicating whether or not focal person is partner
-* **group_id**
-* **group_subid**
+* **group** denotes a group of similar variables across waves and/or surveys
 * **id** family ID
-* **label** variable description
+* **in_FFC_file** a flag for whether this variable was included in the data file for the Fragile Families Challenge (yes/no)
 * **leaf** survey section and question number or constructed variable name
 * **n_cities_asked** number of cities in which the question was asked
-* **measures**
 * **name** variable name used after 2018
 * **old_name** old variable name, used before 2018
-* **probe**
-* **qText**
+* **probe** the exact wording of the lead-in question from the questionnaire
+* **qText** question text
 * **respondent** who answered the question (e.g., "mother")
 * **section** section of the survey
+* **varlab** variable description
 * **warning** reports if there is something unusual about the answer choices for this variable
 * **wave** wave of the survey 
