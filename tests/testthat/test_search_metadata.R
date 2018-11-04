@@ -3,7 +3,7 @@ library(testthat)
 context("Search Metadata")
 
 test_that("search_metadata throws an error when not enough comparison operators specified", {
-  expect_that(search_metadata(wave = "Year 1", respondent = "Mother", scope = "20 Cities",
+  expect_that(search_metadata(wave = "Year 1", respondent = "Mother", n_cities_asked = "20",
                               operation = c("like", "eq")), throws_error())
 })
 
@@ -14,7 +14,7 @@ test_that("search_metadata returns the correct number of variables for wave 1 se
 
 test_that("search_metadata returns the correct number of variables for AND search with wave 1 and respondent mother", {
   and_search <- search_metadata(wave = "Year 1", respondent = "Mother")
-  expect_that(length(and_search), equals(910))
+  expect_that(length(and_search), equals(907))
 })
 
 test_that("search_metadata returns the correct number of variables for f1% wild card name search", {
@@ -29,7 +29,7 @@ test_that("search_metadata returns the correct number of variables when multiple
 
 test_that("search_metadata returns the correct number of variables when using in operator", {
   in_operator <- search_metadata(respondent = list("Interviewer", "Child Care Provider"), operation = "in")
-  expect_that(length(in_operator), equals(1408))
+  expect_that(length(in_operator), equals(1479))
 })
 
 test_that("search_metadata returns the correct number of variables when using is_null operator", {

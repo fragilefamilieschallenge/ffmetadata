@@ -148,13 +148,13 @@ The `select_metadata()` and `search_metadata()` functions both involve searching
 * **id** family ID
 * **label** variable description
 * **leaf** survey section and question number or constructed variable name
+* **n_cities_asked** number of cities in which the question was asked
 * **measures**
 * **name** variable name used after 2018
 * **old_name** old variable name, used before 2018
 * **probe**
 * **qText**
 * **respondent** who answered the question (e.g., "mother")
-* **scope** number of cities in which the question was asked
 * **section** section of the survey
 * **warning** reports if there is something unusual about the answer choices for this variable
 * **wave** wave of the survey 
