@@ -185,10 +185,8 @@ search_metadata <- function(filter_list=list(), ..., operation = "eq") {
   filter_list <- list(filters = filters)
   # convert to JSON as per endpoint syntax
   formatted_params <- jsonlite::toJSON(filter_list)
-  print(formatted_params)
   # create url
   url <- httr::modify_url(.base_url, query = list(q = formatted_params))
-  print(url)
   # call api
   searched <- call_api(url)
   return(searched)

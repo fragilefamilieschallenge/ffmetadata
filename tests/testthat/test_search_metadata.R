@@ -33,11 +33,11 @@ test_that("search_metadata returns the correct number of variables when using in
 })
 
 test_that("search_metadata returns the correct number of variables when using is_null operator", {
-  is_null_operator <- search_metadata(qText = "is_null")
-  expect_that(length(is_null_operator), equals(4473))
+  is_null_operator <- search_metadata(qtext = "is_null")
+  expect_that(length(is_null_operator), equals(4660))
 })
 
 test_that("search_metadata returns the correct number of variables when using is_not_null operator", {
-  is_not_null_operator <- search_metadata(measures = "is_not_null")
-  expect_that(length(is_not_null_operator), equals(1830))
+  is_not_null_operator <- search_metadata(qtext = "is_not_null")
+  expect_that(length(is_not_null_operator), equals(12333))
 })

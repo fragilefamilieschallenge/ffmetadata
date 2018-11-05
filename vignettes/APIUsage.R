@@ -38,5 +38,5 @@ search_start_with <- search_metadata(name = "f1%", operation = "like")
 search_respondents <- search_metadata(respondent = list("Interviewer", "Child Care Provider"), operation = "in")
 
 ## ------------------------------------------------------------------------
-search_qtext <- search_metadata(qText = "is_null")
+search_qtext <- search_metadata(qtext = "is_null")
 
