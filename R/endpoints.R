@@ -133,7 +133,7 @@ select_metadata <- function(variable_name = NULL, fields = NULL, returnDataFrame
 #'
 #' # Note that when using operators checking for null values (or lack thereof), the operation
 #' # parameter should not be included in the call. It should be formatted instead like so:
-#' search_test5 <- search_metadata(qText = "is_null")
+#' search_test5 <- search_metadata(qtext = "is_null")
 search_metadata <- function(filter_list=list(), ..., operation = "eq") {
 
   if (length(list(...)) > length(operation) & length(operation) > 1) {
