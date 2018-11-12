@@ -1,14 +1,16 @@
 Package: ffmetadata
 Type: Package
-Title: Provides Access to Fragile Families Metadata
+Title: Access to Fragile Families Metadata
 Version: 1.0.0
 Authors@R: c(
   person("Ryan", "Vinh", email = "rvinh@princeton.edu", role = c("aut", "cre")),
   person("Ian", "Fellows", email = "ian@fellstat.com", role = "aut"),
   person("Will", "Lowe", email = "wlowe@princeton.edu", role = "ctb"))
-Description: An easy to use package for retrieving metadata for the
-  Fragile Families challenge via a Web API.  Users can
-  select and search metadata for relevant variables.
+Description: A package that allows users to retrieve metadata for the
+  Fragile Families challenge via a Web API 
+  (<http://api.metadata.fragilefamilies.princeton.edu>).  
+  Users can select and search metadata for relevant variables by 
+  filtering on different attribute names.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
