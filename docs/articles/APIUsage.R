@@ -2,31 +2,41 @@
 library(ffmetadata)
 
 ## ------------------------------------------------------------------------
-select_type <- select_metadata(variable_name = "ce3datey", field_name = "source")
-print(select_type)
+select_type <- select_metadata(variable_name = "ce3datey", fields = "data_source")
 
-## ---- results = "asis"---------------------------------------------------
-select_entire <- select_metadata(variable_name = "ce3datey")
-pander::pandoc.table(select_entire, split.tables=Inf)
+## ---- echo=FALSE---------------------------------------------------------
+select_type
 
-## ---- results = "asis"---------------------------------------------------
-search_topic1 <- search_metadata(query = "mental health", field_name = "topic1")
-pander::pandoc.table(search_topic1[1:3,], split.tables=Inf)
+## ------------------------------------------------------------------------
+select_multiple_fields <- select_metadata(variable_name = "ce3datey", fields = c("data_source", "data_type"))
 
-## ---- eval=FALSE---------------------------------------------------------
-#  # named-list approach
-#  params_list <- list(type="bin", source="questionnaire", scope=20)
-#  #names(params_list) <- c("type", "source", "scope")
-#  # call to filter_metadata
-#  filtered <- filter_metadata(params_list)
+## ---- echo=FALSE---------------------------------------------------------
+select_multiple_fields
 
-## ---- eval=FALSE---------------------------------------------------------
-#  # explicit parameter approach
-#  filtered <- filter_metadata(type = "bin", source = "questionnaire", scope = 20)
+## ------------------------------------------------------------------------
+select_full <- select_metadata(variable_name = "ce3datey")
 
-## ---- eval=FALSE---------------------------------------------------------
-#  # mixed approach
-#  params_list <- c("bin", "questionnaire")
-#  names(params_list) <- c("type", "source")
-#  filtered <- filter_metadata(params_list, scope = 20)
+## ---- echo=FALSE---------------------------------------------------------
+select_full
+
+## ------------------------------------------------------------------------
+select_return_list <- select_metadata(variable_name = "ce3datey", returnDataFrame = FALSE)
+
+## ---- echo=FALSE---------------------------------------------------------
+select_return_list
+
+## ------------------------------------------------------------------------
+search_1 <- search_metadata(wave = "Year 1")
+
+## ------------------------------------------------------------------------
+search_1_and <- search_metadata(wave = "Year 1", respondent = "Mother")
+
+## ------------------------------------------------------------------------
+search_start_with <- search_metadata(name = "f1%", operation = "like")
+
+## ------------------------------------------------------------------------
+search_respondents <- search_metadata(respondent = list("Interviewer", "Child Care Provider"), operation = "in")
+
+## ------------------------------------------------------------------------
+search_qtext <- search_metadata(qtext = "is_null")
 
