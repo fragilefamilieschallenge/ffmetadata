@@ -43,7 +43,7 @@ select_type
 
 `select_metadata()` can also be used to find out information about several fields of a given variable along the following lines:
 
-```{r, results='asis'}
+```{r}
 select_multiple_fields <- select_metadata(variable_name = "ce3datey", fields = c("data_source", "data_type"))
 ```
 
@@ -57,7 +57,7 @@ select_multiple_fields
 
 If we want to view the entire variable and all the values for its fields, we can call select_metadata without using the `fields` parameter and simply using "ce3datey" for `variable_name`. This will return ce3datey as a data frame row, with each of its fields corresponding to a column of that row.
 
-```{r, results='asis'}
+```{r}
 select_full <- select_metadata(variable_name = "ce3datey")
 ```
 
@@ -87,7 +87,7 @@ select_return_list
 
 `search_metadata()` allows users to search for variables based on specified field values. This function returns a list of all the variable names that match the specified parameters.  For instance, suppose we want to search for all the variables from the "Year 1" wave. To accomplish this, we would call `search_metadata()` in the following way:
 
-```{r, results = "asis"}
+```{r}
 search_1 <- search_metadata(wave = "Year 1")
 ```
 
